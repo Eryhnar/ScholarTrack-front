@@ -6,13 +6,13 @@ interface CTableProps {
     onClickFunction: (row: any) => void;
 }
 
-export const CTable = ({
+export const CTable: React.FC<CTableProps> = ({
     tableClass = "default-custom-table",
     cellClass = "default-custom-cell",
     headerClass = "default-custom-header",
     data,
     onClickFunction,
-}: CTableProps) => {
+}: CTableProps): JSX.Element => {
 
     const allKeys = [...new Set(data.flatMap(Object.keys))]
     const columns = allKeys.map(key => ({

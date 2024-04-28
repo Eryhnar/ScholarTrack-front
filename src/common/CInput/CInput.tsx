@@ -11,7 +11,7 @@ interface CInputProps {
     min?: string
 }
 
-export const CInput = ({
+export const CInput: React.FC<CInputProps> = ({
   className = "default-custom-input",
   type,
   placeholder,
@@ -20,7 +20,7 @@ export const CInput = ({
   value,
   onChangeFunction,
   min,
-}: CInputProps) => {
+}: CInputProps): JSX.Element => {
   return (
     <input
       className={className}

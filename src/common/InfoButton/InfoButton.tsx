@@ -6,11 +6,11 @@ interface InfoButtonProps {
     info: string;
 }
 
-export const InfoButton = ({
+export const InfoButton: React.FC<InfoButtonProps> = ({
     className = "default-custom-button",
     title = "i",
     info,
-}: InfoButtonProps) => {
+}: InfoButtonProps): JSX.Element => {
     const [showInfo, setShowInfo] = useState(false);
 
     return (

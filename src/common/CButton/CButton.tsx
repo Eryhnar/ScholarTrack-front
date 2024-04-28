@@ -8,11 +8,11 @@ interface CButtonProps {
 
 "default-custom-button"
 
-export const CButton = ({
+export const CButton: React.FC<CButtonProps> = ({
     className = "default-custom-button",
     title,
     onClickFunction,
-}: CButtonProps) => {
+}: CButtonProps): JSX.Element => {
     return (
         <div className={className} onClick={onClickFunction}>
             {title}

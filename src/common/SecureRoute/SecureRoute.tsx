@@ -13,7 +13,7 @@ interface SecureRouteProps {
     protMode: ProtMode;
 }
 
-export const SecureRoute = ({ protMode }: SecureRouteProps) => {
+export const SecureRoute: React.FC<SecureRouteProps> = ({ protMode }: SecureRouteProps): JSX.Element => {
     const { credentials: { token, user } } = useSelector(userData);
     const navigate = useNavigate();
 

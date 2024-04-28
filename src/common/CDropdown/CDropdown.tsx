@@ -7,13 +7,13 @@ interface CDropdownProps {
     onChangeFunction: (e: React.ChangeEvent<HTMLSelectElement>) => void,
 }
 
-export const CDropdown = ({
+export const CDropdown: React.FC<CDropdownProps> = ({
     buttonClass = "default-custom-button",
     dropdownClass = "default-custom-dropdown",
     title,
     items,
     onChangeFunction,
-}: CDropdownProps) => {
+}: CDropdownProps): JSX.Element => {
     return (
         <select className={buttonClass} onChange={onChangeFunction} name={title} defaultValue={""}>
             <option value="">{title}</option>
