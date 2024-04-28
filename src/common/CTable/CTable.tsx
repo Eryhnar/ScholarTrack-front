@@ -3,7 +3,7 @@ interface CTableProps {
     cellClass?: string;
     headerClass?: string;
     data: any[];
-    // onClickFunction: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onClickFunction: (row: any) => void;
 }
 
 export const CTable = ({
@@ -11,6 +11,7 @@ export const CTable = ({
     cellClass = "default-custom-cell",
     headerClass = "default-custom-header",
     data,
+    onClickFunction,
 }: CTableProps) => {
 
     const allKeys = [...new Set(data.flatMap(Object.keys))]
@@ -30,7 +31,7 @@ export const CTable = ({
             </thead>
             <tbody>
                 {data.map((row, index) => (
-                    <tr key={index}>
+                    <tr key={index} onClick={() => onClickFunction(row)}>
                         {columns.map((column, index) => (
                             <td key={index} className={cellClass}>{row[column.accessor]}</td>
                         ))}
