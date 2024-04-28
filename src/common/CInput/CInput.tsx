@@ -1,4 +1,4 @@
-import "./CInput.css"
+// import "./CInput.css"
 
 interface CInputProps {
     className?: string
