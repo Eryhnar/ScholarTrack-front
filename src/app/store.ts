@@ -16,7 +16,8 @@ const reducers: Reducer<RootState, Action> = combineReducers({
     user: userReducer
 });
 
-const secretKey = process.env.REACT_APP_SECRET_KEY;
+// const secretKey = process.env.REACT_APP_SECRET_KEY;
+const secretKey = "Nala"; //TODO change to process.env.REACT_APP_SECRET
 
 if (!secretKey) {
     throw new Error('REACT_APP_SECRET_KEY is not defined');
