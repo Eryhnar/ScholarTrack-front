@@ -72,10 +72,10 @@ export const Register: React.FC = (): JSX.Element => {
     //     }
     // };
     const mutation = useMutation(registerService, {
-        onSuccess: (data: RegisterResponseData) => {
+        onSuccess: (response: RegisterResponseData) => {
             setErrorMsg({
                 ...errorMsg,
-                serverError: { message: data.message, success: data.success },
+                serverError: { message: response.message, success: response.success },
             });
             // setErrorCount(errorCount + 1);
             // navigate("/login");
