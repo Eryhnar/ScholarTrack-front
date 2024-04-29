@@ -39,12 +39,10 @@ export const Login: React.FC = (): JSX.Element => {
 
     const mutation = useMutation(loginService, {
         onSuccess: (response: LoginResponseData) => {
-          // Handle successful login
           dispatch(login(response.data));
           navigate("/");
         },
         onError: (error: any) => {
-          // Handle login error
           setErrorMsg({
             ...errorMsg,
             serverError: { message: error.message, success: false }
@@ -52,7 +50,6 @@ export const Login: React.FC = (): JSX.Element => {
         }
       });
       
-      // To login a user
       const loginUser = (): void => {
         mutation.mutate(credentials);
       };
