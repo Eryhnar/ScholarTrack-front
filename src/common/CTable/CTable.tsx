@@ -30,10 +30,10 @@ export const CTable: React.FC<CTableProps> = ({
                 </tr>
             </thead>
             <tbody>
-                {data.map((row, index) => (
-                    <tr key={index} onClick={() => onClickFunction(row)}>
-                        {columns.map((column, index) => (
-                            <td key={index} className={cellClass}>{row[column.accessor]}</td>
+                {data.map((row) => (
+                    <tr key={row.id} onClick={() => onClickFunction(row)}>
+                        {columns.map((column, columnIndex) => (
+                            <td key={`${row.id}${columnIndex}`} className={cellClass}>{row[column.accessor]}</td>
                         ))}
                     </tr>
                 ))}

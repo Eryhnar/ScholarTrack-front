@@ -17,8 +17,8 @@ export const CDropdown: React.FC<CDropdownProps> = ({
     return (
         <select className={buttonClass} onChange={onChangeFunction} name={title} defaultValue={""}>
             <option value="">{title}</option>
-            {items.map((item, index) => (
-                <option key={index} value={item.id} className={dropdownClass}>{item.name}</option>
+            {items.map((item) => (
+                <option key={item.id} value={item.id} className={dropdownClass}>{item.name}</option>
             ))}
         </select>
     )
