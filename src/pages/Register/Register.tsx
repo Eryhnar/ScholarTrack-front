@@ -7,6 +7,7 @@ import { InfoButton } from "../../common/InfoButton/InfoButton";
 import { CInput } from "../../common/CInput/CInput";
 import "./Register.css";
 import { RegisterResponseData, registerService } from "../../services/apicalls";
+import { useMutation } from "react-query";
 
 interface NewUser {
     name: string;
@@ -20,7 +21,7 @@ interface ErrorMsg {
     emailError: string;
     passwordError: string;
     confirmPasswordError: string;
-    serverError: { message: string, success: boolean };
+    serverError: { message: string, success: boolean } | null;
 }
 
 export const Register: React.FC = (): JSX.Element => {
@@ -38,9 +39,9 @@ export const Register: React.FC = (): JSX.Element => {
         emailError: "",
         passwordError: "",
         confirmPasswordError: "",
-        serverError: { message: "", success: false },
+        serverError: null,
     });
-    const [errorCount, setErrorCount] = useState<number>(0);
+    // const [errorCount, setErrorCount] = useState<number>(0);
 
     const inputHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setNewUser({
@@ -52,39 +53,60 @@ export const Register: React.FC = (): JSX.Element => {
     // TODO validate inputs!!
     // const validateInput 
 
-    //register user
-    const registerUser = async (): Promise<void> => {
-        try {
-            const { confirmPassword, ...newUserWithoutConfirmPassword } = newUser;
-            const response: RegisterResponseData = await registerService(newUserWithoutConfirmPassword);
+    // const registerUser = async (): Promise<void> => {
+    //     try {
+    //         const { confirmPassword, ...newUserWithoutConfirmPassword } = newUser;
+    //         const response: RegisterResponseData = await registerService(newUserWithoutConfirmPassword);
+    //         setErrorMsg({
+    //             ...errorMsg,
+    //             serverError: { message: response.message, success: response.success },
+    //         });
+    //         setErrorCount(errorCount + 1);
+    //         // navigate("/login");
+    //     } catch (error: RegisterResponseData | any) {
+    //         setErrorMsg({
+    //             ...errorMsg,
+    //             serverError: { message: error.message, success: false },
+    //         });
+    //         setErrorCount(errorCount + 1);
+    //     }
+    // };
+    const mutation = useMutation(registerService, {
+        onSuccess: (data: RegisterResponseData) => {
             setErrorMsg({
                 ...errorMsg,
-                serverError: { message: response.message, success: response.success },
+                serverError: { message: data.message, success: data.success },
             });
-            setErrorCount(errorCount + 1);
+            // setErrorCount(errorCount + 1);
             // navigate("/login");
-        } catch (error: RegisterResponseData | any) {
+        },
+        onError: (error: any) => {
             setErrorMsg({
                 ...errorMsg,
                 serverError: { message: error.message, success: false },
             });
-            setErrorCount(errorCount + 1);
+            // setErrorCount(errorCount + 1);
         }
+    });
+    
+    const registerUser = (): void => {
+        const { confirmPassword, ...newUserWithoutConfirmPassword } = newUser;
+        mutation.mutate(newUserWithoutConfirmPassword);
     };
         
 
     return (
         <div className="register-design">
-            {errorMsg.serverError.message !== "" && (
+            {errorMsg.serverError && errorMsg.serverError.message !== "" && (
                 <Toast
-                    key={errorCount}
+                    // key={errorCount}
                     message={errorMsg.serverError.message}
                     success={errorMsg.serverError.success}
                     time={4000}
                     resetServerError={() =>
                         setErrorMsg({
                             ...errorMsg,
-                            serverError: { message: "", success: false },
+                            serverError: null,
                         })
                     }
                 />
