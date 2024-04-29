@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { userData } from "../../app/slices/userSlice";
+import { selectUser } from "../../app/slices/userSlice";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -14,7 +14,7 @@ interface SecureRouteProps {
 }
 
 export const SecureRoute: React.FC<SecureRouteProps> = ({ protMode }: SecureRouteProps): JSX.Element => {
-    const { credentials: { token, user } } = useSelector(userData);
+    const { credentials: { token, user } } = useSelector(selectUser);
     const navigate = useNavigate();
 
     useEffect(() => {
