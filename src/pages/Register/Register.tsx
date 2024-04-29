@@ -6,16 +6,17 @@ import { CButton } from "../../common/CButton/CButton";
 import { InfoButton } from "../../common/InfoButton/InfoButton";
 import { CInput } from "../../common/CInput/CInput";
 import "./Register.css";
+import { RegisterResponseData, registerService } from "../../services/apicalls";
 
 interface NewUser {
-    userName: string;
+    name: string;
     email: string;
     password: string;
     confirmPassword: string;
 }
 
 interface ErrorMsg {
-    userNameError: string;
+    nameError: string;
     emailError: string;
     passwordError: string;
     confirmPasswordError: string;
@@ -26,14 +27,14 @@ export const Register: React.FC = (): JSX.Element => {
     const navigate = useNavigate();
 
     const [newUser, setNewUser] = useState<NewUser>({
-        userName: "",
+        name: "",
         email: "",
         password: "",
         confirmPassword: "",
     });
 
     const [errorMsg, setErrorMsg] = useState<ErrorMsg>({
-        userNameError: "",
+        nameError: "",
         emailError: "",
         passwordError: "",
         confirmPasswordError: "",
@@ -53,7 +54,22 @@ export const Register: React.FC = (): JSX.Element => {
 
     //register user
     const registerUser = async (): Promise<void> => {
-        console.log("registering user");
+        try {
+            const { confirmPassword, ...newUserWithoutConfirmPassword } = newUser;
+            const response: RegisterResponseData = await registerService(newUserWithoutConfirmPassword);
+            setErrorMsg({
+                ...errorMsg,
+                serverError: { message: response.message, success: response.success },
+            });
+            setErrorCount(errorCount + 1);
+            // navigate("/login");
+        } catch (error: RegisterResponseData | any) {
+            setErrorMsg({
+                ...errorMsg,
+                serverError: { message: error.message, success: false },
+            });
+            setErrorCount(errorCount + 1);
+        }
     };
         
 
@@ -81,16 +97,16 @@ export const Register: React.FC = (): JSX.Element => {
                             <div className="register-input-area">
                                 <p>Name</p>
                                 <CInput
-                                    className={`register-handle-field ${errorMsg.userNameError ? "register-field-error" : ""}`}
+                                    className={`register-handle-field ${errorMsg.nameError ? "register-field-error" : ""}`}
                                     type="name"
                                     placeholder="John"
-                                    name="userName"
-                                    value={newUser.userName || ""}
+                                    name="name"
+                                    value={newUser.name || ""}
                                     onChangeFunction={(e) => inputHandler(e)}
                                 />
                                 <div className="info-button-wrapper"><InfoButton info={"Handle must be between 3 and 20 characters. Can contain lower case letters and numbers. Can contain . _ and - but not consecutively. "} /></div>
                             </div>
-                            <div className={errorMsg.userNameError ? "register-field-error-msg" : "register-empty-error"}>{errorMsg.userNameError}</div>
+                            <div className={errorMsg.nameError ? "register-field-error-msg" : "register-empty-error"}>{errorMsg.nameError}</div>
 
                         </div>
                         <div className="register-field">
