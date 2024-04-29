@@ -32,3 +32,44 @@ export const registerService = async (user: RegisterProps) => {
 
     return parsedResponse;
 }
+
+export interface LoginProps {
+    email: string;
+    password: string;
+}
+
+export interface LoginResponseData {
+    success: boolean;
+    message: string;
+    data: {
+        token: string
+        user: {
+            id: string;
+            email: string;
+            role: string;
+            profilePicture?: string;
+        }
+    };
+}
+
+export const loginService = async (user: LoginProps) => {
+    const response = await fetch(root + "auth/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+    });
+
+    const parsedResponse: LoginResponseData = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
+}
