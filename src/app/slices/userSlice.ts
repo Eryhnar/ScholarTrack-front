@@ -36,8 +36,11 @@ export const userSlice = createSlice({
         logout: (state) => {
             state.credentials = initialState.credentials;
         },
-        updateUser: (state, action: PayloadAction<User>) => {
-            state.credentials.user = action.payload;
+        updateUser: (state, action: PayloadAction<Partial<User>>) => {
+            state.credentials.user = { 
+                ...state.credentials.user, 
+                ...action.payload 
+            };
         }
     }
 });
