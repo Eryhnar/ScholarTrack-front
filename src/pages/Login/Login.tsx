@@ -8,6 +8,7 @@ import { CButton } from "../../common/CButton/CButton"
 import { login } from "../../app/slices/userSlice"
 import { LoginResponseData, loginService } from "../../services/apicalls"
 import { useMutation } from "react-query"
+import "./Login.css"
 
 interface ErrorMsg {
     emailError: string,

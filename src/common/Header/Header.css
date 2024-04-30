@@ -1,0 +1,9 @@
+.header-design {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: purple;
+    color: white;
+    min-height: 5svh;
+    padding-inline: 1rem;
+}
