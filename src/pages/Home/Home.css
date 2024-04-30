@@ -1,0 +1,8 @@
+.home-design {
+    min-height: 95svh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    background-color: #333;
+}
