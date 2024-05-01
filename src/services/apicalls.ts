@@ -74,30 +74,31 @@ export const loginService = async (user: LoginProps) => {
 }
 
 export interface UpdateUserProps {
-    name?: string;
-    email?: string;
+    token: string;
+    newUser: {
+        name?: string;
+        email?: string;
+    };
 }
 
 export interface UpdateUserResponseData {
     success: boolean;
     message: string;
     data: {
-        user: {
-            id: string;
-            name: string;
-            role: string;
-        }
+        id: string;
+        name: string;
+        role: string;
     };
 }
 
-export const updateUserService = async (user: UpdateUserProps, token: string) => {
+export const updateUserService = async ({ token, newUser }: UpdateUserProps): Promise<UpdateUserResponseData> => {
     const response = await fetch(root + "user/profile", {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify(user),
+        body: JSON.stringify(newUser),
     });
 
     const parsedResponse: UpdateUserResponseData = await response.json();
