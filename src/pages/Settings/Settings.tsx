@@ -3,6 +3,7 @@ import { useState } from "react"
 import { CButton } from "../../common/CButton/CButton"
 import "./Settings.css"
 import { AccountSettings } from "../../common/AccountSettings/AccountSettings"
+import { ChangePassword } from "../../common/ChangePassword/ChangePassword"
 
 interface ErrorMsg {
     nameError: string,
@@ -56,24 +57,7 @@ export const Settings: React.FC = (): JSX.Element => {
                         <AccountSettings errorMsg={errorMsg} setErrorMsg={setErrorMsg}/>
                     )}
                     {selectedSetting === "Change Password" && (
-                        <div className="change-password-settings">
-                            <h1>Change Password</h1>
-                            <div className="change-password-settings-container">
-                                <div className="change-password-settings-item">
-                                    <label htmlFor="current-password">Current Password</label>
-                                    <input type="password" id="current-password" />
-                                </div>
-                                <div className="change-password-settings-item">
-                                    <label htmlFor="new-password">New Password</label>
-                                    <input type="password" id="new-password" />
-                                </div>
-                                <div className="change-password-settings-item">
-                                    <label htmlFor="confirm-new-password">Confirm New Password</label>
-                                    <input type="password" id="confirm-new-password" />
-                                </div>
-                            </div>
-                            <CButton title="Save" onClickFunction={() => {}} />
-                        </div>
+                        <ChangePassword/>
                     )}
                     {selectedSetting === "Suspend Account" && (
                         <div className="suspend-account-settings">
