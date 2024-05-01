@@ -117,9 +117,9 @@ export const Register: React.FC = (): JSX.Element => {
                     <div className="register-inputs">
                         <div className="register-field">
                             <div className="register-input-area">
-                                <p>Name</p>
+                                <label htmlFor="name">Name</label>
                                 <CInput
-                                    className={`register-handle-field ${errorMsg.nameError ? "register-field-error" : ""}`}
+                                    className={`register-name-field ${errorMsg.nameError ? "register-field-error" : ""}`}
                                     type="name"
                                     placeholder="John"
                                     name="name"
@@ -133,7 +133,7 @@ export const Register: React.FC = (): JSX.Element => {
                         </div>
                         <div className="register-field">
                             <div className="register-input-area">
-                                <p>Email</p>
+                                <label htmlFor="email">Email</label>
                                 <CInput
                                     className={`register-email-field ${errorMsg.emailError ? "register-field-error" : ""}`}
                                     type="email"
@@ -147,7 +147,7 @@ export const Register: React.FC = (): JSX.Element => {
                         </div>
                         <div className="register-field">
                             <div className="register-input-area">
-                                <p>Password</p>
+                                <label htmlFor="password">Password</label>
                                 <CInput
                                     className={`register-password-field ${errorMsg.passwordError ? "register-field-error" : ""}`}
                                     type="password"
@@ -162,7 +162,7 @@ export const Register: React.FC = (): JSX.Element => {
                         </div>
                         <div className="register-field">
                             <div className="register-input-area">
-                                <p>Confirm Password</p>
+                                <label htmlFor="confirmPassword">Confirm Password</label>
                                 <CInput
                                     className={`register-confirm-password-field ${errorMsg.confirmPasswordError ? "register-field-error" : ""}`}
                                     type="password"

@@ -4,7 +4,7 @@ interface User {
     id: string;
     name: string;
     role: string;
-    profilePicture?: string;
+    // profilePicture?: string;
 }
 
 export interface UserState {
@@ -21,7 +21,7 @@ const initialState: UserState = {
             id: "",
             name: "",
             role: "",
-            profilePicture: ""
+            // profilePicture: ""
         }
     }
 };

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 
 interface NavButtonProps {
-    className: string,
+    className?: string,
     title: string,
     path: string
 }

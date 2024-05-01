@@ -29,7 +29,7 @@
     align-items: center;
     position: relative;
 }
-.register-input-area p{
+.register-input-area label{
     position: absolute;
     right: calc(50% + 6rem);
     text-align: right;
