@@ -113,3 +113,41 @@ export const updateUserService = async ({ token, newUser }: UpdateUserProps): Pr
 
     return parsedResponse;
 }
+
+export interface ChangePasswordProps {
+    token: string;
+    newCredentials: {
+        currentPassword: string;
+        newPassword: string;
+        confirmNewPassword: string;
+    }
+}
+
+export interface ChangePasswordResponse {
+    success: boolean;
+    message: string;
+}
+
+export const changePasswordService = async ({ token, newCredentials }: ChangePasswordProps) => {
+    const { currentPassword, newPassword, confirmNewPassword } = newCredentials;
+    const response = await fetch(root + "user/profile/password", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ currentPassword, newPassword, confirmNewPassword }),
+    });
+
+    const parsedResponse: ChangePasswordResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
+}
