@@ -2,6 +2,7 @@
 
 interface CInputProps {
     className?: string
+    id?: string
     type: string
     placeholder: string
     name: string
@@ -13,6 +14,7 @@ interface CInputProps {
 
 export const CInput: React.FC<CInputProps> = ({
   className = "default-custom-input",
+  id,
   type,
   placeholder,
   name,
@@ -24,6 +26,7 @@ export const CInput: React.FC<CInputProps> = ({
   return (
     <input
       className={className}
+      id={id || name}
       type={type}
       placeholder={placeholder}
       name={name}
