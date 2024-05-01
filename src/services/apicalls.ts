@@ -47,7 +47,6 @@ export interface LoginResponseData {
             id: string;
             name: string;
             role: string;
-            profilePicture?: string;
         }
     };
 }
@@ -62,6 +61,46 @@ export const loginService = async (user: LoginProps) => {
     });
 
     const parsedResponse: LoginResponseData = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
+}
+
+export interface UpdateUserProps {
+    name?: string;
+    email?: string;
+}
+
+export interface UpdateUserResponseData {
+    success: boolean;
+    message: string;
+    data: {
+        user: {
+            id: string;
+            name: string;
+            role: string;
+        }
+    };
+}
+
+export const updateUserService = async (user: UpdateUserProps, token: string) => {
+    const response = await fetch(root + "user/profile", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(user),
+    });
+
+    const parsedResponse: UpdateUserResponseData = await response.json();
 
     if (response.status === 404) {
         throw new Error(parsedResponse.message || "Something went wrong");
