@@ -151,3 +151,34 @@ export const changePasswordService = async ({ token, newCredentials }: ChangePas
 
     return parsedResponse;
 }
+
+export interface SuspendAccountProps {
+    token: string;
+}
+
+export interface SuspendAccountResponse {
+    success: boolean;
+    message: string;
+}
+
+export const suspendAccountService = async ({ token }: SuspendAccountProps) => {
+    const response = await fetch(root + "user/profile/suspend", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+    });
+
+    const parsedResponse: SuspendAccountResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
+}
