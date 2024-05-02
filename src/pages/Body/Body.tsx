@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router"
 import { Register } from "../Register/Register"
 import { Login } from "../Login/Login"
 import { Home } from "../Home/Home"
+import { Settings } from "../Settings/Settings"
+import { GroupsOverview } from "../GroupsOverview/GroupsOverview"
 
 export const Body: React.FC = (): JSX.Element => {
     return (
@@ -9,6 +11,9 @@ export const Body: React.FC = (): JSX.Element => {
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="groups" element={<GroupsOverview />} />
+            <Route path="*" element={<Home />} />
         </Routes>
 
     )

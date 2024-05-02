@@ -9,7 +9,7 @@ interface InfoButtonProps {
 }
 
 export const InfoButton: React.FC<InfoButtonProps> = ({
-    className = "default-custom-button",
+    className = "default-custom-info-button",
     infoClassName = "default-custom-info",
     title = "i",
     info,

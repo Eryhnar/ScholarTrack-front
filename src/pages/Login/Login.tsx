@@ -76,7 +76,7 @@ export const Login: React.FC = (): JSX.Element => {
                     <div className="login-inputs">
                         <div className="login-field">
                             <div className="login-input-area">
-                                <p>Email</p>
+                                <label htmlFor="email">Email</label>
                                 <CInput
                                     className={"login-email-field"}
                                     type="email"
@@ -90,7 +90,7 @@ export const Login: React.FC = (): JSX.Element => {
                         </div>
                         <div className="login-field">
                             <div className="login-input-area">
-                                <p>Password</p>
+                                <label htmlFor="password">Password</label>
                                 <CInput
                                     className={"login-password-field"}
                                     type="password"

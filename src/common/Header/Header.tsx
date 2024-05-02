@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { logout, selectUser } from "../../app/slices/userSlice"
 import "./Header.css"
+import { NavButton } from "../NavButton/NavButton"
 
 export const Header: React.FC = (): JSX.Element => {
     // const userName = useSelector(selectUser).credentials.user.name
@@ -19,8 +20,8 @@ export const Header: React.FC = (): JSX.Element => {
             
             :
                 <>
-                    <div>Register</div>
-                    <div>Login</div>
+                    <NavButton title="Register" path="/register" />
+                    <NavButton title="Login" path="/login" />
                 </>
             }
         </div>
