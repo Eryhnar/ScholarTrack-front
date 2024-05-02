@@ -16,6 +16,7 @@ export const SuspendAccount: React.FC = (): JSX.Element => {
     const [errorMsg, setErrorMsg] = useState<ErrorMsg>({
         serverError: { message: "", success: false }
     })
+    const [isOpenConfirmation, setIsOpenConfirmation] = useState<boolean>(false)
 
     const mutation = useMutation(suspendAccountService, {
         onSuccess: (response: any) => {
@@ -36,15 +37,26 @@ export const SuspendAccount: React.FC = (): JSX.Element => {
     }
 
     return (
+        
         <div className="suspend-account-settings">
-            <h1>Suspend Account</h1>
-            <div className="suspend-account-settings-container">
-                <div className="suspend-account-settings-item">
-                    {/* <label htmlFor="reason">Reason</label>
-                    <input type="text" id="reason" /> */}
+            {isOpenConfirmation ?
+                <div className="suspend-account-confirmation">
+                    <h1>Are you sure you want to suspend your account?</h1>
+                    <CButton title="Yes" onClickFunction={suspendAccount} />
+                    <CButton title="No" onClickFunction={() => setIsOpenConfirmation(false)} />
                 </div>
-            </div>
-            <CButton title="Suspend" onClickFunction={suspendAccount} />
+            :
+            <>
+                <h1>Suspend Account</h1>
+                <div className="suspend-account-settings-container">
+                {/* <div className="suspend-account-settings-item">
+                    <label htmlFor="reason">Reason</label>
+                    <input type="text" id="reason" />
+                </div> */}
+                    <CButton title="Suspend" onClickFunction={() => setIsOpenConfirmation(true)} />
+                </div>
+            </>
+            }
         </div>
     )
 }
