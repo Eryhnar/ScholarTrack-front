@@ -4,6 +4,7 @@ import { CButton } from "../../common/CButton/CButton"
 import "./Settings.css"
 import { AccountSettings } from "../../common/AccountSettings/AccountSettings"
 import { ChangePassword } from "../../common/ChangePassword/ChangePassword"
+import { SuspendAccount } from "../../common/SuspendAccount/SuspendAccount"
 
 interface ErrorMsg {
     nameError: string,
@@ -60,16 +61,7 @@ export const Settings: React.FC = (): JSX.Element => {
                         <ChangePassword/>
                     )}
                     {selectedSetting === "Suspend Account" && (
-                        <div className="suspend-account-settings">
-                            <h1>Suspend Account</h1>
-                            <div className="suspend-account-settings-container">
-                                <div className="suspend-account-settings-item">
-                                    <label htmlFor="reason">Reason</label>
-                                    <input type="text" id="reason" />
-                                </div>
-                            </div>
-                            <CButton title="Suspend" onClickFunction={() => {}} />
-                        </div>
+                        <SuspendAccount/>
                     )}
                 </div>
             </div>
