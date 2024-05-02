@@ -1,8 +1,64 @@
 .groups-overview-design {
     min-height: 95vh;
     display: flex;
-    align-items: center;
     flex-direction: column;
-    position: relative;
+    align-items: center;
+    justify-content: center;
     background-color: #333;
+}
+
+.groups-overview-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 90%;
+    height: 85vh;
+    border-radius: 1rem;
+    background-color: white;
+    /* padding-block: 2rem; */
+    overflow-y: scroll;
+    /* scrollbar-width: none;  */
+    scrollbar-width: thin;
+    scrollbar-color: rgb(0, 0, 0);
+}
+
+.groups-overview-wrapper::-webkit-scrollbar {
+    /* display: none; */
+    width: 8px;
+    /* margin-inline: 0.5rem; */
+}
+
+.groups-overview-wrapper::-webkit-scrollbar-track {
+    background: transparent; 
+}
+
+.groups-overview-wrapper::-webkit-scrollbar-thumb {
+    background-color: rgb(0, 0, 0); 
+    border-radius: 20px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+}
+
+/* .scrollable {
+    width: 90%;
+    height: 100%;
+    overflow-y: scroll;
+} */
+
+.groups-overview-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    height: 5rem;
+    border-radius: 1rem;
+    background-color: beige;
+    margin-block: 1rem;
+}
+
+.groups-overview-group:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
 }
