@@ -7,7 +7,7 @@ export const Home: React.FC = (): JSX.Element => {
         <div className="home-design">
             <div className="home-button-wrapper">
                 <NavButton className="home-button" title="Register" path="/register" />
-                <NavButton className="home-button" title="Register" path="/register" />
+                <NavButton className="home-button" title="groups" path="/groups" />
                 <NavButton className="home-button" title="Register" path="/register" />
                 <NavButton className="home-button" title="Settings" path="/settings" />
             </div>

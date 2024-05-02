@@ -1,0 +1,8 @@
+.groups-overview-design {
+    min-height: 95vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    background-color: #333;
+}
