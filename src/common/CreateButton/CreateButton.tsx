@@ -1,7 +1,8 @@
+import "./CreateButton.css"
 
 interface CreateButtonProps {
-    className: string;
-    text: string;
+    className?: string;
+    text?: string;
     action: () => void;
 }
 
