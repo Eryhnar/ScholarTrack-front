@@ -182,3 +182,32 @@ export const suspendAccountService = async ({ token }: SuspendAccountProps) => {
 
     return parsedResponse;
 }
+
+interface getOwnGroupsProps {
+    token: string;
+    pageParam: number;
+}
+
+
+export const getOwnGroupsService = async ({token, pageParam=1}: getOwnGroupsProps) => {
+    const response = await fetch(root + `group?page=${pageParam}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+    });
+
+    const parsedResponse = await response.json();
+    // console.log(parsedResponse.data);
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse.data;
+}

@@ -17,6 +17,7 @@
     height: 85vh;
     border-radius: 1rem;
     background-color: white;
+    /* background-color: transparent; */
     /* padding-block: 2rem; */
     overflow-y: scroll;
     /* scrollbar-width: none;  */
@@ -56,7 +57,9 @@
     height: 5rem;
     border-radius: 1rem;
     background-color: beige;
+    color: black;
     margin-block: 1rem;
+    /* z-index: 100; */
 }
 
 .groups-overview-group:hover {
