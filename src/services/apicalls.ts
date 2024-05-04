@@ -188,6 +188,35 @@ interface getOwnGroupsProps {
     pageParam: number;
 }
 
+interface gradingScale {
+    grade: string;
+    range: {
+        min: number;
+        max: number;
+    }
+}
+
+export interface Group {
+    _id: string;
+    name: string
+    author: string;
+    collaborators: string[];
+    level: string
+    students: string[];
+    tasks: string[];
+    status: "active" | "archived";
+    gradingScale?: gradingScale,
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface getOwnGroupsResponse {
+    success: boolean;
+    message: string;
+    data: Group[];
+}
+
+
 
 export const getOwnGroupsService = async ({token, pageParam=1}: getOwnGroupsProps) => {
     const response = await fetch(root + `group?page=${pageParam}`, {
@@ -198,7 +227,7 @@ export const getOwnGroupsService = async ({token, pageParam=1}: getOwnGroupsProp
         },
     });
 
-    const parsedResponse = await response.json();
+    const parsedResponse: getOwnGroupsResponse = await response.json();
     // console.log(parsedResponse.data);
 
     if (response.status === 404) {
@@ -212,11 +241,29 @@ export const getOwnGroupsService = async ({token, pageParam=1}: getOwnGroupsProp
     return parsedResponse.data;
 }
 
-interface CreateGroupProps {
+export interface CreateGroupProps {
     token: string;
     newGroup: {
         name: string;
         level: string;
+    }
+}
+
+export interface CreateGroupResponse {
+    success: boolean;
+    message: string;
+    data: {
+        _id: string;
+        name: string;
+        author: string;
+        collaborators: string[];
+        level: string;
+        students: string[];
+        tasks: string[];
+        status: "active" | "archived";
+        gradingScale?: gradingScale;
+        createdAt: Date;
+        updatedAt: Date;
     }
 }
 
@@ -230,7 +277,7 @@ export const createGroupService = async ({ token, newGroup }: CreateGroupProps) 
         body: JSON.stringify(newGroup),
     });
 
-    const parsedResponse = await response.json();
+    const parsedResponse: CreateGroupResponse = await response.json();
 
     if (response.status === 404) {
         throw new Error(parsedResponse.message || "Something went wrong");

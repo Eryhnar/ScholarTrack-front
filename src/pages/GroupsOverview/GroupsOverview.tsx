@@ -1,11 +1,11 @@
 import { useState } from "react"
 import { CreateButton } from "../../common/CreateButton/CreateButton"
 import "./GroupsOverview.css"
-import { UseInfiniteQueryResult, useInfiniteQuery } from "react-query";
+import { QueryClient, UseInfiniteQueryResult, useInfiniteQuery, useMutation, useQueryClient } from "react-query";
 import { Virtuoso } from "react-virtuoso";
 import { selectUser } from "../../app/slices/userSlice";
 import { useSelector } from "react-redux";
-import { getOwnGroupsService } from "../../services/apicalls";
+import { CreateGroupResponse, createGroupService, getOwnGroupsService, CreateGroupProps } from "../../services/apicalls";
 import { CButton } from "../../common/CButton/CButton";
 import { CInput } from "../../common/CInput/CInput";
 
@@ -32,6 +32,7 @@ interface Group {
 }
 
 export const GroupsOverview: React.FC = (): JSX.Element => {
+    const queryClient = useQueryClient();
     const token = useSelector(selectUser).credentials.token;
     const [isOpenCreate, setIsOpenCreate] = useState(false)
     const [errorMsg, setErrorMsg] = useState({
@@ -59,12 +60,40 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
     const groups = data ? data.pages.flatMap(page => page) : [];
     // console.log("groups ",groups);
 
-    const newGroupInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setNewGroup((prev) => ({
-            ...prev,
-            [name]: value
-        }))
+    const newGroupInputHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setNewGroup({
+            ...newGroup,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const mutation = useMutation(createGroupService,  {
+        onSuccess: (response: CreateGroupResponse) => {
+            // TODO implement optimistic update
+            // queryClient.setQueryData<Group[]>('groups', (old = []) => [...old, response.data]);
+            // queryClient.setQueryData<Group[][]>('groups', (old = []) => {
+            //     let newPage;
+            //     if (!Array.isArray(old) || old.length === 0) {
+            //         newPage = [response.data];
+            //     } else {
+            //         newPage = [...old[old.length - 1], response.data];
+            //     }
+            //     return [...old.slice(0, -1), newPage];
+            // });
+            setErrorMsg({
+                serverError: { message: response.message, success: true }
+            });
+            setIsOpenCreate(false)
+        },
+        onError: (error: any) => {
+            setErrorMsg({
+                serverError: { message: error.message, success: false }
+            });
+        }
+    })
+
+    const saveNewGroup = async () => {
+        mutation.mutate({token, newGroup});
     }
 
     return (
@@ -80,13 +109,20 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                             <CInput
                                 type="text"
                                 placeholder="Group Name"
-                                name="groupName"
+                                name="name"
                                 value={newGroup.name || ""}
+                                onChangeFunction={newGroupInputHandler}
+                            />
+                            <CInput
+                                type="text"
+                                placeholder="Group Level"
+                                name="level"
+                                value={newGroup.level || ""}
                                 onChangeFunction={newGroupInputHandler}
                             />
                             <CButton
                                 title="Create"
-                                onClickFunction={() => { }}
+                                onClickFunction={saveNewGroup}
                             />
                             <button onClick={() => setIsOpenCreate(false)}>Cancel</button>
                         </div>
