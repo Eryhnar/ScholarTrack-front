@@ -211,3 +211,34 @@ export const getOwnGroupsService = async ({token, pageParam=1}: getOwnGroupsProp
 
     return parsedResponse.data;
 }
+
+interface CreateGroupProps {
+    token: string;
+    newGroup: {
+        name: string;
+        level: string;
+    }
+}
+
+export const createGroupService = async ({ token, newGroup }: CreateGroupProps) => {
+    const response = await fetch(root + "group", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(newGroup),
+    });
+
+    const parsedResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 201) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
+}

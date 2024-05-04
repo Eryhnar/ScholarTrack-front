@@ -6,6 +6,8 @@ import { Virtuoso } from "react-virtuoso";
 import { selectUser } from "../../app/slices/userSlice";
 import { useSelector } from "react-redux";
 import { getOwnGroupsService } from "../../services/apicalls";
+import { CButton } from "../../common/CButton/CButton";
+import { CInput } from "../../common/CInput/CInput";
 
 interface gradingScale {
     grade: string;
@@ -35,6 +37,10 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
     const [errorMsg, setErrorMsg] = useState({
         serverError: { message: "", success: false }
     })
+    const [newGroup, setNewGroup] = useState({
+        name: "",
+        level: ""
+    })
 
     const {
         data,
@@ -42,7 +48,7 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
         hasNextPage,
         isLoading,
         isError,
-    }: UseInfiniteQueryResult<Group[], Error> = useInfiniteQuery('groups', ({pageParam=1}) => getOwnGroupsService({token, pageParam}), {
+    }: UseInfiniteQueryResult<Group[], Error> = useInfiniteQuery('groups', ({ pageParam = 1 }) => getOwnGroupsService({ token, pageParam }), {
         getNextPageParam: (lastPage, allPages) => lastPage.length > 0 ? allPages.length + 1 : undefined,
     });
 
@@ -51,35 +57,53 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
     // })
 
     const groups = data ? data.pages.flatMap(page => page) : [];
-console.log("groups ",groups);
-    
+    // console.log("groups ",groups);
+
+    const newGroupInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setNewGroup((prev) => ({
+            ...prev,
+            [name]: value
+        }))
+    }
+
     return (
         <div className="groups-overview-design">
-            <h1>Groups Overview</h1>
+            {/* <h1>Groups Overview</h1> */}
             <CreateButton action={() => setIsOpenCreate(true)} />
             <div className="groups-overview-wrapper">
                 {isOpenCreate ?
                     <div className="groups-overview-create">
                         <div className="groups-overview-create-form">
-                            <input type="text" placeholder="Group Name" />
-                            <input type="text" placeholder="Group Description" />
-                            <button>Create</button>
+                            {/* <input type="text" placeholder="Group Name" /> */}
+                            {/* <input type="text" placeholder="Group Level" /> */}
+                            <CInput
+                                type="text"
+                                placeholder="Group Name"
+                                name="groupName"
+                                value={newGroup.name || ""}
+                                onChangeFunction={newGroupInputHandler}
+                            />
+                            <CButton
+                                title="Create"
+                                onClickFunction={() => { }}
+                            />
                             <button onClick={() => setIsOpenCreate(false)}>Cancel</button>
                         </div>
                     </div>
                     :
                     <>
+
                         {/* <Virtuoso
                             data={groups}
                             itemContent={(_, group: Group) => {
-                                console.log("group",group);
                                 return (
-                                  <div className="groups-overview-group" key={group._id}>
-                                    <h2>{group.name}</h2>
-                                    <p>{group.level}</p>
-                                  </div>
+                                    <div className="groups-overview-group" key={group._id}>
+                                        <h2>{group.name}</h2>
+                                        <p>{group.level}</p>
+                                    </div>
                                 );
-                              }}
+                            }}
                             style={{ height: "85vh" }}
                             endReached={() => {
                                 if (hasNextPage) fetchNextPage()
@@ -94,7 +118,7 @@ console.log("groups ",groups);
                             )
                         })}
 
-                            {/* <div className="groups-overview-group ">
+                        {/* <div className="groups-overview-group ">
                             <h2>Group 1</h2>
                             <p>Group 1 Description</p>
                         </div>
