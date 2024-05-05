@@ -188,7 +188,7 @@ interface getOwnGroupsProps {
     pageParam: number;
 }
 
-interface gradingScale {
+export interface gradingScale {
     grade: string;
     range: {
         min: number;
@@ -205,7 +205,7 @@ export interface Group {
     students: string[];
     tasks: string[];
     status: "active" | "archived";
-    gradingScale?: gradingScale,
+    gradingScale?: gradingScale | null,
     createdAt: Date;
     updatedAt: Date;
 }
