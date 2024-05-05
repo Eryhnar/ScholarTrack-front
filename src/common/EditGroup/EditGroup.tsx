@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { CButton } from "../CButton/CButton"
 import { CInput } from "../CInput/CInput"
+import { Group } from "../../services/apicalls";
 
 interface EditGroupComponentProps {
     token: string;
-    group: string;
+    group: Group;
     setDisplayed: (displayed: "groups" | "createGroup" | "editGroup" | "deleteGroup") => void;
     setErrorMsg: (errorMsg: { serverError: { message: string, success: boolean } }) => void;
 }

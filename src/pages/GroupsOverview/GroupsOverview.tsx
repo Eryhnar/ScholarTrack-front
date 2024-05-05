@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { CreateButton } from "../../common/CreateButton/CreateButton"
 import "./GroupsOverview.css"
 import { QueryClient, UseInfiniteQueryResult, useInfiniteQuery, useMutation, useQueryClient } from "react-query";
@@ -9,6 +9,7 @@ import { CreateGroupResponse, createGroupService, getOwnGroupsService, CreateGro
 import { CButton } from "../../common/CButton/CButton";
 import { CInput } from "../../common/CInput/CInput";
 import { CreateGroup } from "../../common/CreateGroup/CreateGroup";
+import { EditGroup } from "../../common/EditGroup/EditGroup";
 
 interface gradingScale {
     grade: string;
@@ -35,7 +36,7 @@ interface Group {
 type Displayed = "groups" | "createGroup" | "editGroup" | "deleteGroup"
 
 export const GroupsOverview: React.FC = (): JSX.Element => {
-    const queryClient = useQueryClient();
+    // const queryClient = useQueryClient();
     const token = useSelector(selectUser).credentials.token;
     // const [isOpenCreate, setIsOpenCreate] = useState(false)
     const [errorMsg, setErrorMsg] = useState({
@@ -46,6 +47,7 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
     //     level: ""
     // })
     const [displayed, setDisplayed] = useState<Displayed>("groups")
+    let selectedGroup = useRef<Group | null>(null)
 
     const {
         data,
@@ -73,7 +75,7 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
 
     // const mutation = useMutation(createGroupService,  {
     //     onSuccess: (response: CreateGroupResponse) => {
-            
+
     //         setErrorMsg({
     //             serverError: { message: response.message, success: true }
     //         });
@@ -90,105 +92,56 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
     //     mutation.mutate({token, newGroup});
     // }
 
+    let renderContent: JSX.Element | null;
+    switch (displayed) {
+        case "createGroup":
+            renderContent = <CreateGroup
+                token={token}
+                setDisplayed={setDisplayed}
+                setErrorMsg={setErrorMsg}
+            />
+            break;
+        case "editGroup":
+            renderContent = selectedGroup.current ? (
+                <EditGroup
+                    token={token}
+                    group={selectedGroup.current}
+                    setDisplayed={setDisplayed}
+                    setErrorMsg={setErrorMsg}
+                />
+            ) : <h1>Error loading the page, please try again</h1>;
+            break;
+        case "groups":
+            renderContent = (
+                <>
+                    {groups.map((group: Group) => {
+                        return (
+                            <div className="groups-overview-group" key={group._id}>
+                                <h2>{group.name}</h2>
+                                <p>{group.level}</p>
+                                <CButton
+                                    title="..."
+                                    onClickFunction={() => {
+                                        setDisplayed("editGroup")
+                                        selectedGroup.current = group
+                                    }}
+                                />
+                            </div>
+                        )
+                    })}
+                </>
+            )
+            break;
+        default:
+            renderContent = null;
+    }
+
     return (
         <div className="groups-overview-design">
             {/* <h1>Groups Overview</h1> */}
             <CreateButton action={() => setDisplayed("createGroup")} />
             <div className="groups-overview-wrapper">
-                {displayed === "createGroup" ?
-                    // <div className="groups-overview-create">
-                    //     <div className="groups-overview-create-form">
-                    //         <CInput
-                    //             type="text"
-                    //             placeholder="Group Name"
-                    //             name="name"
-                    //             value={newGroup.name || ""}
-                    //             onChangeFunction={newGroupInputHandler}
-                    //         />
-                    //         <CInput
-                    //             type="text"
-                    //             placeholder="Group Level"
-                    //             name="level"
-                    //             value={newGroup.level || ""}
-                    //             onChangeFunction={newGroupInputHandler}
-                    //         />
-                    //         <CButton
-                    //             title="Create"
-                    //             onClickFunction={saveNewGroup}
-                    //         />
-                    //         <button onClick={() => setIsOpenCreate(false)}>Cancel</button>
-                    //     </div>
-                    // </div>
-                    <CreateGroup
-                        token={token}
-                        setDisplayed={setDisplayed}
-                        setErrorMsg={setErrorMsg}
-                    />
-                    :
-                    <>
-
-                        {/* <Virtuoso
-                            data={groups}
-                            itemContent={(_, group: Group) => {
-                                return (
-                                    <div className="groups-overview-group" key={group._id}>
-                                        <h2>{group.name}</h2>
-                                        <p>{group.level}</p>
-                                    </div>
-                                );
-                            }}
-                            style={{ height: "85vh" }}
-                            endReached={() => {
-                                if (hasNextPage) fetchNextPage()
-                            }}
-                        /> */}
-                        {groups.map((group: Group) => {
-                            return (
-                                <div className="groups-overview-group" key={group._id}>
-                                        <h2>{group.name}</h2>
-                                        <p>{group.level}</p>
-                                        <CButton
-                                            title="..."
-                                            onClickFunction={() => console.log("Edit")}
-                                        />
-                                </div>
-                            )
-                        })}
-
-                        {/* <div className="groups-overview-group ">
-                            <h2>Group 1</h2>
-                            <p>Group 1 Description</p>
-                        </div>
-                        <div className="groups-overview-group ">
-                            <h2>Group 2</h2>
-                            <p>Group 2 Description</p>
-                        </div>
-                        <div className="groups-overview-group ">
-                            <h2>Group 3</h2>
-                            <p>Group 3 Description</p>
-                        </div>
-                        <div className="groups-overview-group ">
-                            <h2>Group 4</h2>
-                            <p>Group 4 Description</p>
-                        </div>
-                        <div className="groups-overview-group ">
-                            <h2>Group 3</h2>
-                            <p>Group 3 Description</p>
-                        </div>
-                        <div className="groups-overview-group ">
-                            <h2>Group 4</h2>
-                            <p>Group 4 Description</p>
-                        </div>
-                        <div className="groups-overview-group ">
-                            <h2>Group 3</h2>
-                            <p>Group 3 Description</p>
-                        </div>
-                        <div className="groups-overview-group ">
-                            <h2>Group 4</h2>
-                            <p>Group 4 Description</p>
-                        </div> */}
-                    </>
-                }
+                {renderContent}
             </div>
         </div>
     )

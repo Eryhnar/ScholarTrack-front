@@ -289,3 +289,41 @@ export const createGroupService = async ({ token, newGroup }: CreateGroupProps) 
 
     return parsedResponse;
 }
+
+export interface EditGroupProps {
+    token: string;
+    groupId: string;
+    editGroup: {
+        name: string;
+        level: string;
+    }
+}
+
+export interface EditGroupResponse {
+    success: boolean;
+    message: string;
+    data: Group;
+}
+
+export const editGroupService = async ({ token, groupId, editGroup }: EditGroupProps) => {
+    const response = await fetch(root + `group/${groupId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(editGroup),
+    });
+
+    const parsedResponse: EditGroupResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
+}
