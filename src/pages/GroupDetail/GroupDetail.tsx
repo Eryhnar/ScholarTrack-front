@@ -15,19 +15,20 @@ export const GroupDetail: React.FC = (): JSX.Element => {
         serverError: { message: "", success: false }
     })
 
-    console.log("group", group);
-
-    const { data: fetchedGroup, isLoading } = useQuery(['group', groupId], () => getGroupService({ token, groupId }), {
+    const { data: fetchedGroup, isLoading, isError } = useQuery(['group', groupId], () => getGroupService({ token, groupId }), {
         enabled: !group || group._id !== groupId,
         onSuccess: (data) => {
             dispatch(setGroup(data));
         },
-        onError: (error: any) => setErrorMsg({
-            serverError: { message: error.message, success: false }
-        })
+        onError: (error: any) => {
+            setErrorMsg({
+                serverError: { message: error.message, success: false }
+            })
+        }
     });
 
     if (isLoading) return <div>Loading...</div>
+    if (isError) return <div className="group-detail-error-screen">Error: {errorMsg.serverError.message}</div>
 
     return (
         <>
