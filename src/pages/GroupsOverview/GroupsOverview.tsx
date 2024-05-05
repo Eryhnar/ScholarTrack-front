@@ -148,8 +148,12 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                         {groups.map((group: Group) => {
                             return (
                                 <div className="groups-overview-group" key={group._id}>
-                                    <h2>{group.name}</h2>
-                                    <p>{group.level}</p>
+                                        <h2>{group.name}</h2>
+                                        <p>{group.level}</p>
+                                        <CButton
+                                            title="..."
+                                            onClickFunction={() => console.log("Edit")}
+                                        />
                                 </div>
                             )
                         })}

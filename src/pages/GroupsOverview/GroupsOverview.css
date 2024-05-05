@@ -51,7 +51,7 @@
 
 .groups-overview-group {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 95%;
@@ -59,7 +59,7 @@
     border-radius: 1rem;
     background-color: beige;
     color: black;
-    margin-block: 1rem;
+    margin-block: 0.5rem;
     /* z-index: 100; */
 }
 
