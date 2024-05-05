@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { CButton } from "../CButton/CButton"
 import { CInput } from "../CInput/CInput"
-import { Group } from "../../services/apicalls";
+import { EditGroupResponse, Group, editGroupService } from "../../services/apicalls";
+import { useMutation } from "react-query";
 
 interface EditGroupComponentProps {
     token: string;
@@ -23,26 +24,44 @@ export const EditGroup: React.FC<EditGroupComponentProps> = ({ token, group, set
         })
     }
 
+    const mutation = useMutation(editGroupService, {
+        onSuccess: (response: EditGroupResponse) => {
+            setErrorMsg({
+                serverError: { message: response.message, success: true }
+            });
+            setDisplayed("groups");
+        },
+        onError: (error: any) => {
+            setErrorMsg({
+                serverError: { message: error.message, success: false }
+            });
+        }
+    })
+
+    const saveEditGroup = async () => {
+        mutation.mutate({ token, groupId: group._id, editGroup });
+    }
+
     return (
         <div className="groups-overview-create">
             <div className="groups-overview-create-form">
                 <CInput
                     type="text"
-                    placeholder="Group Name"
+                    placeholder={group.name}
                     name="name"
                     value={editGroup.name || ""}
                     onChangeFunction={editGroupInputHandler}
                 />
                 <CInput
                     type="text"
-                    placeholder="Group Level"
+                    placeholder={group.level}
                     name="level"
                     value={editGroup.level || ""}
                     onChangeFunction={editGroupInputHandler}
                 />
                 <CButton
                     title="Save"
-                    onClickFunction={() => console.log("Save")}
+                    onClickFunction={saveEditGroup}
                 />
                 <CButton
                     title="Cancel"
