@@ -3,10 +3,11 @@ import { CButton } from "../CButton/CButton"
 import { CInput } from "../CInput/CInput"
 import { CreateGroupResponse, createGroupService } from "../../services/apicalls"
 import { useState } from "react"
+import { Displayed } from "../../pages/GroupsOverview/GroupsOverview"
 
 interface CreateGroupComponentProps {
     token: string;
-    setDisplayed: (displayed: "groups" | "createGroup" | "editGroup" | "deleteGroup") => void;
+    setDisplayed: (displayed: Displayed) => void;
     setErrorMsg: (errorMsg: { serverError: { message: string, success: boolean } }) => void;
 }
 

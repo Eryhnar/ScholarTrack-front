@@ -327,3 +327,35 @@ export const editGroupService = async ({ token, groupId, editGroup }: EditGroupP
 
     return parsedResponse;
 }
+
+export interface DeleteGroupProps {
+    token: string;
+    groupId: string;
+}
+
+export interface DeleteGroupResponse {
+    success: boolean;
+    message: string;
+}
+
+export const deleteGroupService = async ({ token, groupId }: DeleteGroupProps) => {
+    const response = await fetch(root + `group/${groupId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+    });
+
+    const parsedResponse: DeleteGroupResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
+}

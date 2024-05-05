@@ -3,11 +3,12 @@ import { CButton } from "../CButton/CButton"
 import { CInput } from "../CInput/CInput"
 import { EditGroupResponse, Group, editGroupService } from "../../services/apicalls";
 import { useMutation } from "react-query";
+import { Displayed } from "../../pages/GroupsOverview/GroupsOverview";
 
 interface EditGroupComponentProps {
     token: string;
     group: Group;
-    setDisplayed: (displayed: "groups" | "createGroup" | "editGroup" | "deleteGroup") => void;
+    setDisplayed: (displayed: Displayed) => void;
     setErrorMsg: (errorMsg: { serverError: { message: string, success: boolean } }) => void;
 }
 

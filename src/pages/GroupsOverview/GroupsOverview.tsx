@@ -10,6 +10,7 @@ import { CButton } from "../../common/CButton/CButton";
 import { CInput } from "../../common/CInput/CInput";
 import { CreateGroup } from "../../common/CreateGroup/CreateGroup";
 import { EditGroup } from "../../common/EditGroup/EditGroup";
+import { Modal } from "../../common/Modal/Modal";
 
 interface gradingScale {
     grade: string;
@@ -33,7 +34,7 @@ interface Group {
     updatedAt: Date;
 }
 
-type Displayed = "groups" | "createGroup" | "editGroup" | "deleteGroup"
+export type Displayed = "groups" | "createGroup" | "editGroup" | "deleteGroup"
 
 export const GroupsOverview: React.FC = (): JSX.Element => {
     const token = useSelector(selectUser).credentials.token;
@@ -41,6 +42,7 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
         serverError: { message: "", success: false }
     })
     const [isOpenOptions, setIsOpenOptions] = useState(false)
+    const [isOpenModal, setIsOpenModal] = useState(false)
 
     const [displayed, setDisplayed] = useState<Displayed>("groups")
     let selectedGroup = useRef<Group | null>(null)
@@ -103,6 +105,15 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
 
     return (
         <div className="groups-overview-design">
+            {isOpenModal &&
+                <Modal
+                    title="Delete Group"
+                    description="Are you sure you want to delete this group?"
+                    action={() => console.log("delete")}
+                    setIsOpenModal={setIsOpenModal}
+                    setErrorMsg={setErrorMsg}
+                />
+            }
             {isOpenOptions &&
                 <div className="groups-overview-options">
                     <CButton
@@ -115,7 +126,7 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                     />
                     <CButton
                         title="Delete"
-                        onClickFunction={() => setDisplayed("deleteGroup")}
+                        onClickFunction={() => setIsOpenModal(true)}
                     />
                 </div>
             }

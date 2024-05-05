@@ -4,10 +4,11 @@ interface ModalProps {
   title?: string;
   description: string;
   action: () => void;
-  setIsOpen: (isOpen: boolean) => void;
+  setIsOpenModal: (isOpen: boolean) => void;
+  setErrorMsg: (errorMsg: { serverError: { message: string, success: boolean } }) => void;
 }
 
-export const Modal: React.FC<ModalProps> = ({ title="", description, action, setIsOpen }): JSX.Element => {
+export const Modal: React.FC<ModalProps> = ({ title="", description, action, setIsOpenModal, setErrorMsg }): JSX.Element => {
     return (
         <div className="modal">
             <div className="modal-content">
@@ -20,7 +21,7 @@ export const Modal: React.FC<ModalProps> = ({ title="", description, action, set
                     />
                     <CButton 
                         title="No" 
-                        onClickFunction={() => setIsOpen(false)}
+                        onClickFunction={() => setIsOpenModal(false)}
                     />
                 </div>
             </div>
