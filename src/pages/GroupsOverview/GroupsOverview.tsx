@@ -11,6 +11,7 @@ import { CInput } from "../../common/CInput/CInput";
 import { CreateGroup } from "../../common/CreateGroup/CreateGroup";
 import { EditGroup } from "../../common/EditGroup/EditGroup";
 import { Modal } from "../../common/Modal/Modal";
+import { DeleteGroup } from "../../common/DeleteGroup/DeleteGroup";
 
 interface gradingScale {
     grade: string;
@@ -99,13 +100,23 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                 </>
             )
             break;
+            case "deleteGroup":
+            renderContent = selectedGroup.current ? (
+                <DeleteGroup
+                    token={token}
+                    group={selectedGroup.current}
+                    setDisplayed={setDisplayed}
+                    setErrorMsg={setErrorMsg}
+                />
+            ) : <h1>Error loading the page, please try again</h1>;
+            break;
         default:
             renderContent = null;
     }
 
     return (
         <div className="groups-overview-design">
-            {isOpenModal &&
+            {/* {isOpenModal &&
                 <Modal
                     title="Delete Group"
                     description="Are you sure you want to delete this group?"
@@ -113,20 +124,26 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                     setIsOpenModal={setIsOpenModal}
                     setErrorMsg={setErrorMsg}
                 />
-            }
+            } */}
             {isOpenOptions &&
                 <div className="groups-overview-options">
                     <CButton
                         title="Close"
-                        onClickFunction={() => setIsOpenOptions(false)}
+                        onClickFunction={() => {setIsOpenOptions(false)}}
                     />
                     <CButton
                         title="Edit"
-                        onClickFunction={() => setDisplayed("editGroup")}
+                        onClickFunction={() => {
+                            setDisplayed("editGroup")
+                            setIsOpenOptions(false)
+                        }}
                     />
                     <CButton
                         title="Delete"
-                        onClickFunction={() => setIsOpenModal(true)}
+                        onClickFunction={() => {
+                            setDisplayed("deleteGroup")
+                            setIsOpenOptions(false)
+                        }}
                     />
                 </div>
             }
