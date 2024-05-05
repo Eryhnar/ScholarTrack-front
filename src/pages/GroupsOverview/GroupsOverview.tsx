@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { CreateGroupResponse, createGroupService, getOwnGroupsService, CreateGroupProps } from "../../services/apicalls";
 import { CButton } from "../../common/CButton/CButton";
 import { CInput } from "../../common/CInput/CInput";
+import { CreateGroup } from "../../common/CreateGroup/CreateGroup";
 
 interface gradingScale {
     grade: string;
@@ -31,17 +32,20 @@ interface Group {
     updatedAt: Date;
 }
 
+type Displayed = "groups" | "createGroup" | "editGroup" | "deleteGroup"
+
 export const GroupsOverview: React.FC = (): JSX.Element => {
     const queryClient = useQueryClient();
     const token = useSelector(selectUser).credentials.token;
-    const [isOpenCreate, setIsOpenCreate] = useState(false)
+    // const [isOpenCreate, setIsOpenCreate] = useState(false)
     const [errorMsg, setErrorMsg] = useState({
         serverError: { message: "", success: false }
     })
-    const [newGroup, setNewGroup] = useState({
-        name: "",
-        level: ""
-    })
+    // const [newGroup, setNewGroup] = useState({
+    //     name: "",
+    //     level: ""
+    // })
+    const [displayed, setDisplayed] = useState<Displayed>("groups")
 
     const {
         data,
@@ -60,73 +64,66 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
     const groups = data ? data.pages.flatMap(page => page) : [];
     // console.log("groups ",groups);
 
-    const newGroupInputHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setNewGroup({
-            ...newGroup,
-            [e.target.name]: e.target.value
-        })
-    }
+    // const newGroupInputHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    //     setNewGroup({
+    //         ...newGroup,
+    //         [e.target.name]: e.target.value
+    //     })
+    // }
 
-    const mutation = useMutation(createGroupService,  {
-        onSuccess: (response: CreateGroupResponse) => {
-            // TODO implement optimistic update
-            // queryClient.setQueryData<Group[]>('groups', (old = []) => [...old, response.data]);
-            // queryClient.setQueryData<Group[][]>('groups', (old = []) => {
-            //     let newPage;
-            //     if (!Array.isArray(old) || old.length === 0) {
-            //         newPage = [response.data];
-            //     } else {
-            //         newPage = [...old[old.length - 1], response.data];
-            //     }
-            //     return [...old.slice(0, -1), newPage];
-            // });
-            setErrorMsg({
-                serverError: { message: response.message, success: true }
-            });
-            setIsOpenCreate(false)
-        },
-        onError: (error: any) => {
-            setErrorMsg({
-                serverError: { message: error.message, success: false }
-            });
-        }
-    })
+    // const mutation = useMutation(createGroupService,  {
+    //     onSuccess: (response: CreateGroupResponse) => {
+            
+    //         setErrorMsg({
+    //             serverError: { message: response.message, success: true }
+    //         });
+    //         setIsOpenCreate(false)
+    //     },
+    //     onError: (error: any) => {
+    //         setErrorMsg({
+    //             serverError: { message: error.message, success: false }
+    //         });
+    //     }
+    // })
 
-    const saveNewGroup = async () => {
-        mutation.mutate({token, newGroup});
-    }
+    // const saveNewGroup = async () => {
+    //     mutation.mutate({token, newGroup});
+    // }
 
     return (
         <div className="groups-overview-design">
             {/* <h1>Groups Overview</h1> */}
-            <CreateButton action={() => setIsOpenCreate(true)} />
+            <CreateButton action={() => setDisplayed("createGroup")} />
             <div className="groups-overview-wrapper">
-                {isOpenCreate ?
-                    <div className="groups-overview-create">
-                        <div className="groups-overview-create-form">
-                            {/* <input type="text" placeholder="Group Name" /> */}
-                            {/* <input type="text" placeholder="Group Level" /> */}
-                            <CInput
-                                type="text"
-                                placeholder="Group Name"
-                                name="name"
-                                value={newGroup.name || ""}
-                                onChangeFunction={newGroupInputHandler}
-                            />
-                            <CInput
-                                type="text"
-                                placeholder="Group Level"
-                                name="level"
-                                value={newGroup.level || ""}
-                                onChangeFunction={newGroupInputHandler}
-                            />
-                            <CButton
-                                title="Create"
-                                onClickFunction={saveNewGroup}
-                            />
-                            <button onClick={() => setIsOpenCreate(false)}>Cancel</button>
-                        </div>
-                    </div>
+                {displayed === "createGroup" ?
+                    // <div className="groups-overview-create">
+                    //     <div className="groups-overview-create-form">
+                    //         <CInput
+                    //             type="text"
+                    //             placeholder="Group Name"
+                    //             name="name"
+                    //             value={newGroup.name || ""}
+                    //             onChangeFunction={newGroupInputHandler}
+                    //         />
+                    //         <CInput
+                    //             type="text"
+                    //             placeholder="Group Level"
+                    //             name="level"
+                    //             value={newGroup.level || ""}
+                    //             onChangeFunction={newGroupInputHandler}
+                    //         />
+                    //         <CButton
+                    //             title="Create"
+                    //             onClickFunction={saveNewGroup}
+                    //         />
+                    //         <button onClick={() => setIsOpenCreate(false)}>Cancel</button>
+                    //     </div>
+                    // </div>
+                    <CreateGroup
+                        token={token}
+                        setDisplayed={setDisplayed}
+                        setErrorMsg={setErrorMsg}
+                    />
                     :
                     <>
 
