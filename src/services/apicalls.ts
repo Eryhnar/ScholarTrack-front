@@ -182,3 +182,180 @@ export const suspendAccountService = async ({ token }: SuspendAccountProps) => {
 
     return parsedResponse;
 }
+
+interface getOwnGroupsProps {
+    token: string;
+    pageParam: number;
+}
+
+interface gradingScale {
+    grade: string;
+    range: {
+        min: number;
+        max: number;
+    }
+}
+
+export interface Group {
+    _id: string;
+    name: string
+    author: string;
+    collaborators: string[];
+    level: string
+    students: string[];
+    tasks: string[];
+    status: "active" | "archived";
+    gradingScale?: gradingScale,
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface getOwnGroupsResponse {
+    success: boolean;
+    message: string;
+    data: Group[];
+}
+
+
+
+export const getOwnGroupsService = async ({token, pageParam=1}: getOwnGroupsProps) => {
+    const response = await fetch(root + `group?page=${pageParam}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+    });
+
+    const parsedResponse: getOwnGroupsResponse = await response.json();
+    // console.log(parsedResponse.data);
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse.data;
+}
+
+export interface CreateGroupProps {
+    token: string;
+    newGroup: {
+        name: string;
+        level: string;
+    }
+}
+
+export interface CreateGroupResponse {
+    success: boolean;
+    message: string;
+    data: {
+        _id: string;
+        name: string;
+        author: string;
+        collaborators: string[];
+        level: string;
+        students: string[];
+        tasks: string[];
+        status: "active" | "archived";
+        gradingScale?: gradingScale;
+        createdAt: Date;
+        updatedAt: Date;
+    }
+}
+
+export const createGroupService = async ({ token, newGroup }: CreateGroupProps) => {
+    const response = await fetch(root + "group", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(newGroup),
+    });
+
+    const parsedResponse: CreateGroupResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 201) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
+}
+
+export interface EditGroupProps {
+    token: string;
+    groupId: string;
+    editGroup: {
+        name: string;
+        level: string;
+    }
+}
+
+export interface EditGroupResponse {
+    success: boolean;
+    message: string;
+    data: Group;
+}
+
+export const editGroupService = async ({ token, groupId, editGroup }: EditGroupProps) => {
+    const response = await fetch(root + `group/${groupId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(editGroup),
+    });
+
+    const parsedResponse: EditGroupResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
+}
+
+export interface DeleteGroupProps {
+    token: string;
+    groupId: string;
+}
+
+export interface DeleteGroupResponse {
+    success: boolean;
+    message: string;
+}
+
+export const deleteGroupService = async ({ token, groupId }: DeleteGroupProps) => {
+    const response = await fetch(root + `group/${groupId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+    });
+
+    const parsedResponse: DeleteGroupResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
+}

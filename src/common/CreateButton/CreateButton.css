@@ -1,0 +1,16 @@
+.default-create-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(66, 74, 212);
+    border-radius: 0.5rem;
+    height: 3rem;
+    width: 3rem;
+
+    position: absolute;
+    right: calc(7% + 1rem);
+    bottom: calc(10% + 1rem);
+    /* right: 1rem; */
+    /* bottom: 1rem; */
+    z-index: 1;
+}
