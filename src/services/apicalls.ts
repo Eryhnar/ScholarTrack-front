@@ -359,3 +359,36 @@ export const deleteGroupService = async ({ token, groupId }: DeleteGroupProps) =
 
     return parsedResponse;
 }
+
+export interface getGroupProps {
+    token: string;
+    groupId: string;
+}
+
+export interface getGroupResponse {
+    success: boolean;
+    message: string;
+    data: Group;
+}
+
+export const getGroupService = async ({ token, groupId }: getGroupProps) => {
+    const response = await fetch(root + `group/${groupId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+    });
+
+    const parsedResponse: getGroupResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse.data;
+}
