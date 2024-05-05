@@ -36,16 +36,12 @@ interface Group {
 type Displayed = "groups" | "createGroup" | "editGroup" | "deleteGroup"
 
 export const GroupsOverview: React.FC = (): JSX.Element => {
-    // const queryClient = useQueryClient();
     const token = useSelector(selectUser).credentials.token;
-    // const [isOpenCreate, setIsOpenCreate] = useState(false)
     const [errorMsg, setErrorMsg] = useState({
         serverError: { message: "", success: false }
     })
-    // const [newGroup, setNewGroup] = useState({
-    //     name: "",
-    //     level: ""
-    // })
+    const [isOpenOptions, setIsOpenOptions] = useState(false)
+
     const [displayed, setDisplayed] = useState<Displayed>("groups")
     let selectedGroup = useRef<Group | null>(null)
 
@@ -59,38 +55,7 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
         getNextPageParam: (lastPage, allPages) => lastPage.length > 0 ? allPages.length + 1 : undefined,
     });
 
-    // if (isError) setErrorMsg({
-    //     serverError: { message: data.message, success: false }
-    // })
-
     const groups = data ? data.pages.flatMap(page => page) : [];
-    // console.log("groups ",groups);
-
-    // const newGroupInputHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    //     setNewGroup({
-    //         ...newGroup,
-    //         [e.target.name]: e.target.value
-    //     })
-    // }
-
-    // const mutation = useMutation(createGroupService,  {
-    //     onSuccess: (response: CreateGroupResponse) => {
-
-    //         setErrorMsg({
-    //             serverError: { message: response.message, success: true }
-    //         });
-    //         setIsOpenCreate(false)
-    //     },
-    //     onError: (error: any) => {
-    //         setErrorMsg({
-    //             serverError: { message: error.message, success: false }
-    //         });
-    //     }
-    // })
-
-    // const saveNewGroup = async () => {
-    //     mutation.mutate({token, newGroup});
-    // }
 
     let renderContent: JSX.Element | null;
     switch (displayed) {
@@ -122,7 +87,7 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                                 <CButton
                                     title="..."
                                     onClickFunction={() => {
-                                        setDisplayed("editGroup")
+                                        setIsOpenOptions(true)
                                         selectedGroup.current = group
                                     }}
                                 />
@@ -138,7 +103,22 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
 
     return (
         <div className="groups-overview-design">
-            {/* <h1>Groups Overview</h1> */}
+            {isOpenOptions &&
+                <div className="groups-overview-options">
+                    <CButton
+                        title="Close"
+                        onClickFunction={() => setIsOpenOptions(false)}
+                    />
+                    <CButton
+                        title="Edit"
+                        onClickFunction={() => setDisplayed("editGroup")}
+                    />
+                    <CButton
+                        title="Delete"
+                        onClickFunction={() => setDisplayed("deleteGroup")}
+                    />
+                </div>
+            }
             <CreateButton action={() => setDisplayed("createGroup")} />
             <div className="groups-overview-wrapper">
                 {renderContent}
