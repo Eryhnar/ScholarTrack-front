@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Group } from "../../services/apicalls";
 
-const initialState: Group = {
+export type GroupDetailState = Group;
+
+const initialState: GroupDetailState = {
     _id: "",
     name: "",
     author: "",

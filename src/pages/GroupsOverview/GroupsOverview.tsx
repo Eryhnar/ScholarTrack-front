@@ -13,6 +13,7 @@ import { EditGroup } from "../../common/EditGroup/EditGroup";
 import { Modal } from "../../common/Modal/Modal";
 import { DeleteGroup } from "../../common/DeleteGroup/DeleteGroup";
 import { useNavigate } from "react-router-dom";
+import { setGroup } from "../../app/slices/groupDetailSlice";
 
 interface gradingScale {
     grade: string;
@@ -89,7 +90,7 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                         return (
                             <div className="groups-overview-group" key={group._id} onClick={() => {
                                 navigate(`/groups/${group._id}`)
-                                dispatch
+                                dispatch(setGroup(group))
                                 }}>
                                 <h2>{group.name}</h2>
                                 <p>{group.level}</p>
