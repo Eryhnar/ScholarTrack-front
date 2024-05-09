@@ -391,4 +391,26 @@ export const getGroupService = async ({ token, groupId }: getGroupProps) => {
     }
 
     return parsedResponse.data;
+}                                 
+
+export const getStudentOverviewService = async ({ token, groupId }: getGroupProps) => {
+    const response = await fetch(root + `student/overview/${groupId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+    });
+
+    const parsedResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
 }

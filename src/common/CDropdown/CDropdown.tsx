@@ -1,9 +1,10 @@
 
 interface CDropdownProps {
-    buttonClass: string,
-    dropdownClass: string,
+    buttonClass?: string,
+    dropdownClass?: string,
     title: string,
     items: any[],
+    selectedValue: string,
     onChangeFunction: (e: React.ChangeEvent<HTMLSelectElement>) => void,
 }
 
@@ -12,13 +13,14 @@ export const CDropdown: React.FC<CDropdownProps> = ({
     dropdownClass = "default-custom-dropdown",
     title,
     items,
+    selectedValue,
     onChangeFunction,
 }: CDropdownProps): JSX.Element => {
     return (
-        <select className={buttonClass} onChange={onChangeFunction} name={title} defaultValue={""}>
-            <option value="">{title}</option>
+        <select className={buttonClass} onChange={onChangeFunction} name={title} value={selectedValue}>
+            {/* <option value="" disabled>{title}</option> */}
             {items.map((item) => (
-                <option key={item.id} value={item.id} className={dropdownClass}>{item.name}</option>
+                <option key={item._id} value={item._id} className={dropdownClass}>{item.name}</option>
             ))}
         </select>
     )
