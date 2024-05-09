@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { selectGroup, setGroup } from "../../app/slices/groupDetailSlice"
 import { useNavigate, useParams } from "react-router-dom"
 import { selectUser } from "../../app/slices/userSlice";
-import { getGroupService, getOwnGroupsService } from "../../services/apicalls";
+import { getGroupService, getOwnGroupsService, getStudentOverviewService } from "../../services/apicalls";
 import { useQuery } from "react-query";
 import { useState } from "react";
 import { CDropdown } from "../../common/CDropdown/CDropdown";
@@ -26,7 +26,7 @@ export const GroupDetail: React.FC = (): JSX.Element => {
         }
     });
 
-    const { data: fetchedGroup, isLoading, isError } = useQuery(['group', groupId], () => getGroupService({ token, groupId }), {
+    const { data: fetchedGroup, isLoading, isError } = useQuery(['group', groupId], () => getStudentOverviewService({ token, groupId }), {
         // enabled: !group || group._id !== groupId,
         // forceFetchOnMount: true,
         refetchOnWindowFocus: false,
@@ -63,10 +63,20 @@ export const GroupDetail: React.FC = (): JSX.Element => {
                 selectedValue={group._id}
                 onChangeFunction={changeGroup}
             />
-                <div className="group-detail">
+                {/* <div className="group-detail">
                     <h1>{group.name}</h1>
                     <h2>{group.level}</h2>
-                </div>
+                </div> */}
+                <div className="group-detail">
+                        {fetchedGroup.map((student: any) => {
+                            return (
+                                <div className="group-detail-student-card" key={student._id}>
+                                    <p>{student.name}</p>
+                                    <p>{student.surname}</p>
+                                </div>
+                            )
+                        })}
+                    </div>
             </>
                 // : <div className="group-detail">Loading...</div>
                 : (fetchedGroup &&
@@ -74,10 +84,20 @@ export const GroupDetail: React.FC = (): JSX.Element => {
                     //     <h1>{fetchedGroup.name}</h1>
                     //     <h2>{fetchedGroup.level}</h2>
                     // </div>
-                    <div className="group-detail-student-card">
-
+                    <div className="group-detail">
+                        {fetchedGroup.map((student: any) => {
+                            return (
+                                <div className="group-detail-student-card" key={student._id}>
+                                    <p>{student.name}</p>
+                                    <p>{student.surname}</p>
+                                </div>
+                            )
+                        })}
                     </div>
                 )
+                // <div className="group-detail-student-card">
+
+                // </div>
             }
         </>
     )

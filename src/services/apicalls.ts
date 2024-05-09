@@ -401,7 +401,8 @@ export const getStudentOverviewService = async ({ token, groupId }: getGroupProp
             "Authorization": `Bearer ${token}`
         },
     });
-
+    console.log(response);
+    
     const parsedResponse = await response.json();
 
     if (response.status === 404) {
@@ -412,5 +413,5 @@ export const getStudentOverviewService = async ({ token, groupId }: getGroupProp
         throw new Error(parsedResponse.message);
     }
 
-    return parsedResponse;
+    return parsedResponse.data;
 }
