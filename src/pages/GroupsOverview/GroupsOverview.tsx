@@ -62,7 +62,7 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
     }: UseInfiniteQueryResult<Group[], Error> = useInfiniteQuery('groups', ({ pageParam = 1 }) => getOwnGroupsService({ token, pageParam }), {
         getNextPageParam: (lastPage, allPages) => lastPage.length > 0 ? allPages.length + 1 : undefined,
     });
-    
+
     if (isLoading || isFetchingNextPage) return <div>Loading...</div>
 
     const groups = data?.pages ? data.pages.flatMap(page => page) : [];
@@ -94,14 +94,24 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                             <div className="groups-overview-group" key={group._id} onClick={() => {
                                 navigate(`/groups/${group._id}`, { state: { path: '/groups/:groupId' } })
                                 dispatch(setGroup(group))
-                                }}>
+                            }}>
                                 <h2>{group.name}</h2>
                                 <p>{group.level}</p>
-                                <CButton
+                                {/* <CButton
                                     title="..."
                                     onClickFunction={() => {
-                                        setIsOpenOptions(true)
-                                        selectedGroup.current = group
+                                        setIsOpenOptions(true);
+                                        selectedGroup.current = group;
+                                    }}
+                                /> */}
+                                <CButton
+                                    title="..."
+                                    onClickFunction={(event: React.MouseEvent<Element, MouseEvent> | undefined) => {
+                                        if (event) {
+                                            event.stopPropagation();
+                                        }
+                                        setIsOpenOptions(true);
+                                        selectedGroup.current = group;
                                     }}
                                 />
                             </div>
@@ -110,7 +120,7 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                 </>
             )
             break;
-            case "deleteGroup":
+        case "deleteGroup":
             renderContent = selectedGroup.current ? (
                 <DeleteGroup
                     token={token}
@@ -139,7 +149,7 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                 <div className="groups-overview-options">
                     <CButton
                         title="Close"
-                        onClickFunction={() => {setIsOpenOptions(false)}}
+                        onClickFunction={() => { setIsOpenOptions(false) }}
                     />
                     <CButton
                         title="Edit"
