@@ -4,7 +4,7 @@ import "./GroupsOverview.css"
 import { QueryClient, UseInfiniteQueryResult, useInfiniteQuery, useMutation, useQueryClient } from "react-query";
 import { Virtuoso } from "react-virtuoso";
 import { selectUser } from "../../app/slices/userSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CreateGroupResponse, createGroupService, getOwnGroupsService, CreateGroupProps } from "../../services/apicalls";
 import { CButton } from "../../common/CButton/CButton";
 import { CInput } from "../../common/CInput/CInput";
@@ -12,6 +12,8 @@ import { CreateGroup } from "../../common/CreateGroup/CreateGroup";
 import { EditGroup } from "../../common/EditGroup/EditGroup";
 import { Modal } from "../../common/Modal/Modal";
 import { DeleteGroup } from "../../common/DeleteGroup/DeleteGroup";
+import { useNavigate } from "react-router-dom";
+import { setGroup } from "../../app/slices/groupDetailSlice";
 
 interface gradingScale {
     grade: string;
@@ -38,6 +40,8 @@ interface Group {
 export type Displayed = "groups" | "createGroup" | "editGroup" | "deleteGroup"
 
 export const GroupsOverview: React.FC = (): JSX.Element => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const token = useSelector(selectUser).credentials.token;
     const [errorMsg, setErrorMsg] = useState({
         serverError: { message: "", success: false }
@@ -84,7 +88,10 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                 <>
                     {groups.map((group: Group) => {
                         return (
-                            <div className="groups-overview-group" key={group._id}>
+                            <div className="groups-overview-group" key={group._id} onClick={() => {
+                                navigate(`/groups/${group._id}`)
+                                dispatch(setGroup(group))
+                                }}>
                                 <h2>{group.name}</h2>
                                 <p>{group.level}</p>
                                 <CButton

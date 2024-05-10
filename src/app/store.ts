@@ -7,13 +7,16 @@ import thunk from "redux-thunk";
 import storage from "redux-persist/lib/storage";
 
 import userReducer, { UserState } from "./slices/userSlice";
+import groupReducer, { GroupDetailState } from "./slices/groupDetailSlice";
 
 export interface RootState {
     user: UserState;
+    groupDetail: GroupDetailState;
 }
 
 const reducers: Reducer<RootState, Action> = combineReducers({
-    user: userReducer
+    user: userReducer,
+    groupDetail: groupReducer
 });
 
 // const secretKey = process.env.REACT_APP_SECRET_KEY;

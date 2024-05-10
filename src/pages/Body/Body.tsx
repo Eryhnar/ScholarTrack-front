@@ -4,6 +4,7 @@ import { Login } from "../Login/Login"
 import { Home } from "../Home/Home"
 import { Settings } from "../Settings/Settings"
 import { GroupsOverview } from "../GroupsOverview/GroupsOverview"
+import { GroupDetail } from "../GroupDetail/GroupDetail"
 
 export const Body: React.FC = (): JSX.Element => {
     return (
@@ -13,6 +14,7 @@ export const Body: React.FC = (): JSX.Element => {
             <Route path="/login" element={<Login />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="groups" element={<GroupsOverview />} />
+            <Route path="groups/:id" element={<GroupDetail />} />
             <Route path="*" element={<Home />} />
         </Routes>
 
