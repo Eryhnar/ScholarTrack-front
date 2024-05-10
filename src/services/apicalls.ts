@@ -391,7 +391,43 @@ export const getGroupService = async ({ token, groupId }: getGroupProps) => {
     }
 
     return parsedResponse.data;
-}                                 
+}  
+
+export interface Attendance {
+    _id: string;
+    date: Date;
+    present: boolean;
+    student: string;
+    group: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface Mark {
+    _id: string;
+    value: number;
+    student: string;
+    task: string;
+    group: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface Student {
+    _id: string;
+    name: string;
+    surname: string;
+    groups: string[];
+    status: "active" | "suspended";
+    age: number;
+    createdAt: Date;
+    updatedAt: Date;
+    attendances: Attendance[];
+    marks: Mark[];
+    totalAttendance: number;
+    totalMarks: number;
+
+}
 
 export const getStudentOverviewService = async ({ token, groupId }: getGroupProps) => {
     const response = await fetch(root + `student/overview/${groupId}`, {

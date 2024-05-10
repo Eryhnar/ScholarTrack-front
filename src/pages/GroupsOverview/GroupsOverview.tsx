@@ -57,12 +57,15 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
         fetchNextPage,
         hasNextPage,
         isLoading,
+        isFetchingNextPage,
         isError,
     }: UseInfiniteQueryResult<Group[], Error> = useInfiniteQuery('groups', ({ pageParam = 1 }) => getOwnGroupsService({ token, pageParam }), {
         getNextPageParam: (lastPage, allPages) => lastPage.length > 0 ? allPages.length + 1 : undefined,
     });
+    
+    if (isLoading || isFetchingNextPage) return <div>Loading...</div>
 
-    const groups = data ? data.pages.flatMap(page => page) : [];
+    const groups = data?.pages ? data.pages.flatMap(page => page) : [];
 
     let renderContent: JSX.Element | null;
     switch (displayed) {
