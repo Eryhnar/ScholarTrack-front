@@ -6,4 +6,61 @@
     color: white;
     min-height: 5svh;
     padding-inline: 1rem;
+
+    position: relative;
+}
+
+.burguer-button {
+    cursor: pointer;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    color: black;
+
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+
+    width: 15%;
+    height: 95svh;
+}
+
+.nav-profile-button {
+    cursor: pointer;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: white;
+    color: black;
+    font-weight: bold;
+}
+
+.nav-profile-menu {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    color: black;
+
+    position: absolute;
+    top: 100%;
+    right: 0%;
+    z-index: 1;
+
+    width: 10%;
+    padding-block: 1rem;
+    gap: 1rem;
+    /* height: 95svh; */
+}
+
+.nav-profile-menu li {
+    list-style: none;
+    cursor: pointer;
 }

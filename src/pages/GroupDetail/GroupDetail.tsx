@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { selectUser } from "../../app/slices/userSlice";
 import { getGroupService, getOwnGroupsService, getStudentOverviewService } from "../../services/apicalls";
 import { useQuery } from "react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CDropdown } from "../../common/CDropdown/CDropdown";
 import { CreateButton } from "../../common/CreateButton/CreateButton";
 
@@ -18,6 +18,10 @@ export const GroupDetail: React.FC = (): JSX.Element => {
     const [errorMsg, setErrorMsg] = useState({
         serverError: { message: "", success: false }
     })
+
+    useEffect(() => {
+        console.log(location);
+    }, [])
 
     const { data: groups, isLoading: groupsLoading, isError: groupsError } = useQuery('groups', ({ pageParam = 1 }) => getOwnGroupsService({ token, pageParam }), {
         refetchOnWindowFocus: false,
