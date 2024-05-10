@@ -89,7 +89,7 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                     {groups.map((group: Group) => {
                         return (
                             <div className="groups-overview-group" key={group._id} onClick={() => {
-                                navigate(`/groups/${group._id}`)
+                                navigate(`/groups/${group._id}`, { state: { path: '/groups/:groupId' } })
                                 dispatch(setGroup(group))
                                 }}>
                                 <h2>{group.name}</h2>
