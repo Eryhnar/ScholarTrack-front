@@ -401,7 +401,6 @@ export const getStudentOverviewService = async ({ token, groupId }: getGroupProp
             "Authorization": `Bearer ${token}`
         },
     });
-    console.log(response);
     
     const parsedResponse = await response.json();
 

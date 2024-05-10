@@ -1,3 +1,4 @@
+import "./GroupDetail.css"
 import { useDispatch, useSelector } from "react-redux"
 import { selectGroup, setGroup } from "../../app/slices/groupDetailSlice"
 import { useNavigate, useParams } from "react-router-dom"
@@ -6,6 +7,7 @@ import { getGroupService, getOwnGroupsService, getStudentOverviewService } from 
 import { useQuery } from "react-query";
 import { useState } from "react";
 import { CDropdown } from "../../common/CDropdown/CDropdown";
+import { CreateButton } from "../../common/CreateButton/CreateButton";
 
 export const GroupDetail: React.FC = (): JSX.Element => {
     const navigate = useNavigate();
@@ -33,8 +35,7 @@ export const GroupDetail: React.FC = (): JSX.Element => {
         onSuccess: (data) => {
             dispatch(setGroup(data));
             // console.log("hi");
-            console.log(fetchedGroup);
-            
+            // console.log(fetchedGroup);
         },
         onError: (error: any) => {
             setErrorMsg({
@@ -56,28 +57,39 @@ export const GroupDetail: React.FC = (): JSX.Element => {
     return (
         <>
             {group && group._id === groupId ?
-            <>
-            <CDropdown
-                title={group.name}
-                items={groups || []}
-                selectedValue={group._id}
-                onChangeFunction={changeGroup}
-            />
-                {/* <div className="group-detail">
+                <>
+                    <CreateButton
+                        action={() => navigate(`/groups/${groupId}/create-task`)}
+                    />
+                    <CDropdown
+                        title={group.name}
+                        items={groups || []}
+                        selectedValue={group._id}
+                        onChangeFunction={changeGroup}
+                    />
+                    {/* <div className="group-detail">
                     <h1>{group.name}</h1>
                     <h2>{group.level}</h2>
                 </div> */}
-                <div className="group-detail">
+                    <div className="group-detail">
+                        <div className="group-detail-row">
+                            <p>name</p>
+                            <p>surname</p>
+                            <p>attendance %</p>
+                            <p>marks</p>
+                        </div>
                         {fetchedGroup.map((student: any) => {
                             return (
-                                <div className="group-detail-student-card" key={student._id}>
+                                <div className="group-detail-row" key={student._id}>
                                     <p>{student.name}</p>
                                     <p>{student.surname}</p>
+                                    <p>{student.totalAttendance}</p>
+                                    <p>{student.totalMarks}</p>
                                 </div>
                             )
                         })}
                     </div>
-            </>
+                </>
                 // : <div className="group-detail">Loading...</div>
                 : (fetchedGroup &&
                     // <div className="group-detail">

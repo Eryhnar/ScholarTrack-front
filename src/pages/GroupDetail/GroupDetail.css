@@ -1,0 +1,52 @@
+/* .group-detail-student-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+} */
+
+
+
+/* .group-detail {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.group-detail-headers {
+    display: contents;
+    background-color: grey;
+}
+.group-detail-student-card {
+    display: contents;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.group-detail-student-card:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+} */
+
+.group-detail {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.group-detail-row {
+    display: contents;
+}
+
+.group-detail-row > p {
+    background-color: rgba(0,0,0,0.2);
+}
+
+.group-detail-row:hover > p {
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.group-detail-row:first-child > p {
+    background-color: grey;
+}
