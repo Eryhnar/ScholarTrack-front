@@ -429,6 +429,17 @@ export interface Student {
 
 }
 
+export interface getStudentOverviewProps {
+    token: string;
+    groupId: string;
+}
+
+export interface getStudentOverviewResponse {
+    success: boolean;
+    message: string;
+    data: Student[];
+}
+
 export const getStudentOverviewService = async ({ token, groupId }: getGroupProps) => {
     const response = await fetch(root + `student/overview/${groupId}`, {
         method: "GET",
@@ -438,7 +449,7 @@ export const getStudentOverviewService = async ({ token, groupId }: getGroupProp
         },
     });
     
-    const parsedResponse = await response.json();
+    const parsedResponse:getStudentOverviewResponse = await response.json();
 
     if (response.status === 404) {
         throw new Error(parsedResponse.message || "Something went wrong");
@@ -449,4 +460,57 @@ export const getStudentOverviewService = async ({ token, groupId }: getGroupProp
     }
 
     return parsedResponse.data;
+}
+
+export interface CreateTaskProps {
+    token: string;
+    group: string;
+    newTask: {
+        name: string;
+        description?: string;
+        deadline?: string;
+        groups: string[];
+        weight: string;
+        optional: boolean;
+    }
+}
+
+export interface CreateTaskResponse {
+    success: boolean;
+    message: string;
+    data: {
+        _id: string;
+        name: string;
+        description?: string;
+        deadline?: string;
+        groups: string[];
+        weight: string;
+        optional: boolean;
+        tags: string[];
+        createdAt: Date;
+        updatedAt: Date;
+    }
+}
+
+export const createTaskService = async ({ token, group, newTask }: CreateTaskProps) => {
+    const response = await fetch(root + `task/${group}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(newTask),
+    });
+
+    const parsedResponse:CreateTaskResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 201) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
 }

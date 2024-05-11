@@ -1,8 +1,13 @@
 import { useState } from "react"
 import { CInput } from "../../common/CInput/CInput"
-import { CDropdown } from "../../common/CDropdown/CDropdown";
-import { useParams } from "react-router-dom";
+// import { CDropdown } from "../../common/CDropdown/CDropdown";
+import { useNavigate, useParams } from "react-router-dom";
 import { CButton } from "../../common/CButton/CButton";
+import { useMutation } from "react-query";
+import { CreateTaskResponse, createTaskService, CreateTaskProps } from "../../services/apicalls";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../app/slices/userSlice";
+import { Toast } from "../../common/Toast/Toast";
 
 interface Task {
     name: string;
@@ -14,14 +19,19 @@ interface Task {
 }
 
 export const CreateTask: React.FC = (): JSX.Element => {
-    const group = useParams<{ groupId: string }>()
+    const token = useSelector(selectUser).credentials.token;
+    const navigate = useNavigate()
+    const group = useParams<{ groupId: string }>().groupId
     const [newTask, setNewTask] = useState<Task>({
         name: "",
         description: "",
         deadline: "",
-        groups: [group.groupId!],
+        groups: [group!],
         weight: "",
         optional: false,
+    })
+    const [errorMsg, setErrorMsg] = useState({
+        serverError: { message: "", success: false }
     })
 
     const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,8 +42,31 @@ export const CreateTask: React.FC = (): JSX.Element => {
         })
     }
 
+    const mutation = useMutation(createTaskService, {
+        onSuccess: (response: CreateTaskResponse) => {
+            // console.log(response)
+            navigate(-1)
+        },
+        onError: (error: any) => {
+            // console.log(error)
+            setErrorMsg({
+                serverError: { message: error.message, success: false }
+            })
+        }
+    })
+
+    const createTask = async () => {
+        mutation.mutate({token, group, newTask} as CreateTaskProps)
+    }
+
     return (
         <div>
+            <Toast 
+                message={errorMsg.serverError.message}
+                success={errorMsg.serverError.success}
+                time={4000}
+                resetServerError={() => setErrorMsg({serverError: {message: "", success: false}})}
+            />
             <h1>Create Task</h1>
             <CInput
                 type="text"
@@ -92,7 +125,7 @@ export const CreateTask: React.FC = (): JSX.Element => {
                 <p>All fields marked with * are required</p>
                 <CButton 
                     title="Create Task"
-                    onClickFunction={() => console.log(newTask)}
+                    onClickFunction={createTask}
                 />
         </div>
     )
