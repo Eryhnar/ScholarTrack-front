@@ -2,19 +2,20 @@ import "./GroupDetail.css"
 import { useDispatch, useSelector } from "react-redux"
 import { selectGroup, setGroup, setGroups } from "../../app/slices/groupDetailSlice"
 import { useNavigate, useParams } from "react-router-dom"
-import { UserState, selectUser } from "../../app/slices/userSlice";
+// import { UserState, selectUser } from "../../app/slices/userSlice";
 import { Group, Student, getOwnGroupsService, getStudentOverviewService } from "../../services/apicalls";
 import { useQuery } from "react-query";
 import { useState } from "react";
 import { CreateButton } from "../../common/CreateButton/CreateButton";
 import { RootState } from "../../app/store";
 import { ChooseCreate } from "../../common/ChooseCreate/ChooseCreate";
+import { CButton } from "../../common/CButton/CButton";
 
 export const GroupDetail: React.FC = (): JSX.Element => {
     const navigate = useNavigate();
     const token = useSelector((state: RootState) => state.user.credentials.token);
     const groupId = useParams<{ id: string }>().id!;
-    const group = useSelector(selectGroup); // add type
+    const group = useSelector(selectGroup); // TODO add type
     const dispatch = useDispatch();
     const [errorMsg, setErrorMsg] = useState({
         serverError: { message: "", success: false }
@@ -58,7 +59,17 @@ export const GroupDetail: React.FC = (): JSX.Element => {
 
     return (
         <>
-        {isOpenCreate && <ChooseCreate closeFunction={() => setIsOpenCreate(false)}/>}
+        {isOpenCreate && 
+        <ChooseCreate 
+        closeFunction={() => setIsOpenCreate(false)}
+        children= {
+            <>
+                <CButton title="Create Student" onClickFunction={() => navigate(`/groups/${groupId}/create-student`)} />
+                <CButton title="Create Attendance" onClickFunction={() => navigate(`/groups/${groupId}/create-attendance`)} />
+                <CButton title="Create Task" onClickFunction={() => navigate(`/groups/${groupId}/create-task`, { state: { path: '/groups/:groupId/create-task' }})} />
+            </>
+        }
+        />}
             {fetchedGroup &&
                 <>
                     <CreateButton
