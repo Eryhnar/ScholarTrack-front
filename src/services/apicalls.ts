@@ -514,3 +514,53 @@ export const createTaskService = async ({ token, group, newTask }: CreateTaskPro
 
     return parsedResponse;
 }
+
+export interface CreateStudentProps {
+    token: string;
+    newStudent: {
+        name: string;
+        surname: string;
+        age: string;
+        group: string;
+    }
+}
+
+export interface CreateStudentResponse {
+    success: boolean;
+    message: string;
+    data: {
+        _id: string;
+        name: string;
+        surname: string;
+        age: number;
+        groups: string[];
+        status: "active" | "suspended";
+        createdAt: Date;
+        updatedAt: Date;
+        attendances: Attendance[];
+        marks: Mark[];
+    }
+}
+
+export const createStudentService = async ({ token, newStudent }: CreateStudentProps) => {
+    const response = await fetch(root + "student", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(newStudent),
+    });
+
+    const parsedResponse:CreateStudentResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 201) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
+}
