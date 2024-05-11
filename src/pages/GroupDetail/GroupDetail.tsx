@@ -64,9 +64,10 @@ export const GroupDetail: React.FC = (): JSX.Element => {
         closeFunction={() => setIsOpenCreate(false)}
         children= {
             <>
-                <CButton title="Create Student" onClickFunction={() => navigate(`/groups/${groupId}/create-student`)} />
-                <CButton title="Create Attendance" onClickFunction={() => navigate(`/groups/${groupId}/create-attendance`)} />
+                <CButton title="Create Student" onClickFunction={() => navigate(`/groups/${groupId}/create-student`, { state: { path: '/groups/:groupId/create-student'}})} />
                 <CButton title="Create Task" onClickFunction={() => navigate(`/groups/${groupId}/create-task`, { state: { path: '/groups/:groupId/create-task' }})} /> {/* todo possibly remove the id */}
+                <CButton title="Create Attendance" onClickFunction={() => navigate(`/groups/${groupId}/create-attendance`)} />
+                {/* <CButton title="Mark task" onClickFunction={() => navigate(`/groups/${groupId}/create-mark`)} /> */}
             </>
         }
         />}
