@@ -66,7 +66,7 @@ export const GroupDetail: React.FC = (): JSX.Element => {
             <>
                 <CButton title="Create Student" onClickFunction={() => navigate(`/groups/${groupId}/create-student`)} />
                 <CButton title="Create Attendance" onClickFunction={() => navigate(`/groups/${groupId}/create-attendance`)} />
-                <CButton title="Create Task" onClickFunction={() => navigate(`/groups/${groupId}/create-task`, { state: { path: '/groups/:groupId/create-task' }})} />
+                <CButton title="Create Task" onClickFunction={() => navigate(`/groups/${groupId}/create-task`, { state: { path: '/groups/:groupId/create-task' }})} /> {/* todo possibly remove the id */}
             </>
         }
         />}
