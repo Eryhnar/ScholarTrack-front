@@ -56,9 +56,9 @@ export const Header: React.FC = (): JSX.Element => {
                 setIsOpenNavMenu(false);
             }
         };
-    
+
         window.addEventListener('click', closeMenu);
-    
+
         return () => {
             window.removeEventListener('click', closeMenu);
         };
@@ -136,14 +136,19 @@ export const Header: React.FC = (): JSX.Element => {
                     <div onClick={() => setIsOpenProfileMenu(false)}><span className="material-symbols-outlined">close</span></div>
                 </div>
             }
-            <div className="burguer-button" onClick={toggleBurguerMenu}>
+            {/* <div className="burguer-button" onClick={toggleBurguerMenu}>
                 <span className="material-symbols-outlined">
                     {isOpenNavMenu ? "close" : "menu"}
                 </span>
-            </div>
+            </div> */}
 
             {token ?
                 <>
+                    <div className="burguer-button" onClick={toggleBurguerMenu}>
+                        <span className="material-symbols-outlined">
+                            {isOpenNavMenu ? "close" : "menu"}
+                        </span>
+                    </div>
                     {renderContent}
                     {/* <div>{user.name}</div> */}
                     <div className="nav-profile-button" onClick={toggleprofileMenu}>{user.name[0]}</div>
@@ -153,6 +158,7 @@ export const Header: React.FC = (): JSX.Element => {
 
                 :
                 <>
+                    <NavButton title="Home" path="/" />
                     <NavButton title="Register" path="/register" />
                     <NavButton title="Login" path="/login" />
                 </>
