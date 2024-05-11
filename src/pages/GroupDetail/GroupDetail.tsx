@@ -8,6 +8,7 @@ import { useQuery } from "react-query";
 import { useState } from "react";
 import { CreateButton } from "../../common/CreateButton/CreateButton";
 import { RootState } from "../../app/store";
+import { ChooseCreate } from "../../common/ChooseCreate/ChooseCreate";
 
 export const GroupDetail: React.FC = (): JSX.Element => {
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ export const GroupDetail: React.FC = (): JSX.Element => {
     const [errorMsg, setErrorMsg] = useState({
         serverError: { message: "", success: false }
     })
+    const [isOpenCreate, setIsOpenCreate] = useState(false);
 
     const { data: groups, isLoading: groupsLoading, isError: groupsError } = useQuery<Group[]>('groups', ({ pageParam = 1 }) => getOwnGroupsService({ token, pageParam }), {
         refetchOnWindowFocus: false,
@@ -47,13 +49,22 @@ export const GroupDetail: React.FC = (): JSX.Element => {
 
     if (isLoading || groupsLoading) return <div>Loading...</div>
     if (isError || groupsError) return <div className="group-detail-error-screen">Error: {errorMsg.serverError.message}</div>
+    // const openMenu = () => {
+    //     // const event = window.event as MouseEvent // todo URGENT change this. Possibly adding id
+    //     event.stopPropagation()
+    //     setIsOpenCreate(!isOpenCreate)
+    // }
+
 
     return (
         <>
+        {isOpenCreate && <ChooseCreate closeFunction={() => setIsOpenCreate(false)}/>}
             {fetchedGroup &&
                 <>
                     <CreateButton
-                        action={() => navigate(`/groups/${groupId}/create-task`)}
+                        // popovertarget="GroupDetail-create-menu"
+                        id="GroupDetail-create-button"
+                        action={() => setIsOpenCreate(!isOpenCreate)}
                     />
                     <div className="group-detail">
                         <div className="group-detail-row">
