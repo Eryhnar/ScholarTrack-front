@@ -136,7 +136,7 @@ export const Header: React.FC = (): JSX.Element => {
             default:
                 renderContent =
                     <>
-                        <NavButton title="not groups" path={"/groups"} />
+                        {/* <NavButton title="not groups" path={"/groups"} /> */}
                     </>
                 break;
         }
@@ -157,29 +157,29 @@ export const Header: React.FC = (): JSX.Element => {
 
     return (
         <div className="header-design">
-            {isOpenNavMenu &&
-                <div className="nav-menu" ref={navMenuRef}>
-                    <NavButton title="Home" path={"/"} />
-                    <NavButton title="Groups" path={"/groups"} />
-                    <NavButton title="Settings" path={"/settings"} />
-                </div>
-            }
-            {isOpenProfileMenu &&
-                <div className="nav-profile-menu" ref={profileRef}>
-                    <h3>{user.name}</h3>
-                    <NavButton title="Settings" path={"/settings"} />
-                    <div onClick={() => dispatch(logout())}>Logout</div>
-                    <div onClick={() => setIsOpenProfileMenu(false)}><span className="material-symbols-outlined">close</span></div>
-                </div>
-            }
             {/* <div className="burguer-button" onClick={toggleBurguerMenu}>
                 <span className="material-symbols-outlined">
-                    {isOpenNavMenu ? "close" : "menu"}
+                {isOpenNavMenu ? "close" : "menu"}
                 </span>
             </div> */}
 
             {token ?
                 <>
+                {isOpenNavMenu &&
+                    <div className="nav-menu" ref={navMenuRef}>
+                        <NavButton title="Home" path={"/"} />
+                        <NavButton title="Groups" path={"/groups"} />
+                        <NavButton title="Settings" path={"/settings"} />
+                    </div>
+                }
+                {isOpenProfileMenu &&
+                    <div className="nav-profile-menu" ref={profileRef}>
+                        <h3>{user.name}</h3>
+                        <NavButton title="Settings" path={"/settings"} />
+                        <div onClick={() => dispatch(logout())}>Logout</div>
+                        <div onClick={() => setIsOpenProfileMenu(false)}><span className="material-symbols-outlined">close</span></div>
+                    </div>
+                }
                     <div className="burguer-button" onClick={toggleBurguerMenu}>
                         <span className="material-symbols-outlined">
                             {isOpenNavMenu ? "close" : "menu"}
@@ -193,11 +193,17 @@ export const Header: React.FC = (): JSX.Element => {
                 </>
 
                 :
-                <>
-                    <NavButton title="Home" path={"/"} />
-                    <NavButton title="Register" path={"/register"} />
-                    <NavButton title="Login" path={"/login"} />
-                </>
+                <div className="no-token-header-wrapper">
+                    <div className="no-token-header">
+                        <div className="no-token-header-left">
+                            <NavButton title="ScholarTrack" path={"/"} />
+                        </div>
+                        <div className="no-token-header-right">
+                            <NavButton title="Register" path={"/register"} />
+                            <NavButton title="Login" path={"/login"} />
+                        </div>
+                    </div>
+                </div>
             }
         </div>
     )

@@ -27,8 +27,8 @@ export const Body: React.FC = (): JSX.Element => {
             <Route path="/groups/:groupId/tasks" element={<Tasks />} />
             {/* <Route path="/groups/:groupId/edit-task" element={<EditTask />} /> */}
             <Route path="/groups/:groupId/marks" element={<Marks />} />
-            {/* <Route path="/groups/:groupId/:taskId/create" element={<CreateMark />} /> */}
-            <Route path="/groups/:groupId/create" element={<CreateMark />} />
+            {/* <Route path="/groups/:groupId/:taskId/:studentId/create" element={<CreateMark />} /> */}
+            <Route path="/groups/:groupId/:studentId/create" element={<CreateMark />} />
             <Route path="/groups/:groupId/:studentId" element={<StudentDetail />} />
             <Route path="*" element={<Home />} />
         </Routes>

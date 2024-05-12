@@ -1,3 +1,4 @@
+import "./NavButton.css"
 import { useNavigate } from "react-router-dom"
 
 interface NavButtonProps {

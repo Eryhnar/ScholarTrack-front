@@ -3,10 +3,10 @@
     /* height: 2rem; */
     display: flex;
     align-items: center;
-    /* justify-content: center; */
+    justify-content: center;
     flex-direction: column;
     position: relative;
-    background-color: #333;
+    /* background-color: #333; */
 }
 
 /* .home-button-wrapper {
@@ -30,7 +30,8 @@
     margin-block: 2rem;
     justify-content: center; 
     border-radius: 0.5rem;
-    background-color: cyan;
+    /* background-color: cyan; */
+    background-color: rgba(0,0,0,0.3);
     justify-items: center;
     align-items: center;
 }
@@ -46,8 +47,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: bisque;
+    background-color: var(--button-color);
     border-radius: 0.5rem;
+    font-size: 2rem;
     /* padding: 1rem; */
     /* width: 30rem; */
     /* max-width: 30rem; */

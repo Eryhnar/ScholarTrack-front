@@ -409,7 +409,11 @@ export interface Mark {
     _id: string;
     value: number;
     student: string;
-    task: string;
+    task: [{
+        _id: string;
+        name: string;
+        weight: string;
+    }];
     group: string;
     createdAt: Date;
     updatedAt: Date;
@@ -676,6 +680,45 @@ export const deleteTaskService = async ({ token, groupId, taskId }: DeleteTaskPr
     }
 
     if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
+}
+
+export interface CreateMarkProps {
+    token: string;
+    groupId: string;
+    taskId: string;
+    studentId: string;
+    newMark: {
+        value: string;
+    }
+}
+
+export interface CreateMarkResponse {
+    success: boolean;
+    message: string;
+    data: Mark;
+}
+
+export const createMarkService = async ({ token, groupId, taskId, studentId, newMark }: CreateMarkProps) => {
+    const response = await fetch(root + `mark/${groupId}/${taskId}/${studentId}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(newMark),
+    });
+
+    const parsedResponse:CreateMarkResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 201) {
         throw new Error(parsedResponse.message);
     }
 

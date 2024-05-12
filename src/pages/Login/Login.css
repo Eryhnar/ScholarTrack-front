@@ -4,7 +4,26 @@
     align-items: center;
     flex-direction: column;
     position: relative;
-    background-color: #333;
+    /* background-color: #333; */
+}
+
+.login-inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-block: 2rem;
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 1rem;
+    width: 80vw;
+    max-width: 40rem;
+    height: 60svh;
+
+}
+
+.login-title {
+    padding-top: 0;
+    padding-bottom: 3rem;
 }
 
 .login-card {
