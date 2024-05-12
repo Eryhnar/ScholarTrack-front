@@ -646,7 +646,7 @@ export const editTaskService = async ({ token, group, task, newTask }: EditTaskS
         throw new Error(parsedResponse.message);
     }
 
-    return parsedResponse;
+    return parsedResponse.data;
 }
 
 export interface DeleteTaskProps {

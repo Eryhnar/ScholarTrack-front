@@ -6,7 +6,7 @@ import { NewTask } from "../CreateTask/CreateTask"
 // import { selectUser } from "../../app/slices/userSlice";
 import { CButton } from "../../common/CButton/CButton";
 import { EditTaskServiceProps, Task, editTaskService } from "../../services/apicalls";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 interface EditTaskProps {
     token: string;
@@ -20,10 +20,7 @@ interface EditTaskProps {
 }
 
 export const EditTask: React.FC<EditTaskProps> = ({token, group, task, close, setErrorMsg}): JSX.Element => {
-    console.log("token", token);
-    console.log("group", group);
-    console.log("task", task);
-    
+    const queryClient = useQueryClient()    
     // const token = useSelector(selectUser).credentials.token;
     // const navigate = useNavigate()
     // const group = useParams<{ groupId: string }>().groupId
@@ -47,6 +44,9 @@ export const EditTask: React.FC<EditTaskProps> = ({token, group, task, close, se
     const mutation = useMutation(editTaskService, {
         onSuccess: (response: any) => {
             // console.log(response)
+            queryClient.setQueryData<Task[]>('tasks', (old) => 
+                old!.map(task => task._id === response._id ? response : task)
+            );
             close()
         },
         onError: (error: any) => {
