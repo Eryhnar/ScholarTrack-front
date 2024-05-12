@@ -41,21 +41,47 @@ export const EditTask: React.FC<EditTaskProps> = ({token, group, task, close, se
         })
     }
 
+    // const mutation = useMutation(editTaskService, {
+    //     onSuccess: (response: any) => {
+    //         // console.log(response)
+    //         queryClient.setQueryData<Task[]>('tasks', (old) => 
+    //             old!.map(task => task._id === response._id ? response : task)
+    //         );
+    //         close()
+    //     },
+    //     onError: (error: any) => {
+    //         // console.log(error)
+    //         setErrorMsg({
+    //             serverError: { message: error.message, success: false }
+    //         })
+    //     }
+    // })
     const mutation = useMutation(editTaskService, {
-        onSuccess: (response: any) => {
-            // console.log(response)
-            queryClient.setQueryData<Task[]>('tasks', (old) => 
-                old!.map(task => task._id === response._id ? response : task)
+        onMutate: async (newData: EditTaskServiceProps) => {
+            await queryClient.cancelQueries('tasks');
+    
+            const previousTasks = queryClient.getQueryData<Task[]>('tasks');
+    
+            queryClient.setQueryData<Task[]>('tasks', (old) =>
+                old!.map(task => task._id === newData.task ? {...task, ...newData.newTask} : task)
             );
-            close()
+    
+            return { previousTasks };
         },
-        onError: (error: any) => {
-            // console.log(error)
+        onError: (error: any, variables, context) => {
+            if (context?.previousTasks) {
+                queryClient.setQueryData<Task[]>('tasks', context.previousTasks);
+            }
+    
             setErrorMsg({
                 serverError: { message: error.message, success: false }
-            })
-        }
-    })
+            });
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries('tasks');
+            close();
+        },
+    });
 
     const editTask = async () => {
         mutation.mutate({token, group, task: task._id, newTask} as EditTaskServiceProps)

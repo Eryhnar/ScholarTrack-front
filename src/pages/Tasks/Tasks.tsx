@@ -1,14 +1,15 @@
-import { Task, getTasksResponse, getTasksService } from "../../services/apicalls"
+import { DeleteTaskProps, Task, deleteTaskService, getTasksResponse, getTasksService } from "../../services/apicalls"
 import { useNavigate, useParams } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { selectUser } from "../../app/slices/userSlice"
-import { useQuery } from "react-query"
+import { useMutation, useQuery, useQueryClient } from "react-query"
 import { CreateButton } from "../../common/CreateButton/CreateButton"
 import { useEffect, useRef, useState } from "react"
 import { CButton } from "../../common/CButton/CButton"
 import { EditTask } from "../EditTask/EditTask"
 
 export const Tasks: React.FC = (): JSX.Element => {
+    const queryClient = useQueryClient()
     const token = useSelector(selectUser).credentials.token
     const groupId = useParams<{ groupId: string }>().groupId!;
     const navigate = useNavigate();
@@ -38,6 +39,37 @@ export const Tasks: React.FC = (): JSX.Element => {
     }, [isOpenEdit]);
 
     const tasks = useQuery<Task[]>("tasks", () => getTasksService({ token, groupId }));
+
+const mutation = useMutation(deleteTaskService, {
+    onMutate: async ({ taskId }: DeleteTaskProps) => {
+        await queryClient.cancelQueries('tasks');
+    
+        const previousTasks = queryClient.getQueryData<Task[]>('tasks');
+    
+        queryClient.setQueryData<Task[]>('tasks', (old) =>
+            old!.filter(task => task._id !== taskId)
+        );
+    
+        return { previousTasks };
+    },
+    onError: (error: any, variables, context) => {
+        if (context?.previousTasks) {
+            queryClient.setQueryData<Task[]>('tasks', context.previousTasks);
+        }
+
+        setErrorMsg({
+            serverError: { message: error.message, success: false }
+        });
+    },
+    onSuccess: () => {
+        queryClient.invalidateQueries('tasks');
+    },
+});
+
+    const deleteTask = async () => {
+        mutation.mutate({token, groupId, taskId: selectedTask!._id} as DeleteTaskProps)
+    }
+
     return (
         <div className="tasks-design">
             {isOpenOptions && (
@@ -51,7 +83,7 @@ export const Tasks: React.FC = (): JSX.Element => {
                         </span>
                     </div>
                     <CButton title="Edit" onClickFunction={() => { setIsOpenEdit(true) }} />
-                    <CButton title="Delete" onClickFunction={() => { }} />
+                    <CButton title="Delete" onClickFunction={deleteTask} />
                 </div>
             )}
             {isOpenEdit && (
