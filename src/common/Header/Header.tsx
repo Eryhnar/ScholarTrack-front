@@ -21,7 +21,9 @@ export const Header: React.FC = (): JSX.Element => {
     let renderContent = null
     const [isOpenNavMenu, setIsOpenNavMenu] = useState(false)
     const [isOpenProfileMenu, setIsOpenProfileMenu] = useState(false)
-    const currentGroup = useParams<{ groupId: string }>().groupId!;
+
+    // const currentGroup = useParams<{ id: string }>().id!;
+
     // const path = matchPath(location.pathname, {
     //     path: "/groups/:groupId",
     //     exact: true,
@@ -31,6 +33,22 @@ export const Header: React.FC = (): JSX.Element => {
     const navMenuRef = useRef<HTMLDivElement | null>(null);
 
     const tasks = useSelector(selectTasks);
+    // console.log(currentGroup);
+    
+
+//     const [isLoading, setIsLoading] = useState(false);
+
+//     useEffect(() => {
+//       if (!groups || !group) {
+//         setIsLoading(true);
+//       } else {
+//         setIsLoading(false);
+//       }
+//     }, [groups, group]);
+
+// if (isLoading) {
+//     return <div>Loading...</div>;
+// }
 
     // useEffect(() => {
     //     const closeMenu = (event: MouseEvent) => {
@@ -83,6 +101,11 @@ export const Header: React.FC = (): JSX.Element => {
         // console.log(e.target.value);
         navigate(`/groups/${e.target.value}`, { state: { path: "/groups/:groupId" } });
     }
+
+    // const [currentGroup, setCurrentGroup] = location;
+    const currentGroup = location.pathname.split('/')[2];
+    // console.log(location);
+    
 
     // useEffect(() => {
     //     if (tasks && tasks.length > 0) {
