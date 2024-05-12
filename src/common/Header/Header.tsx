@@ -95,6 +95,7 @@ export const Header: React.FC = (): JSX.Element => {
                             selectedValue={group._id}
                             onChangeFunction={changeGroup}
                         />
+                        <NavButton title= "Tasks" path={`/groups/${group._id}/tasks`} />
                     </>
                 break;
             default:
