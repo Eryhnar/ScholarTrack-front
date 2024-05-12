@@ -158,13 +158,13 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                             setIsOpenOptions(false)
                         }}
                     />
-                    <CButton
+                    {/* <CButton
                         title="Delete"
                         onClickFunction={() => {
                             setDisplayed("deleteGroup")
                             setIsOpenOptions(false)
                         }}
-                    />
+                    /> */}
                 </div>
             }
             <CreateButton action={() => setDisplayed("createGroup")} />

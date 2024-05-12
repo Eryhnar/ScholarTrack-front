@@ -1,3 +1,5 @@
+import { NewTask } from "../pages/CreateTask/CreateTask";
+
 const root = "http://localhost:4000/api/";
 
 export interface RegisterProps {
@@ -559,6 +561,121 @@ export const createStudentService = async ({ token, newStudent }: CreateStudentP
     }
 
     if (response.status !== 201) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
+}
+
+export interface getTasksProps {
+    token: string;
+    groupId: string;
+}
+
+export interface Task {
+    _id: string;
+    name: string;
+    description?: string;
+    deadline?: string;
+    groups: string[];
+    weight: string;
+    optional: boolean;
+    tags: string[];
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface getTasksResponse { //TODO change with the correct interface for task
+    success: boolean;
+    message: string;
+    data: Task[]; 
+}
+
+export const getTasksService = async ({ token, groupId }: getTasksProps) => {
+    const response = await fetch(root + `task/${groupId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+    });
+
+    const parsedResponse:getTasksResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse.data;
+}
+
+export interface EditTaskServiceProps {
+    token: string;
+    group: string;
+    task: string;
+    newTask: NewTask;
+}
+
+export interface EditTaskResponse {
+    success: boolean;
+    message: string;
+    data: Task;
+}
+
+export const editTaskService = async ({ token, group, task, newTask }: EditTaskServiceProps) => {
+    const response = await fetch(root + `task/${group}/${task}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(newTask),
+    });
+
+    const parsedResponse:EditTaskResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse.data;
+}
+
+export interface DeleteTaskProps {
+    token: string;
+    groupId: string;
+    taskId: string;
+}
+
+export interface DeleteTaskResponse {
+    success: boolean;
+    message: string;
+}
+
+export const deleteTaskService = async ({ token, groupId, taskId }: DeleteTaskProps) => {
+    const response = await fetch(root + `task/${groupId}/${taskId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+    });
+
+    const parsedResponse:DeleteTaskResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
         throw new Error(parsedResponse.message);
     }
 

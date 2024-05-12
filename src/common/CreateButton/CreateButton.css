@@ -7,7 +7,7 @@
     height: 3rem;
     width: 3rem;
 
-    position: absolute;
+    position: fixed;
     right: calc(7% + 1rem);
     bottom: calc(10% + 1rem);
     /* right: 1rem; */
