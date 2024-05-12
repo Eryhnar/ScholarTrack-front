@@ -112,9 +112,10 @@ export const Register: React.FC = (): JSX.Element => {
                 />
             )}
             <CCard
-                title="Register"
+                title=""
                 content={
                     <div className="register-inputs">
+                        <h1 className="register-title">Create an account</h1>
                         <div className="register-field">
                             <div className="register-input-area">
                                 <label htmlFor="name">Name</label>
@@ -175,7 +176,7 @@ export const Register: React.FC = (): JSX.Element => {
                         </div>
                         <div className={errorMsg.confirmPasswordError ? "register-field-error-msg" : "register-empty-error"}>{errorMsg.confirmPasswordError}</div>
                         <CButton
-                            className="register-button"
+                            // className="register-button"
                             title="Register"
                             onClickFunction={registerUser}
                         />

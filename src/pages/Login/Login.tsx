@@ -71,9 +71,10 @@ export const Login: React.FC = (): JSX.Element => {
             )}
             <CCard
                 className={"login-card"}
-                title="Login"
+                title=""
                 content={
                     <div className="login-inputs">
+                        <h1 className="login-title">Log In</h1>
                         <div className="login-field">
                             <div className="login-input-area">
                                 <label htmlFor="email">Email</label>
@@ -103,7 +104,7 @@ export const Login: React.FC = (): JSX.Element => {
                             <div className={errorMsg.passwordError ? "login-field-error-msg" : "login-empty-error"}>{errorMsg.passwordError}</div>
                         </div>
                         <CButton
-                            className={"login-button"}
+                            // className={"login-button"}
                             title={"Login"}
                             onClickFunction={loginUser}
                         />

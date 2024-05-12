@@ -17,9 +17,11 @@ export const InfoButton: React.FC<InfoButtonProps> = ({
     const [showInfo, setShowInfo] = useState(false);
 
     return (
-        <div className={className} onClick={() => setShowInfo(!showInfo)} onMouseEnter={() => setShowInfo(true)} onMouseLeave={() => setShowInfo(false)}>
-            <div >{title}</div>
-            {showInfo && <div className={infoClassName}>{info}</div>}
-        </div>
+        <>
+            <div className={className} onClick={() => setShowInfo(!showInfo)} onMouseEnter={() => setShowInfo(true)} onMouseLeave={() => setShowInfo(false)}>
+                <div >{title}</div>
+                {showInfo && <div className={infoClassName}>{info}</div>}
+            </div>
+        </>
     )
 }

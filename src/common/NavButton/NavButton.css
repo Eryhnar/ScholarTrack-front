@@ -1,17 +1,17 @@
-.default-custom-button {
+.default-nav-button {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--button-color);
-    border-radius: 0.5rem;
+    /* background-color: var(--button-color); */
+    /* border-radius: 0.5rem; */
 
     padding-block: 0.25rem;
     padding-inline: 0.5rem;
     width: 7rem;
+    color: var(--button-color);
 }
 
-.default-custom-button:hover {
-    /* background-color: #e0e0e0; */
+.default-nav-button:hover {
     background-color: var(--button-color-hover);
     cursor: pointer;
 }

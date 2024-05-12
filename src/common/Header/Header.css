@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: purple;
+    background-color: #2e1b2c;
     color: white;
     min-height: 5svh;
     padding-inline: 1rem;
@@ -12,6 +12,7 @@
 
 .burguer-button {
     cursor: pointer;
+    color: var(--button-color);
 }
 
 .nav-menu {
@@ -38,7 +39,7 @@
     justify-content: center;
     align-items: center;
 
-    background-color: white;
+    background-color: var(--button-color);
     color: black;
     font-weight: bold;
 }
@@ -63,4 +64,41 @@
 .nav-profile-menu li {
     list-style: none;
     cursor: pointer;
+}
+
+.no-token-header-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    /* padding-inline: 2rem; */
+
+}
+
+.no-token-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: var(--accent-color); */
+    background-color: #2e1b2c;
+    color: var(--light-font-color);
+    min-height: 5svh;
+    /* padding-inline: 4rem; */
+
+    width: 100%;
+    padding-inline: 1rem;
+
+    /* position: fixed; */
+}
+
+.no-token-header-right{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
 }

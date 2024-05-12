@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: blue;
+    background-color: var(--button-color);
     border-radius: 0.5rem;
     height: 1rem;
     width: 1rem;
@@ -10,4 +10,10 @@
 
 .default-custom-info {
     background-color: rosybrown;
+    width: 10rem;
+    z-index: 5;
+
+    position: fixed;
+    top: 30%;
+    left: 45%;
 }
