@@ -83,7 +83,7 @@ const mutation = useMutation(deleteTaskService, {
                         </span>
                     </div>
                     <CButton title="Edit" onClickFunction={() => { setIsOpenEdit(true) }} />
-                    <CButton title="Delete" onClickFunction={deleteTask} />
+                    {/* <CButton title="Delete" onClickFunction={deleteTask} /> */}
                 </div>
             )}
             {isOpenEdit && (
