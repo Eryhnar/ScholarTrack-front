@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
 import { selectGroup, selectGroups } from "../../app/slices/groupDetailSlice"
 import { CDropdown } from "../CDropdown/CDropdown"
+import { selectTasks } from "../../app/slices/groupTasksSlice"
 
 export const Header: React.FC = (): JSX.Element => {
     // const userName = useSelector(selectUser).credentials.user.name
@@ -28,7 +29,7 @@ export const Header: React.FC = (): JSX.Element => {
     const profileRef = useRef<HTMLDivElement | null>(null);
     const navMenuRef = useRef<HTMLDivElement | null>(null);
 
-    const tasks = useSelector(selectGroup).tasks;
+    const tasks = useSelector(selectTasks);
 
     // useEffect(() => {
     //     const closeMenu = (event: MouseEvent) => {
@@ -82,6 +83,19 @@ export const Header: React.FC = (): JSX.Element => {
         navigate(`/groups/${e.target.value}`, { state: { path: "/groups/:groupId" } });
     }
 
+    // useEffect(() => {
+    //     if (tasks && tasks.length > 0) {
+    //         navigate(`/groups/${group._id}/${tasks[0]._id}/marks`, { state: { path: "/groups/:groupId/:taskId/marks" } });
+    //     }
+    // }, [tasks, group]);
+
+    // const changeTask = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    //     if (!tasks) {
+    //         navigate(`/groups/${group._id}/marks`, { state: { path: "/groups/:groupId/marks" } });
+    //     }
+    //     navigate(`/groups/${group._id}/${e.target.value}/marks`, { state: { path: "/groups/:groupId/:taskId/marks" } });
+    // }
+
     if (location.state) {
         switch (location.state.path) {
             // case "/groups":
@@ -98,8 +112,7 @@ export const Header: React.FC = (): JSX.Element => {
                             onChangeFunction={changeGroup}
                         />
                         <NavButton title= "Tasks" path={`/groups/${group._id}/tasks`} />
-                        <NavButton title="Marks" path={`/groups/${group._id}/marks`} state={{path: '/groups/:groupId/marks'}} />
-                        {/* , { state: { path: '/groups/:groupId/marks'}} */}
+                        {/* <NavButton title="Marks" path={`/groups/${group._id}/marks`} state={{path: '/groups/:groupId/marks'}} /> */}
                     </>
                 break;
             case "/groups/:groupId/marks":
@@ -108,7 +121,16 @@ export const Header: React.FC = (): JSX.Element => {
                         title="Tasks" 
                         items={tasks || []}
                         selectedValue={"Task"}
-                        onChangeFunction={() => {}}
+                        onChangeFunction={() => { }}
+                    />
+                break;
+            case "/groups/:groupId/:taskId/marks":
+                renderContent =
+                    <CDropdown 
+                        title="Tasks" 
+                        items={tasks || []}
+                        selectedValue={"Task"}
+                        onChangeFunction={() => { }}
                     />
                 break;
             default:
