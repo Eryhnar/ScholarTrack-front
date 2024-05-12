@@ -1,3 +1,4 @@
+import "./SuspendAccount.css"
 import { useMutation } from "react-query"
 import { CButton } from "../CButton/CButton"
 import { suspendAccountService } from "../../services/apicalls"
