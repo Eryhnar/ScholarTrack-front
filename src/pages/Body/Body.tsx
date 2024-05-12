@@ -8,6 +8,7 @@ import { GroupDetail } from "../GroupDetail/GroupDetail"
 import { CreateTask } from "../CreateTask/CreateTask"
 import { CreateStudent } from "../CreateStudent/CreateStudent"
 import { Tasks } from "../Tasks/Tasks"
+import { EditTask } from "../EditTask/EditTask"
 
 export const Body: React.FC = (): JSX.Element => {
     return (
@@ -21,6 +22,7 @@ export const Body: React.FC = (): JSX.Element => {
             <Route path="/groups/:groupId/create-task" element={<CreateTask />} />
             <Route path="/groups/:groupId/create-student" element={<CreateStudent />} />
             <Route path="/groups/:groupId/tasks" element={<Tasks />} />
+            {/* <Route path="/groups/:groupId/edit-task" element={<EditTask />} /> */}
             <Route path="*" element={<Home />} />
         </Routes>
 

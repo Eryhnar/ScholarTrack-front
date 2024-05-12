@@ -9,10 +9,10 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../app/slices/userSlice";
 import { Toast } from "../../common/Toast/Toast";
 
-interface Task {
+export interface NewTask {
     name: string;
-    description: string;
-    deadline: string;
+    description?: string;
+    deadline?: string;
     groups: string[];
     weight: string;
     optional: boolean;
@@ -22,7 +22,7 @@ export const CreateTask: React.FC = (): JSX.Element => {
     const token = useSelector(selectUser).credentials.token;
     const navigate = useNavigate()
     const group = useParams<{ groupId: string }>().groupId
-    const [newTask, setNewTask] = useState<Task>({
+    const [newTask, setNewTask] = useState<NewTask>({
         name: "",
         description: "",
         deadline: "",
