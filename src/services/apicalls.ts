@@ -570,21 +570,23 @@ export interface getTasksProps {
     groupId: string;
 }
 
+export interface Task {
+    _id: string;
+    name: string;
+    description?: string;
+    deadline?: string;
+    groups: string[];
+    weight: string;
+    optional: boolean;
+    tags: string[];
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export interface getTasksResponse { //TODO change with the correct interface for task
     success: boolean;
     message: string;
-    data: {
-        _id: string;
-        name: string;
-        description?: string;
-        deadline?: string;
-        groups: string[];
-        weight: string;
-        optional: boolean;
-        tags: string[];
-        createdAt: Date;
-        updatedAt: Date;
-    }[]
+    data: Task[]; 
 }
 
 export const getTasksService = async ({ token, groupId }: getTasksProps) => {
