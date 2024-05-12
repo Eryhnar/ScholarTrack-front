@@ -8,15 +8,19 @@ import storage from "redux-persist/lib/storage";
 
 import userReducer, { UserState } from "./slices/userSlice";
 import groupReducer, { GroupDetailState } from "./slices/groupDetailSlice";
+import { GroupTasksState } from "./slices/groupTasksSlice";
+import groupTasksReducer from "./slices/groupTasksSlice";
 
 export interface RootState {
     user: UserState;
     groupDetail: GroupDetailState;
+    groupTasks: GroupTasksState;
 }
 
 const reducers: Reducer<RootState, Action> = combineReducers({
     user: userReducer,
-    groupDetail: groupReducer
+    groupDetail: groupReducer,
+    groupTasks: groupTasksReducer
 });
 
 // const secretKey = process.env.REACT_APP_SECRET_KEY;
