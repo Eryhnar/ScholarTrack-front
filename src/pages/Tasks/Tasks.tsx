@@ -16,6 +16,9 @@ export const Tasks: React.FC = (): JSX.Element => {
     const optionsRef = useRef<HTMLDivElement | null>(null);
     const [isOpenEdit, setIsOpenEdit] = useState(false);
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+    const [errorMsg, setErrorMsg] = useState({
+        serverError: { message: "", success: false }
+    })
 
     useEffect(() => {
         const closeMenu = (event: MouseEvent) => {
@@ -57,6 +60,7 @@ export const Tasks: React.FC = (): JSX.Element => {
                     group={groupId} 
                     task={selectedTask!}
                     close={() => setIsOpenEdit(false)} 
+                    setErrorMsg={() => setErrorMsg}
                 />
             )}
             <CreateButton action={() => navigate(`/groups/${groupId}/create-task`)} />
@@ -66,7 +70,7 @@ export const Tasks: React.FC = (): JSX.Element => {
                     <div key={task._id}>
                         <h2>{task.name}</h2>
                         {/* <p>{task.description}</p> */}
-                        <p>{task.weight}</p>
+                        <p>{task.weight}%</p>
                         <p>{task.deadline}</p>
                         <p>{task.optional ? "Yes" : "No"}</p>
                     </div>

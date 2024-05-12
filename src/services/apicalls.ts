@@ -1,3 +1,5 @@
+import { NewTask } from "../pages/CreateTask/CreateTask";
+
 const root = "http://localhost:4000/api/";
 
 export interface RegisterProps {
@@ -609,4 +611,40 @@ export const getTasksService = async ({ token, groupId }: getTasksProps) => {
     }
 
     return parsedResponse.data;
+}
+
+export interface EditTaskServiceProps {
+    token: string;
+    group: string;
+    task: string;
+    newTask: NewTask;
+}
+
+export interface EditTaskResponse {
+    success: boolean;
+    message: string;
+    data: Task;
+}
+
+export const editTaskService = async ({ token, group, task, newTask }: EditTaskServiceProps) => {
+    const response = await fetch(root + `task/${group}/${task}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(newTask),
+    });
+
+    const parsedResponse:EditTaskResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
 }
