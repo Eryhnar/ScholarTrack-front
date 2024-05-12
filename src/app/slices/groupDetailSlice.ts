@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Group } from "../../services/apicalls";
 
-export type GroupDetailState = {
+export interface GroupDetailState {
     selectedGroup: Group;
     groups: Group[];
 };
