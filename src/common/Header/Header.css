@@ -18,7 +18,9 @@
 .nav-menu {
     display: flex;
     flex-direction: column;
-    background-color: white;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: var(--secondary-background-color);
     color: black;
 
     position: absolute;

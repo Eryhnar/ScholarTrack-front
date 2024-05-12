@@ -2,15 +2,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(66, 74, 212);
+    background-color: var(--button-color);
     border-radius: 0.5rem;
     height: 3rem;
     width: 3rem;
 
     position: fixed;
+    /* right: calc(7% + 1rem); */
+    /* bottom: calc(10% + 1rem); */
     right: calc(7% + 1rem);
-    bottom: calc(10% + 1rem);
+    top: calc(15% + 0.65rem);
     /* right: 1rem; */
     /* bottom: 1rem; */
     z-index: 1;
+}
+
+.default-create-button:hover {
+    background-color: var(--button-color-hover);
 }
