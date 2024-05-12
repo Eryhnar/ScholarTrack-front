@@ -3,7 +3,7 @@ import "./CButton.css"
 interface CButtonProps {
     className?: string
     title: string
-    onClickFunction: () => void
+    onClickFunction: (event?: React.MouseEvent) => void
 }
 
 export const CButton: React.FC<CButtonProps> = ({
@@ -12,7 +12,7 @@ export const CButton: React.FC<CButtonProps> = ({
     onClickFunction,
 }: CButtonProps): JSX.Element => {
     return (
-        <div className={className} onClick={onClickFunction}>
+        <div className={className} onClick={(event) => onClickFunction(event)}>
             {title}
         </div>
     )

@@ -2,13 +2,18 @@ import "./Header.css"
 import { useDispatch, useSelector } from "react-redux"
 import { logout, selectUser } from "../../app/slices/userSlice"
 import { NavButton } from "../NavButton/NavButton"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
+import { selectGroup, selectGroups } from "../../app/slices/groupDetailSlice"
+import { CDropdown } from "../CDropdown/CDropdown"
 
 export const Header: React.FC = (): JSX.Element => {
     // const userName = useSelector(selectUser).credentials.user.name
     // const menuRef = useRef<HTMLDivElement | null>(null);
     // const buttonRef = useRef<HTMLDivElement | null>(null);
+    const navigate = useNavigate()
+    const group = useSelector(selectGroup)
+    const groups = useSelector(selectGroups)
     const { token, user } = useSelector(selectUser).credentials
     const dispatch = useDispatch()
     const location = useLocation()
@@ -20,15 +25,19 @@ export const Header: React.FC = (): JSX.Element => {
     //     exact: true,
     //     strict: false
     // })
+    const profileRef = useRef<HTMLDivElement | null>(null);
+    const navMenuRef = useRef<HTMLDivElement | null>(null);
 
     // useEffect(() => {
     //     const closeMenu = (event: MouseEvent) => {
-    //         if (buttonRef.current && buttonRef.current.contains(event.target as Node)) {
-    //             return;
+    //         // if (buttonRef.current && buttonRef.current.contains(event.target as Node)) {
+    //         //     return;
+    //         // }
+    //         if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+    //             // setIsOpenNavMenu(false);
+    //             setIsOpenProfileMenu(false);
     //         }
-    //         if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-    //             setIsOpenNavMenu(false);
-    //         }
+    //         // setIsOpenNavMenu(false);
     //     };
 
     //     document.addEventListener('mousedown', closeMenu);
@@ -38,13 +47,37 @@ export const Header: React.FC = (): JSX.Element => {
     //     };
     // }, []);
 
-    const toggleBurguerMenu = () => {
-        // event.stopPropagation();
+    useEffect(() => {
+        const closeMenu = (event: MouseEvent) => {
+            if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+                setIsOpenProfileMenu(false);
+            }
+            if (navMenuRef.current && !navMenuRef.current.contains(event.target as Node)) {
+                setIsOpenNavMenu(false);
+            }
+        };
+
+        window.addEventListener('click', closeMenu);
+
+        return () => {
+            window.removeEventListener('click', closeMenu);
+        };
+    }, []);
+
+    const toggleBurguerMenu = (event: React.MouseEvent) => {
+        event.stopPropagation();
         setIsOpenNavMenu(!isOpenNavMenu);
     }
 
-    const toggleprofileMenu = () => {
+    const toggleprofileMenu = (event: React.MouseEvent) => {
+        event.stopPropagation();
         setIsOpenProfileMenu(!isOpenProfileMenu);
+    }
+
+    const changeGroup = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        // const newGroupId = e.target.value;
+        // console.log(e.target.value);
+        navigate(`/groups/${e.target.value}`, { state: { path: "/groups/:groupId" } });
     }
 
     if (location.state) {
@@ -56,7 +89,12 @@ export const Header: React.FC = (): JSX.Element => {
             case "/groups/:groupId":
                 renderContent =
                     <>
-                        <NavButton title="Hi" path="/groups/create" />
+                        <CDropdown
+                            title={group.name}
+                            items={groups || []}
+                            selectedValue={group._id}
+                            onChangeFunction={changeGroup}
+                        />
                     </>
                 break;
             default:
@@ -84,28 +122,33 @@ export const Header: React.FC = (): JSX.Element => {
     return (
         <div className="header-design">
             {isOpenNavMenu &&
-                <div className="nav-menu">
+                <div className="nav-menu" ref={navMenuRef}>
                     <NavButton title="Home" path="/" />
                     <NavButton title="Groups" path="/groups" />
                     <NavButton title="Settings" path="/settings" />
                 </div>
             }
             {isOpenProfileMenu &&
-                <div className="nav-profile-menu">
+                <div className="nav-profile-menu" ref={profileRef}>
                     <h3>{user.name}</h3>
                     <NavButton title="Settings" path="/settings" />
                     <div onClick={() => dispatch(logout())}>Logout</div>
                     <div onClick={() => setIsOpenProfileMenu(false)}><span className="material-symbols-outlined">close</span></div>
                 </div>
             }
-            <div className="burguer-button" onClick={toggleBurguerMenu}>
+            {/* <div className="burguer-button" onClick={toggleBurguerMenu}>
                 <span className="material-symbols-outlined">
                     {isOpenNavMenu ? "close" : "menu"}
                 </span>
-            </div>
+            </div> */}
 
             {token ?
                 <>
+                    <div className="burguer-button" onClick={toggleBurguerMenu}>
+                        <span className="material-symbols-outlined">
+                            {isOpenNavMenu ? "close" : "menu"}
+                        </span>
+                    </div>
                     {renderContent}
                     {/* <div>{user.name}</div> */}
                     <div className="nav-profile-button" onClick={toggleprofileMenu}>{user.name[0]}</div>
@@ -115,6 +158,7 @@ export const Header: React.FC = (): JSX.Element => {
 
                 :
                 <>
+                    <NavButton title="Home" path="/" />
                     <NavButton title="Register" path="/register" />
                     <NavButton title="Login" path="/login" />
                 </>

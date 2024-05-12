@@ -1,20 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Group } from "../../services/apicalls";
 
-export type GroupDetailState = Group;
+export type GroupDetailState = {
+    selectedGroup: Group;
+    groups: Group[];
+};
 
 const initialState: GroupDetailState = {
-    _id: "",
-    name: "",
-    author: "",
-    collaborators: [],
-    level: "",
-    students: [],
-    tasks: [],
-    status: "active",
-    gradingScale: null,
-    createdAt: new Date(),
-    updatedAt: new Date()
+    selectedGroup: {
+        _id: "",
+        name: "",
+        author: "",
+        collaborators: [],
+        level: "",
+        students: [],
+        tasks: [],
+        status: "active",
+        gradingScale: null,
+        createdAt: new Date(),
+        updatedAt: new Date()
+    },
+    groups: []
 };
 
 export const groupDetailSlice = createSlice({
@@ -22,16 +28,23 @@ export const groupDetailSlice = createSlice({
     initialState: initialState,
     reducers: {
         setGroup: (state, action: PayloadAction<Group>) => {
-            Object.assign(state, action.payload);
+            state.selectedGroup = action.payload;
+        },
+        setGroups: (state, action: PayloadAction<Group[]>) => {
+            state.groups = action.payload;
         },
         clearGroup: (state) => {
-            Object.assign(state, initialState);
+            state.selectedGroup = initialState.selectedGroup;
+        },
+        clearGroups: (state) => {
+            state.groups = initialState.groups;
         }
     }
 });
 
-export const { setGroup, clearGroup } = groupDetailSlice.actions;
+export const { setGroup, setGroups, clearGroup, clearGroups } = groupDetailSlice.actions;
 
-export const selectGroup = (state: { groupDetail: Group }) => state.groupDetail;
+export const selectGroup = (state: { groupDetail: GroupDetailState }) => state.groupDetail.selectedGroup;
+export const selectGroups = (state: { groupDetail: GroupDetailState }) => state.groupDetail.groups;
 
 export default groupDetailSlice.reducer;

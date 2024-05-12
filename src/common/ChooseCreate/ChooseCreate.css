@@ -1,0 +1,15 @@
+.default-choose-create{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #f5f5f5;
+
+    position: absolute;
+    z-index: 2;
+    /* bottom: 100%; */
+    /* right: 100%; */
+    right: calc(7% + 4rem);
+    bottom: calc(10% + 1rem);
+}

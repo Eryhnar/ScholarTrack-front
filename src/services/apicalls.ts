@@ -391,7 +391,54 @@ export const getGroupService = async ({ token, groupId }: getGroupProps) => {
     }
 
     return parsedResponse.data;
-}                                 
+}  
+
+export interface Attendance {
+    _id: string;
+    date: Date;
+    present: boolean;
+    student: string;
+    group: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface Mark {
+    _id: string;
+    value: number;
+    student: string;
+    task: string;
+    group: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface Student {
+    _id: string;
+    name: string;
+    surname: string;
+    groups: string[];
+    status: "active" | "suspended";
+    age: number;
+    createdAt: Date;
+    updatedAt: Date;
+    attendances: Attendance[];
+    marks: Mark[];
+    totalAttendance: number;
+    totalMarks: number;
+
+}
+
+export interface getStudentOverviewProps {
+    token: string;
+    groupId: string;
+}
+
+export interface getStudentOverviewResponse {
+    success: boolean;
+    message: string;
+    data: Student[];
+}
 
 export const getStudentOverviewService = async ({ token, groupId }: getGroupProps) => {
     const response = await fetch(root + `student/overview/${groupId}`, {
@@ -402,7 +449,7 @@ export const getStudentOverviewService = async ({ token, groupId }: getGroupProp
         },
     });
     
-    const parsedResponse = await response.json();
+    const parsedResponse:getStudentOverviewResponse = await response.json();
 
     if (response.status === 404) {
         throw new Error(parsedResponse.message || "Something went wrong");
@@ -413,4 +460,107 @@ export const getStudentOverviewService = async ({ token, groupId }: getGroupProp
     }
 
     return parsedResponse.data;
+}
+
+export interface CreateTaskProps {
+    token: string;
+    group: string;
+    newTask: {
+        name: string;
+        description?: string;
+        deadline?: string;
+        groups: string[];
+        weight: string;
+        optional: boolean;
+    }
+}
+
+export interface CreateTaskResponse {
+    success: boolean;
+    message: string;
+    data: {
+        _id: string;
+        name: string;
+        description?: string;
+        deadline?: string;
+        groups: string[];
+        weight: string;
+        optional: boolean;
+        tags: string[];
+        createdAt: Date;
+        updatedAt: Date;
+    }
+}
+
+export const createTaskService = async ({ token, group, newTask }: CreateTaskProps) => {
+    const response = await fetch(root + `task/${group}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(newTask),
+    });
+
+    const parsedResponse:CreateTaskResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 201) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
+}
+
+export interface CreateStudentProps {
+    token: string;
+    newStudent: {
+        name: string;
+        surname: string;
+        age: string;
+        group: string;
+    }
+}
+
+export interface CreateStudentResponse {
+    success: boolean;
+    message: string;
+    data: {
+        _id: string;
+        name: string;
+        surname: string;
+        age: number;
+        groups: string[];
+        status: "active" | "suspended";
+        createdAt: Date;
+        updatedAt: Date;
+        attendances: Attendance[];
+        marks: Mark[];
+    }
+}
+
+export const createStudentService = async ({ token, newStudent }: CreateStudentProps) => {
+    const response = await fetch(root + "student", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(newStudent),
+    });
+
+    const parsedResponse:CreateStudentResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 201) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
 }
