@@ -648,3 +648,36 @@ export const editTaskService = async ({ token, group, task, newTask }: EditTaskS
 
     return parsedResponse;
 }
+
+export interface DeleteTaskProps {
+    token: string;
+    groupId: string;
+    taskId: string;
+}
+
+export interface DeleteTaskResponse {
+    success: boolean;
+    message: string;
+}
+
+export const deleteTaskService = async ({ token, groupId, taskId }: DeleteTaskProps) => {
+    const response = await fetch(root + `task/${groupId}/${taskId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+    });
+
+    const parsedResponse:DeleteTaskResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse;
+}
