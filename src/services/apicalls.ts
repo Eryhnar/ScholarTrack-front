@@ -564,3 +564,47 @@ export const createStudentService = async ({ token, newStudent }: CreateStudentP
 
     return parsedResponse;
 }
+
+export interface getTasksProps {
+    token: string;
+    groupId: string;
+}
+
+export interface getTasksResponse { //TODO change with the correct interface for task
+    success: boolean;
+    message: string;
+    data: {
+        _id: string;
+        name: string;
+        description?: string;
+        deadline?: string;
+        groups: string[];
+        weight: string;
+        optional: boolean;
+        tags: string[];
+        createdAt: Date;
+        updatedAt: Date;
+    }[]
+}
+
+export const getTasksService = async ({ token, groupId }: getTasksProps) => {
+    const response = await fetch(root + `task/${groupId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+    });
+
+    const parsedResponse:getTasksResponse = await response.json();
+
+    if (response.status === 404) {
+        throw new Error(parsedResponse.message || "Something went wrong");
+    }
+
+    if (response.status !== 200) {
+        throw new Error(parsedResponse.message);
+    }
+
+    return parsedResponse.data;
+}
