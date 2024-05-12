@@ -10,6 +10,7 @@ import { CreateButton } from "../../common/CreateButton/CreateButton";
 import { RootState } from "../../app/store";
 import { ChooseCreate } from "../../common/ChooseCreate/ChooseCreate";
 import { CButton } from "../../common/CButton/CButton";
+import { setStudent } from "../../app/slices/studentDetailSlice";
 
 export const GroupDetail: React.FC = (): JSX.Element => {
     const navigate = useNavigate();
@@ -87,7 +88,10 @@ export const GroupDetail: React.FC = (): JSX.Element => {
                         </div>
                         {fetchedGroup.map((student: any) => {
                             return (
-                                <div className="group-detail-row" key={student._id}>
+                                <div className="group-detail-row" key={student._id} onClick={() => {
+                                    dispatch(setStudent(student));
+                                    navigate(`/groups/${groupId}/${student._id}`, { state: { path: '/groups/:groupId/:studentId' } })
+                                }}>
                                     <p>{student.name}</p>
                                     <p>{student.surname}</p>
                                     <p>{student.totalAttendance}</p>
