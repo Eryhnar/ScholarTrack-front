@@ -1,3 +1,4 @@
+import "./CreateTask.css"
 import { useState } from "react"
 import { CInput } from "../../common/CInput/CInput"
 // import { CDropdown } from "../../common/CDropdown/CDropdown";
@@ -60,73 +61,77 @@ export const CreateTask: React.FC = (): JSX.Element => {
     }
 
     return (
-        <div>
+        <div className="create-task-design">
             <Toast 
                 message={errorMsg.serverError.message}
                 success={errorMsg.serverError.success}
                 time={4000}
                 resetServerError={() => setErrorMsg({serverError: {message: "", success: false}})}
             />
-            <h1>Create Task</h1>
-            <CInput
-                type="text"
-                placeholder="Task Name"
-                name="name"
-                value={newTask.name || ""}
-                onChangeFunction={(e) => inputHandler(e)}
-            />
-            <p>*</p>
-            <CInput
-                type="text"
-                placeholder="Description"
-                name="description"
-                value={newTask.description || ""}
-                onChangeFunction={(e) => inputHandler(e)}
-            />
-            <CInput
-                type="date"
-                placeholder="Deadline"
-                name="deadline"
-                value={newTask.deadline || ""}
-                onChangeFunction={(e) => inputHandler(e)}
-            />
-            {/* <CInput
-                type="text"
-                placeholder="Groups"
-                name="groups"
-                value={newTask.groups || ""}
-                onChangeFunction={(e) => inputHandler(e)}
-            /> */}
-            <div>
+            <div className="create-task-wrapper">
+                <h1>Create Task</h1>
+                <div className="create-task-row">
+                    <CInput
+                        type="text"
+                        placeholder="Task Name"
+                        name="name"
+                        value={newTask.name || ""}
+                        onChangeFunction={(e) => inputHandler(e)}
+                    />
+                    <p>*</p>
+                </div>
                 <CInput
                     type="text"
-                    placeholder="Value of the task over 100"
-                    name="weight"
-                    value={newTask.weight || ""}
+                    placeholder="Description"
+                    name="description"
+                    value={newTask.description || ""}
                     onChangeFunction={(e) => inputHandler(e)}
                 />
-                <p>*</p>
-            </div>
-            <div>
-                <p>Optional?</p>
                 <CInput
-                    type="checkbox"
-                    placeholder="Optional"
-                    name="optional"
-                    value={newTask.optional ? "true" : "false"}
+                    type="date"
+                    placeholder="Deadline"
+                    name="deadline"
+                    value={newTask.deadline || ""}
                     onChangeFunction={(e) => inputHandler(e)}
                 />
+                {/* <CInput
+                    type="text"
+                    placeholder="Groups"
+                    name="groups"
+                    value={newTask.groups || ""}
+                    onChangeFunction={(e) => inputHandler(e)}
+                /> */}
+                <div className="create-task-row">
+                    <CInput
+                        type="text"
+                        placeholder="Value of the task over 100"
+                        name="weight"
+                        value={newTask.weight || ""}
+                        onChangeFunction={(e) => inputHandler(e)}
+                    />
+                    <p>*</p>
+                </div>
+                <div className="create-task-row-2">
+                    <p>Optional?</p>
+                    <CInput
+                        type="checkbox"
+                        placeholder="Optional"
+                        name="optional"
+                        value={newTask.optional ? "true" : "false"}
+                        onChangeFunction={(e) => inputHandler(e)}
+                    />
+                </div>
+                {/* <CDropdown
+                    title="Groups"
+                    items={["group1", "group2", "group3"]}
+                    selectedValue={newTask.groups[0]}
+                    onChangeFunction={(e) => inputHandler(e)} */}
+                    <p>All fields marked with * are required</p>
+                    <CButton
+                        title="Create Task"
+                        onClickFunction={createTask}
+                    />
             </div>
-            {/* <CDropdown
-                title="Groups"
-                items={["group1", "group2", "group3"]}
-                selectedValue={newTask.groups[0]}
-                onChangeFunction={(e) => inputHandler(e)} */}
-                <p>All fields marked with * are required</p>
-                <CButton 
-                    title="Create Task"
-                    onClickFunction={createTask}
-                />
         </div>
     )
 }
