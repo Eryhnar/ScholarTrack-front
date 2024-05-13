@@ -1,3 +1,4 @@
+import "./CreateStudent.css"
 import { useState } from "react";
 import { CInput } from "../../common/CInput/CInput"
 import { useNavigate, useParams } from "react-router-dom";
@@ -54,46 +55,48 @@ export const CreateStudent: React.FC = (): JSX.Element => {
     }
 
     return (
-        <>
+        <div className="create-student-design">
             <Toast 
                 message={errorMsg.serverError.message}
                 success={errorMsg.serverError.success}
                 time={4000}
                 resetServerError={() => setErrorMsg({serverError: {message: "", success: false}})}
             />
-            <h1>Create Student</h1>
-            <CInput
-                type="text"
-                placeholder="Name"
-                name="name"
-                value={newStudent.name || ""}
-                onChangeFunction={inputHandler}
-            />
-            <CInput
-                type="text"
-                placeholder="Surname"
-                name="surname"
-                value={newStudent.surname || ""}
-                onChangeFunction={inputHandler}
-            />
-            <CInput
-                type="text"
-                placeholder="Age"
-                name="age"
-                value={newStudent.age || ""}
-                onChangeFunction={inputHandler}
-            />
-            {/* <CInput
-                type="text"
-                placeholder="Group"
-                name="group"
-                value={newStudent.group || ""}
-                onChangeFunction={inputHandler}
-            /> */}
-            <CButton
-                title="Create Student"
-                onClickFunction={createStudent}
-            />
-        </>
+            <div className="create-student-wrapper">
+                <h1>Create Student</h1>
+                <CInput
+                    type="text"
+                    placeholder="Name"
+                    name="name"
+                    value={newStudent.name || ""}
+                    onChangeFunction={inputHandler}
+                />
+                <CInput
+                    type="text"
+                    placeholder="Surname"
+                    name="surname"
+                    value={newStudent.surname || ""}
+                    onChangeFunction={inputHandler}
+                />
+                <CInput
+                    type="text"
+                    placeholder="Age"
+                    name="age"
+                    value={newStudent.age || ""}
+                    onChangeFunction={inputHandler}
+                />
+                {/* <CInput
+                    type="text"
+                    placeholder="Group"
+                    name="group"
+                    value={newStudent.group || ""}
+                    onChangeFunction={inputHandler}
+                /> */}
+                <CButton
+                    title="Create Student"
+                    onClickFunction={createStudent}
+                />
+            </div>
+        </div>
     )
 }

@@ -1,3 +1,4 @@
+import "./Tasks.css"
 import { DeleteTaskProps, Task, deleteTaskService, getTasksResponse, getTasksService } from "../../services/apicalls"
 import { useNavigate, useParams } from "react-router-dom"
 import { useSelector } from "react-redux"

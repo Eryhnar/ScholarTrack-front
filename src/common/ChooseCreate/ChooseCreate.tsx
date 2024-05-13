@@ -47,22 +47,24 @@ export const ChooseCreate: React.FC<ChooseCreateProps> = (
                 title="Close"
                 onClickFunction={() => closeFunction()}
             /> */}
-            <div onClick={closeFunction}><span className="material-symbols-outlined">
-                close
-            </span></div>
             {/* <CButton
                 title="Create Task"
                 onClickFunction={() => console.log("Create Task")}
-            />
-            <CButton
+                />
+                <CButton
                 title="Create Attendance"
                 onClickFunction={() => console.log("Create Attendance")}
-            />
-            <CButton
+                />
+                <CButton
                 title="Create Student"
                 onClickFunction={() => console.log("Create Student")}
             /> */}
-            {children}
+            <div className="create-button-menu">
+                {children}
+                <div onClick={closeFunction}><span className="material-symbols-outlined default-nav-button">
+                    close
+                </span></div>
+            </div>
         </div>
     )
 }

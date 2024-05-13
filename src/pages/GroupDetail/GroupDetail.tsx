@@ -11,6 +11,7 @@ import { RootState } from "../../app/store";
 import { ChooseCreate } from "../../common/ChooseCreate/ChooseCreate";
 import { CButton } from "../../common/CButton/CButton";
 import { setStudent } from "../../app/slices/studentDetailSlice";
+import { NavButton } from "../../common/NavButton/NavButton";
 
 export const GroupDetail: React.FC = (): JSX.Element => {
     const navigate = useNavigate();
@@ -59,49 +60,58 @@ export const GroupDetail: React.FC = (): JSX.Element => {
 
 
     return (
-        <>
+        <div className="group-detail-design">
         {isOpenCreate && 
         <ChooseCreate 
         closeFunction={() => setIsOpenCreate(false)}
         children= {
             <>
-                <CButton title="Create Student" onClickFunction={() => navigate(`/groups/${groupId}/create-student`, { state: { path: '/groups/:groupId/create-student'}})} />
-                <CButton title="Create Task" onClickFunction={() => navigate(`/groups/${groupId}/create-task`, { state: { path: '/groups/:groupId/create-task' }})} /> {/* todo possibly remove the id */}
-                <CButton title="Create Attendance" onClickFunction={() => navigate(`/groups/${groupId}/create-attendance`)} />
+                <NavButton title="Create Student" path={`/groups/${groupId}/create-student`}  state= {{ path: '/groups/:groupId/create-student'}} />
+                {/* <CButton title="Create Student" onClickFunction={() => navigate(`/groups/${groupId}/create-student`, { state: { path: '/groups/:groupId/create-student'}})} /> */}
+                <NavButton title="Create Task" path={`/groups/${groupId}/create-task`} state= {{ path: '/groups/:groupId/create-task'}} />
+                {/* <CButton title="Create Task" onClickFunction={() => navigate(`/groups/${groupId}/create-task`, { state: { path: '/groups/:groupId/create-task' }})} /> todo possibly remove the id */}
+                {/* <NavButton title="Create Attendance" path={`/groups/${groupId}/create-attendance`} state= {{ path: '/groups/:groupId/create-attendance'}} /> */}
+                {/* <CButton title="Create Attendance" onClickFunction={() => navigate(`/groups/${groupId}/create-attendance`)} /> */}
                 {/* <CButton title="Mark task" onClickFunction={() => navigate(`/groups/${groupId}/create-mark`)} /> */}
             </>
         }
         />}
             {fetchedGroup &&
-                <>
+                <div className="group-detail-wrapper">
                     <CreateButton
                         // popovertarget="GroupDetail-create-menu"
                         id="GroupDetail-create-button"
                         action={() => setIsOpenCreate(!isOpenCreate)}
                     />
-                    <div className="group-detail">
-                        <div className="group-detail-row">
-                            <p>name</p>
-                            <p>surname</p>
-                            <p>attendance %</p>
-                            <p>marks</p>
-                        </div>
-                        {fetchedGroup.map((student: any) => {
-                            return (
-                                <div className="group-detail-row" key={student._id} onClick={() => {
-                                    dispatch(setStudent(student));
-                                    navigate(`/groups/${groupId}/${student._id}`, { state: { path: '/groups/:groupId/:studentId' } })
-                                }}>
-                                    <p>{student.name}</p>
-                                    <p>{student.surname}</p>
-                                    <p>{student.totalAttendance}</p>
-                                    <p>{student.totalMarks}</p>
+                    {/* <div className="group-detail-wrapper"> */}
+                        <div className="group-detail">
+                            <div className="group-detail-row">
+                                <div className="group-detail-student">
+                                    <p>name</p>
+                                    <p>surname</p>
+                                    <p>attendance %</p>
+                                    <p>marks</p>
                                 </div>
-                            )
-                        })}
-                    </div>
-                </>
+                            </div>
+                            {fetchedGroup.map((student: any) => {
+                                return (
+                                    <div className="group-detail-row" key={student._id} onClick={() => {
+                                        dispatch(setStudent(student));
+                                        navigate(`/groups/${groupId}/${student._id}`, { state: { path: '/groups/:groupId/:studentId' } })
+                                    }}>
+                                        <div className="group-detail-student">
+                                            <p>{student.name}</p>
+                                            <p>{student.surname}</p>
+                                            <p>{student.totalAttendance}</p>
+                                            <p>{student.totalMarks}</p>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    {/* </div> */}
+                </div>
             }
-        </>
+        </div>
     )
 }

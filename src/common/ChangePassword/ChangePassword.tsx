@@ -1,3 +1,4 @@
+import "./ChangePassword.css"
 import { useState } from "react"
 import { CButton } from "../CButton/CButton"
 import { CInput } from "../CInput/CInput"
@@ -61,10 +62,10 @@ export const ChangePassword: React.FC = (): JSX.Element => {
 
     return (
         <div className="change-password-settings">
-            <h1>Change Password</h1>
             <div className="change-password-settings-container">
+            <h1>Change Password</h1>
                 <div className="change-password-settings-item">
-                    <label htmlFor="current-password">Current Password</label>
+                    {/* <label htmlFor="current-password">Current Password</label> */}
                     <CInput
                         // className={"account-name-field"}
                         id="settings-current-password"
@@ -76,7 +77,7 @@ export const ChangePassword: React.FC = (): JSX.Element => {
                     />
                 </div>
                 <div className="change-password-settings-item">
-                    <label htmlFor="new-password">New Password</label>
+                    {/* <label htmlFor="new-password">New Password</label> */}
                     <CInput
                         // className={"account-name-field"}
                         id="settings-new-password"
@@ -88,7 +89,7 @@ export const ChangePassword: React.FC = (): JSX.Element => {
                     />
                 </div>
                 <div className="change-password-settings-item">
-                    <label htmlFor="confirm-new-password">Confirm New Password</label>
+                    {/* <label htmlFor="confirm-new-password">Confirm New Password</label> */}
                     <CInput
                         // className={"account-name-field"}
                         id="settings-confirm-new-password"
@@ -99,8 +100,8 @@ export const ChangePassword: React.FC = (): JSX.Element => {
                         onChangeFunction={inputHandler}
                     />
                 </div>
-            </div>
             <CButton title="Save" onClickFunction={saveNewPassword} />
+            </div>
         </div>
     )
 }

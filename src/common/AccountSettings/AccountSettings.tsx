@@ -1,3 +1,4 @@
+import "./AccountSettings.css";
 import { useState } from "react";
 import { CButton } from "../CButton/CButton"
 import { CInput } from "../CInput/CInput"
@@ -26,9 +27,10 @@ interface NewUser {
 
 export const AccountSettings: React.FC<AccountSettingsProps> = ({ errorMsg, setErrorMsg }) => {
     const token = useSelector(selectUser).credentials.token;
+    const user = useSelector(selectUser).credentials.user;
     const dispatch = useDispatch();
     const [newUser, setNewUser] = useState<NewUser>({
-        name: "",
+        name: user.name,
         email: "",
     });
 
@@ -62,13 +64,14 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ errorMsg, setE
     }
 
     return (
-        <div className="account-settings">
-            <h1>Account Settings</h1>
+        <div className="account-settings-design">
+            {/* <h1>Account Settings</h1> */}
             <div className="account-settings-container">
+            <h1>Account Settings</h1>
                 <div className="account-settings-item">
-                    <label htmlFor="account-name">Name</label>
+                    {/* <label htmlFor="account-name">Name</label> */}
                     <CInput
-                        className={"account-name-field"}
+                        // className={"account-name-field"}
                         id="account-name"
                         type="text"
                         placeholder="Name"
@@ -89,8 +92,8 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ errorMsg, setE
                         onChangeFunction={inputHandler}
                     />
                 </div> */}
-            </div>
             <CButton title="Save" onClickFunction={saveAccountSettings} />
+            </div>
         </div>
     )
 }

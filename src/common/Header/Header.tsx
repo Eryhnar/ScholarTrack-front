@@ -2,7 +2,7 @@ import "./Header.css"
 import { useDispatch, useSelector } from "react-redux"
 import { logout, selectUser } from "../../app/slices/userSlice"
 import { NavButton } from "../NavButton/NavButton"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
 import { selectGroup, selectGroups } from "../../app/slices/groupDetailSlice"
 import { CDropdown } from "../CDropdown/CDropdown"
@@ -21,6 +21,9 @@ export const Header: React.FC = (): JSX.Element => {
     let renderContent = null
     const [isOpenNavMenu, setIsOpenNavMenu] = useState(false)
     const [isOpenProfileMenu, setIsOpenProfileMenu] = useState(false)
+
+    // const currentGroup = useParams<{ id: string }>().id!;
+
     // const path = matchPath(location.pathname, {
     //     path: "/groups/:groupId",
     //     exact: true,
@@ -30,6 +33,22 @@ export const Header: React.FC = (): JSX.Element => {
     const navMenuRef = useRef<HTMLDivElement | null>(null);
 
     const tasks = useSelector(selectTasks);
+    // console.log(currentGroup);
+    
+
+//     const [isLoading, setIsLoading] = useState(false);
+
+//     useEffect(() => {
+//       if (!groups || !group) {
+//         setIsLoading(true);
+//       } else {
+//         setIsLoading(false);
+//       }
+//     }, [groups, group]);
+
+// if (isLoading) {
+//     return <div>Loading...</div>;
+// }
 
     // useEffect(() => {
     //     const closeMenu = (event: MouseEvent) => {
@@ -83,6 +102,11 @@ export const Header: React.FC = (): JSX.Element => {
         navigate(`/groups/${e.target.value}`, { state: { path: "/groups/:groupId" } });
     }
 
+    // const [currentGroup, setCurrentGroup] = location;
+    const currentGroup = location.pathname.split('/')[2];
+    // console.log(location);
+    
+
     // useEffect(() => {
     //     if (tasks && tasks.length > 0) {
     //         navigate(`/groups/${group._id}/${tasks[0]._id}/marks`, { state: { path: "/groups/:groupId/:taskId/marks" } });
@@ -108,10 +132,10 @@ export const Header: React.FC = (): JSX.Element => {
                         <CDropdown
                             title={group.name}
                             items={groups || []}
-                            selectedValue={group._id}
+                            selectedValue={currentGroup}
                             onChangeFunction={changeGroup}
                         />
-                        <NavButton title= "Tasks" path={`/groups/${group._id}/tasks`} />
+                        {/* <NavButton title= "Tasks" path={`/groups/${group._id}/tasks`} /> */}
                         {/* <NavButton title="Marks" path={`/groups/${group._id}/marks`} state={{path: '/groups/:groupId/marks'}} /> */}
                     </>
                 break;
@@ -176,8 +200,8 @@ export const Header: React.FC = (): JSX.Element => {
                     <div className="nav-profile-menu" ref={profileRef}>
                         <h3>{user.name}</h3>
                         <NavButton title="Settings" path={"/settings"} />
-                        <div onClick={() => dispatch(logout())}>Logout</div>
-                        <div onClick={() => setIsOpenProfileMenu(false)}><span className="material-symbols-outlined">close</span></div>
+                        <div onClick={() => dispatch(logout())} className="default-nav-button">Logout</div>
+                        <div onClick={() => setIsOpenProfileMenu(false)}><span className="material-symbols-outlined default-nav-button">close</span></div>
                     </div>
                 }
                     <div className="burguer-button" onClick={toggleBurguerMenu}>

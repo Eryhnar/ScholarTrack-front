@@ -1,0 +1,25 @@
+.groups-overview-create-design {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 95vh;
+}
+
+
+.groups-overview-create-design {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 90vw;
+    height: 85svh;
+    padding-block: 1rem;
+    gap: 2rem;
+    padding-inline: 2rem;
+    border-radius: 1rem;
+}
+
+.groups-overview-create-wrapper h1 {
+    padding-block: 2rem;
+}

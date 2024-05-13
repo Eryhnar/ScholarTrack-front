@@ -88,7 +88,12 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
             break;
         case "groups":
             renderContent = (
-                <>
+                <div className="groups-overview-groups-wrapper">
+                    <div className="groups-overview-group-header">
+                        <h2>Name</h2>
+                        <h2>Level</h2>
+                        <h2></h2>
+                    </div>
                     {groups.map((group: Group) => {
                         return (
                             <div className="groups-overview-group" key={group._id} onClick={() => {
@@ -104,7 +109,7 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                                         selectedGroup.current = group;
                                     }}
                                 /> */}
-                                <CButton
+                                {/* <CButton
                                     title="..."
                                     onClickFunction={(event: React.MouseEvent<Element, MouseEvent> | undefined) => {
                                         if (event) {
@@ -113,11 +118,25 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                                         setIsOpenOptions(true);
                                         selectedGroup.current = group;
                                     }}
-                                />
+                                /> */}
+                                <div className="group-options-button" onClick={
+                                    (event: React.MouseEvent<Element, MouseEvent> | undefined) => {
+                                        if (event) {
+                                            event.stopPropagation();
+                                        }
+                                        setIsOpenOptions(true);
+                                        selectedGroup.current = group;
+                                    }
+                                
+                                }>
+                                    <span className="material-symbols-outlined">
+                                        more_vert
+                                    </span>
+                                </div>
                             </div>
                         )
                     })}
-                </>
+                </div>
             )
             break;
         case "deleteGroup":

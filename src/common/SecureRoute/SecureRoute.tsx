@@ -3,11 +3,17 @@ import { selectUser } from "../../app/slices/userSlice";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-const enum ProtMode {
-    allowLoggedIn = 'allow-logged-in',
-    allowLoggedOut = 'allow-logged-out',
-    allowLoggedInAdmin = 'allow-logged-in-admin'
-}
+// const enum ProtMode {
+//     allowLoggedIn = 'allow-logged-in',
+//     allowLoggedOut = 'allow-logged-out',
+//     allowLoggedInAdmin = 'allow-logged-in-admin'
+// }
+
+// interface SecureRouteProps {
+//     protMode: ProtMode;
+// }
+
+type ProtMode = 'allow-logged-in' | 'allow-logged-out' | 'allow-logged-in-admin';
 
 interface SecureRouteProps {
     protMode: ProtMode;
@@ -19,17 +25,17 @@ export const SecureRoute: React.FC<SecureRouteProps> = ({ protMode }: SecureRout
 
     useEffect(() => {
         switch (protMode) {
-            case ProtMode.allowLoggedIn:
+            case 'allow-logged-in':
                 if (!token) {
-                    navigate('/');
+                    navigate('/login');
                 }
                 break;
-            case ProtMode.allowLoggedOut:
+            case 'allow-logged-out':
                 if (token) {
                     navigate('/');
                 }
                 break;
-            case ProtMode.allowLoggedInAdmin:
+            case 'allow-logged-in-admin':
                 if (!token || !user.role.includes('admin')) {
                     navigate('/');
                 }
