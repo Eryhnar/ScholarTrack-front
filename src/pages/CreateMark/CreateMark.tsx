@@ -1,3 +1,4 @@
+import "./CreateMark.css"
 import { useNavigate, useParams } from "react-router-dom"
 import { Task, createMarkService, getTasksService } from "../../services/apicalls"
 import { useSelector } from "react-redux"
@@ -54,17 +55,16 @@ export const CreateMark: React.FC = (): JSX.Element => {
     }
 
     return (
-        <div>
-            <h1>CreateMark</h1>
-
-            <CDropdown title="Task" items={tasks} selectedValue={selectedTask} onChangeFunction={(e) => handleTaskChange(e)} />
-            <CInput type="text" name="value" value={newMark.value || ""} onChangeFunction={inputHandler} placeholder="Mark" />
-            <CButton
-                title="Create"
-                onClickFunction={
-                    createMark
-                }
-            />
+        <div className="create-mark-design">
+            <div className="create-mark-wrapper">
+                <h1>CreateMark</h1>
+                <CDropdown title="Task" items={tasks} selectedValue={selectedTask} onChangeFunction={(e) => handleTaskChange(e)} />
+                <CInput type="text" name="value" value={newMark.value || ""} onChangeFunction={inputHandler} placeholder="Mark" />
+                <CButton
+                    title="Create"
+                    onClickFunction={() => createMark()}
+                />
+            </div>
         </div>
     )
 }
