@@ -1,4 +1,4 @@
-# Twittagram
+# ScholarTrack
 
 <details>
   <summary>Content 📝</summary>
