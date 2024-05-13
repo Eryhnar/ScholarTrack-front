@@ -1,3 +1,4 @@
+import "./EditGroup.css"
 import { useState } from "react";
 import { CButton } from "../CButton/CButton"
 import { CInput } from "../CInput/CInput"
@@ -44,8 +45,10 @@ export const EditGroup: React.FC<EditGroupComponentProps> = ({ token, group, set
     }
 
     return (
-        <div className="groups-overview-create">
-            <div className="groups-overview-create-form">
+        <div className="groups-overview-create-design">
+            <div className="groups-overview-create-wrapper">
+                <h1>Edit Group</h1>
+                {/* <h3>{group.name}</h3> */}
                 <CInput
                     type="text"
                     placeholder={group.name}

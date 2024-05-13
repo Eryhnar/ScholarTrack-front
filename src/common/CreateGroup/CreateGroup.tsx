@@ -1,3 +1,4 @@
+import "./CreateGroup.css"
 import { useMutation } from "react-query"
 import { CButton } from "../CButton/CButton"
 import { CInput } from "../CInput/CInput"
@@ -55,8 +56,9 @@ export const CreateGroup: React.FC<CreateGroupComponentProps> = ({token, setDisp
     }
 
     return (
-        <div className="groups-overview-create">
-            <div className="groups-overview-create-form">
+        <div className="groups-overview-create-design">
+            <div className="groups-overview-create-wrapper">
+                <h1>Create Group</h1>
                 {/* <input type="text" placeholder="Group Name" /> */}
                 {/* <input type="text" placeholder="Group Level" /> */}
                 <CInput
