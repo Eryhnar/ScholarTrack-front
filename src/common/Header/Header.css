@@ -62,7 +62,6 @@
     width: 10%;
     padding-block: 1rem;
     gap: 1rem;
-    /* height: 95svh; */
 }
 
 .nav-profile-menu h3 {
@@ -82,7 +81,6 @@
     align-items: center;
 
     width: 100%;
-    /* padding-inline: 2rem; */
 
 }
 
@@ -91,16 +89,13 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    /* background-color: var(--accent-color); */
     background-color: #2e1b2c;
     color: var(--light-font-color);
     min-height: 5svh;
-    /* padding-inline: 4rem; */
 
     width: 100%;
     padding-inline: 1rem;
 
-    /* position: fixed; */
 }
 
 .no-token-header-right{

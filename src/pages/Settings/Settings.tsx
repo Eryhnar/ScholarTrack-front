@@ -41,20 +41,7 @@ export const Settings: React.FC = (): JSX.Element => {
                 </div>
                 <div className="setting-display">
                     {selectedSetting === "Account" && (
-                        // <div className="account-settings">
-                        //     <h1>Account Settings</h1>
-                        //     <div className="account-settings-container">
-                        //         <div className="account-settings-item">
-                        //             <label htmlFor="name">Name</label>
-                        //             <input type="text" id="name" />
-                        //         </div>
-                        //         <div className="account-settings-item">
-                        //             <label htmlFor="email">Email</label>
-                        //             <input type="email" id="email" />
-                        //         </div>
-                        //     </div>
-                        //     <CButton title="Save" onClickFunction={() => {}} />
-                        // </div>
+
                         <AccountSettings errorMsg={errorMsg} setErrorMsg={setErrorMsg}/>
                     )}
                     {selectedSetting === "Change Password" && (

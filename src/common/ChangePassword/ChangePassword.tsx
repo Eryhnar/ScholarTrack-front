@@ -65,9 +65,7 @@ export const ChangePassword: React.FC = (): JSX.Element => {
             <div className="change-password-settings-container">
             <h1>Change Password</h1>
                 <div className="change-password-settings-item">
-                    {/* <label htmlFor="current-password">Current Password</label> */}
                     <CInput
-                        // className={"account-name-field"}
                         id="settings-current-password"
                         type="text"
                         placeholder="Current Password"
@@ -77,9 +75,7 @@ export const ChangePassword: React.FC = (): JSX.Element => {
                     />
                 </div>
                 <div className="change-password-settings-item">
-                    {/* <label htmlFor="new-password">New Password</label> */}
                     <CInput
-                        // className={"account-name-field"}
                         id="settings-new-password"
                         type="text"
                         placeholder="New Password"
@@ -89,9 +85,7 @@ export const ChangePassword: React.FC = (): JSX.Element => {
                     />
                 </div>
                 <div className="change-password-settings-item">
-                    {/* <label htmlFor="confirm-new-password">Confirm New Password</label> */}
                     <CInput
-                        // className={"account-name-field"}
                         id="settings-confirm-new-password"
                         type="text"
                         placeholder="Confirm New Password"

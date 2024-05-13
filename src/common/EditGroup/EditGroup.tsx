@@ -48,7 +48,6 @@ export const EditGroup: React.FC<EditGroupComponentProps> = ({ token, group, set
         <div className="groups-overview-create-design">
             <div className="groups-overview-create-wrapper">
                 <h1>Edit Group</h1>
-                {/* <h3>{group.name}</h3> */}
                 <CInput
                     type="text"
                     placeholder={group.name}

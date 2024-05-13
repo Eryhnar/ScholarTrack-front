@@ -28,17 +28,6 @@ export const CreateGroup: React.FC<CreateGroupComponentProps> = ({token, setDisp
 
     const mutation = useMutation(createGroupService,  {
         onSuccess: (response: CreateGroupResponse) => {
-            // TODO implement optimistic update
-            // queryClient.setQueryData<Group[]>('groups', (old = []) => [...old, response.data]);
-            // queryClient.setQueryData<Group[][]>('groups', (old = []) => {
-            //     let newPage;
-            //     if (!Array.isArray(old) || old.length === 0) {
-            //         newPage = [response.data];
-            //     } else {
-            //         newPage = [...old[old.length - 1], response.data];
-            //     }
-            //     return [...old.slice(0, -1), newPage];
-            // });
             setErrorMsg({
                 serverError: { message: response.message, success: true }
             });
@@ -59,8 +48,6 @@ export const CreateGroup: React.FC<CreateGroupComponentProps> = ({token, setDisp
         <div className="groups-overview-create-design">
             <div className="groups-overview-create-wrapper">
                 <h1>Create Group</h1>
-                {/* <input type="text" placeholder="Group Name" /> */}
-                {/* <input type="text" placeholder="Group Level" /> */}
                 <CInput
                     type="text"
                     placeholder="Group Name"
@@ -79,7 +66,6 @@ export const CreateGroup: React.FC<CreateGroupComponentProps> = ({token, setDisp
                     title="Create"
                     onClickFunction={saveNewGroup}
                 />
-                {/* <button onClick={() => setIsOpenCreate(false)}>Cancel</button> */}
                 <CButton
                     title="Cancel"
                     onClickFunction={() => setDisplayed("groups")}

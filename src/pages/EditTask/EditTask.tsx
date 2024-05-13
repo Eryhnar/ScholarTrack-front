@@ -1,9 +1,6 @@
 import { useState } from "react"
 import { CInput } from "../../common/CInput/CInput"
 import { NewTask } from "../CreateTask/CreateTask"
-// import { useNavigate, useParams } from "react-router-dom";
-// import { useSelector } from "react-redux";
-// import { selectUser } from "../../app/slices/userSlice";
 import { CButton } from "../../common/CButton/CButton";
 import { EditTaskServiceProps, Task, editTaskService } from "../../services/apicalls";
 import { useMutation, useQueryClient } from "react-query";
@@ -21,9 +18,6 @@ interface EditTaskProps {
 
 export const EditTask: React.FC<EditTaskProps> = ({token, group, task, close, setErrorMsg}): JSX.Element => {
     const queryClient = useQueryClient()    
-    // const token = useSelector(selectUser).credentials.token;
-    // const navigate = useNavigate()
-    // const group = useParams<{ groupId: string }>().groupId
     const [newTask, setNewTask] = useState<NewTask>({
         name: task.name,
         description: task.description,
@@ -41,21 +35,6 @@ export const EditTask: React.FC<EditTaskProps> = ({token, group, task, close, se
         })
     }
 
-    // const mutation = useMutation(editTaskService, {
-    //     onSuccess: (response: any) => {
-    //         // console.log(response)
-    //         queryClient.setQueryData<Task[]>('tasks', (old) => 
-    //             old!.map(task => task._id === response._id ? response : task)
-    //         );
-    //         close()
-    //     },
-    //     onError: (error: any) => {
-    //         // console.log(error)
-    //         setErrorMsg({
-    //             serverError: { message: error.message, success: false }
-    //         })
-    //     }
-    // })
     const mutation = useMutation(editTaskService, {
         onMutate: async (newData: EditTaskServiceProps) => {
             await queryClient.cancelQueries('tasks');
@@ -68,7 +47,7 @@ export const EditTask: React.FC<EditTaskProps> = ({token, group, task, close, se
     
             return { previousTasks };
         },
-        onError: (error: any, variables, context) => {
+        onError: (error: any, _, context) => {
             if (context?.previousTasks) {
                 queryClient.setQueryData<Task[]>('tasks', context.previousTasks);
             }
@@ -104,13 +83,6 @@ export const EditTask: React.FC<EditTaskProps> = ({token, group, task, close, se
                     value={newTask.description || ""}
                     onChangeFunction={(e) => inputHandler(e)}
                 />
-                {/* <CInput
-                    type="date"
-                    placeholder="Task Deadline"
-                    name="deadline"
-                    value={newTask.deadline || ""}
-                    onChangeFunction={(e) => inputHandler(e)}
-                /> */}
                 <CInput
                     type="text"
                     placeholder="Task Weight"

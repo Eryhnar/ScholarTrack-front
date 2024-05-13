@@ -10,10 +10,6 @@
     position: fixed;
     right: calc(7% + 1rem);
     bottom: calc(10% + 1rem);
-    /* right: calc(7% + 1rem); */
-    /* top: calc(15% + 0.65rem); */
-    /* right: 1rem; */
-    /* bottom: 1rem; */
     z-index: 1;
     font-size: 1.5rem;
     font-weight: bold;

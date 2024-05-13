@@ -27,7 +27,6 @@ const reducers: Reducer<RootState, Action> = combineReducers({
     studentDetail: studentDetailReducer
 });
 
-// const secretKey = process.env.REACT_APP_SECRET_KEY;
 const secretKey = "Nala"; //TODO change to process.env.REACT_APP_SECRET
 
 if (!secretKey) {

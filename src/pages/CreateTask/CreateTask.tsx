@@ -1,11 +1,10 @@
 import "./CreateTask.css"
 import { useState } from "react"
 import { CInput } from "../../common/CInput/CInput"
-// import { CDropdown } from "../../common/CDropdown/CDropdown";
 import { useNavigate, useParams } from "react-router-dom";
 import { CButton } from "../../common/CButton/CButton";
 import { useMutation } from "react-query";
-import { CreateTaskResponse, createTaskService, CreateTaskProps } from "../../services/apicalls";
+import { createTaskService, CreateTaskProps } from "../../services/apicalls";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../app/slices/userSlice";
 import { Toast } from "../../common/Toast/Toast";
@@ -44,12 +43,10 @@ export const CreateTask: React.FC = (): JSX.Element => {
     }
 
     const mutation = useMutation(createTaskService, {
-        onSuccess: (response: CreateTaskResponse) => {
-            // console.log(response)
+        onSuccess: () => {
             navigate(-1)
         },
         onError: (error: any) => {
-            // console.log(error)
             setErrorMsg({
                 serverError: { message: error.message, success: false }
             })
@@ -94,13 +91,6 @@ export const CreateTask: React.FC = (): JSX.Element => {
                     value={newTask.deadline || ""}
                     onChangeFunction={(e) => inputHandler(e)}
                 />
-                {/* <CInput
-                    type="text"
-                    placeholder="Groups"
-                    name="groups"
-                    value={newTask.groups || ""}
-                    onChangeFunction={(e) => inputHandler(e)}
-                /> */}
                 <div className="create-task-row">
                     <CInput
                         type="text"
@@ -121,11 +111,6 @@ export const CreateTask: React.FC = (): JSX.Element => {
                         onChangeFunction={(e) => inputHandler(e)}
                     />
                 </div>
-                {/* <CDropdown
-                    title="Groups"
-                    items={["group1", "group2", "group3"]}
-                    selectedValue={newTask.groups[0]}
-                    onChangeFunction={(e) => inputHandler(e)} */}
                     <p>All fields marked with * are required</p>
                     <CButton
                         title="Create Task"

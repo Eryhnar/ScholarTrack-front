@@ -1,16 +1,13 @@
 import { useRef, useState } from "react"
 import { CreateButton } from "../../common/CreateButton/CreateButton"
 import "./GroupsOverview.css"
-import { QueryClient, UseInfiniteQueryResult, useInfiniteQuery, useMutation, useQueryClient } from "react-query";
-import { Virtuoso } from "react-virtuoso";
+import { UseInfiniteQueryResult, useInfiniteQuery } from "react-query";
 import { selectUser } from "../../app/slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { CreateGroupResponse, createGroupService, getOwnGroupsService, CreateGroupProps } from "../../services/apicalls";
+import { getOwnGroupsService } from "../../services/apicalls";
 import { CButton } from "../../common/CButton/CButton";
-import { CInput } from "../../common/CInput/CInput";
 import { CreateGroup } from "../../common/CreateGroup/CreateGroup";
 import { EditGroup } from "../../common/EditGroup/EditGroup";
-import { Modal } from "../../common/Modal/Modal";
 import { DeleteGroup } from "../../common/DeleteGroup/DeleteGroup";
 import { useNavigate } from "react-router-dom";
 import { setGroup } from "../../app/slices/groupDetailSlice";
@@ -43,22 +40,17 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const token = useSelector(selectUser).credentials.token;
-    const [errorMsg, setErrorMsg] = useState({
+    const [_, setErrorMsg] = useState({
         serverError: { message: "", success: false }
     })
     const [isOpenOptions, setIsOpenOptions] = useState(false)
-    const [isOpenModal, setIsOpenModal] = useState(false)
-
     const [displayed, setDisplayed] = useState<Displayed>("groups")
     let selectedGroup = useRef<Group | null>(null)
 
     const {
         data,
-        fetchNextPage,
-        hasNextPage,
         isLoading,
         isFetchingNextPage,
-        isError,
     }: UseInfiniteQueryResult<Group[], Error> = useInfiniteQuery('groups', ({ pageParam = 1 }) => getOwnGroupsService({ token, pageParam }), {
         getNextPageParam: (lastPage, allPages) => lastPage.length > 0 ? allPages.length + 1 : undefined,
     });
@@ -102,23 +94,6 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                             }}>
                                 <h2>{group.name}</h2>
                                 <p>{group.level}</p>
-                                {/* <CButton
-                                    title="..."
-                                    onClickFunction={() => {
-                                        setIsOpenOptions(true);
-                                        selectedGroup.current = group;
-                                    }}
-                                /> */}
-                                {/* <CButton
-                                    title="..."
-                                    onClickFunction={(event: React.MouseEvent<Element, MouseEvent> | undefined) => {
-                                        if (event) {
-                                            event.stopPropagation();
-                                        }
-                                        setIsOpenOptions(true);
-                                        selectedGroup.current = group;
-                                    }}
-                                /> */}
                                 <div className="group-options-button" onClick={
                                     (event: React.MouseEvent<Element, MouseEvent> | undefined) => {
                                         if (event) {
@@ -155,15 +130,7 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
 
     return (
         <div className="groups-overview-design">
-            {/* {isOpenModal &&
-                <Modal
-                    title="Delete Group"
-                    description="Are you sure you want to delete this group?"
-                    action={() => console.log("delete")}
-                    setIsOpenModal={setIsOpenModal}
-                    setErrorMsg={setErrorMsg}
-                />
-            } */}
+
             {isOpenOptions &&
                 <div className="groups-overview-options">
                     <CButton
@@ -177,13 +144,7 @@ export const GroupsOverview: React.FC = (): JSX.Element => {
                             setIsOpenOptions(false)
                         }}
                     />
-                    {/* <CButton
-                        title="Delete"
-                        onClickFunction={() => {
-                            setDisplayed("deleteGroup")
-                            setIsOpenOptions(false)
-                        }}
-                    /> */}
+
                 </div>
             }
             <CreateButton action={() => setDisplayed("createGroup")} />

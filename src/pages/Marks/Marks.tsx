@@ -20,7 +20,6 @@ export const Marks: React.FC = (): JSX.Element => {
 
     return (
         <div className="marks-design">
-            {/* <CreateButton action={() => navigate(`/groups/${groupId}/${taskId}/create`)} /> TODO reimplement this */}
             <CreateButton action={() => navigate(`/groups/${groupId}/create`)} /> 
             <h1>Marks</h1>
             <div className="marks">
@@ -31,7 +30,6 @@ export const Marks: React.FC = (): JSX.Element => {
                         <p>{task.deadline}</p>
                         <p>{task.weight}</p>
                         <p>{task.optional ? "Optional" : "Mandatory"}</p>
-                        {/* <p>{task.groups}</p> */}
                     </div>
                 ))}
             </div>

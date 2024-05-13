@@ -65,13 +65,10 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ errorMsg, setE
 
     return (
         <div className="account-settings-design">
-            {/* <h1>Account Settings</h1> */}
             <div className="account-settings-container">
             <h1>Account Settings</h1>
                 <div className="account-settings-item">
-                    {/* <label htmlFor="account-name">Name</label> */}
                     <CInput
-                        // className={"account-name-field"}
                         id="account-name"
                         type="text"
                         placeholder="Name"
@@ -80,18 +77,7 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ errorMsg, setE
                         onChangeFunction={inputHandler}
                     />
                 </div>
-                {/* <div className="account-settings-item">
-                    <label htmlFor="account-email">Email</label>
-                    <CInput
-                        className={"account-email-field"}
-                        id="account-email"
-                        type="email"
-                        placeholder="Email"
-                        name="email"
-                        value={newUser.email || ""}
-                        onChangeFunction={inputHandler}
-                    />
-                </div> */}
+
             <CButton title="Save" onClickFunction={saveAccountSettings} />
             </div>
         </div>

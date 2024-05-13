@@ -15,13 +15,11 @@ import { SecureRoute } from "../../common/SecureRoute/SecureRoute"
 import { selectUser } from "../../app/slices/userSlice"
 import { useSelector } from "react-redux"
 import { Navigate } from "react-router-dom"
-// import { EditTask } from "../EditTask/EditTask"
 
 export const Body: React.FC = (): JSX.Element => {
     const token = useSelector(selectUser).credentials.token
     return (
         <Routes>
-            {/* {<SecureRoute protMode="allow-logged-out" />} */}
             <Route path="/" element={<SecureRoute protMode="allow-logged-in" />} >
                 <Route index element={<Home />} />
             </Route>
@@ -49,11 +47,9 @@ export const Body: React.FC = (): JSX.Element => {
             <Route path="/groups/:groupId/tasks" element={<SecureRoute protMode="allow-logged-in" />} >
                 <Route index element={<Tasks />} />
             </Route>
-            {/* <Route path="/groups/:groupId/edit-task" element={<EditTask />} /> */}
             <Route path="/groups/:groupId/marks" element={<SecureRoute protMode="allow-logged-in" />} >
                 <Route index element={<Marks />} />
             </Route>
-            {/* <Route path="/groups/:groupId/:taskId/:studentId/create" element={<CreateMark />} /> */}
             <Route path="/groups/:groupId/:studentId/create" element={<SecureRoute protMode="allow-logged-in" />} >
                 <Route index element={<CreateMark />} />
             </Route>

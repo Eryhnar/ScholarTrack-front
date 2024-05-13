@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
 import { Toast } from "../../common/Toast/Toast";
 import { CCard } from "../../common/CCard/CCard";
 import { CButton } from "../../common/CButton/CButton";
@@ -25,8 +24,6 @@ interface ErrorMsg {
 }
 
 export const Register: React.FC = (): JSX.Element => {
-    const navigate = useNavigate();
-
     const [newUser, setNewUser] = useState<NewUser>({
         name: "",
         email: "",
@@ -41,7 +38,6 @@ export const Register: React.FC = (): JSX.Element => {
         confirmPasswordError: "",
         serverError: null,
     });
-    // const [errorCount, setErrorCount] = useState<number>(0);
 
     const inputHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setNewUser({
@@ -50,42 +46,18 @@ export const Register: React.FC = (): JSX.Element => {
         });
     };
 
-    // TODO validate inputs!!
-    // const validateInput 
-
-    // const registerUser = async (): Promise<void> => {
-    //     try {
-    //         const { confirmPassword, ...newUserWithoutConfirmPassword } = newUser;
-    //         const response: RegisterResponseData = await registerService(newUserWithoutConfirmPassword);
-    //         setErrorMsg({
-    //             ...errorMsg,
-    //             serverError: { message: response.message, success: response.success },
-    //         });
-    //         setErrorCount(errorCount + 1);
-    //         // navigate("/login");
-    //     } catch (error: RegisterResponseData | any) {
-    //         setErrorMsg({
-    //             ...errorMsg,
-    //             serverError: { message: error.message, success: false },
-    //         });
-    //         setErrorCount(errorCount + 1);
-    //     }
-    // };
     const mutation = useMutation(registerService, {
         onSuccess: (response: RegisterResponseData) => {
             setErrorMsg({
                 ...errorMsg,
                 serverError: { message: response.message, success: response.success },
             });
-            // setErrorCount(errorCount + 1);
-            // navigate("/login");
         },
         onError: (error: any) => {
             setErrorMsg({
                 ...errorMsg,
                 serverError: { message: error.message, success: false },
             });
-            // setErrorCount(errorCount + 1);
         }
     });
     
@@ -99,7 +71,6 @@ export const Register: React.FC = (): JSX.Element => {
         <div className="register-design">
             {errorMsg.serverError && errorMsg.serverError.message !== "" && (
                 <Toast
-                    // key={errorCount}
                     message={errorMsg.serverError.message}
                     success={errorMsg.serverError.success}
                     time={4000}
@@ -176,7 +147,6 @@ export const Register: React.FC = (): JSX.Element => {
                         </div>
                         <div className={errorMsg.confirmPasswordError ? "register-field-error-msg" : "register-empty-error"}>{errorMsg.confirmPasswordError}</div>
                         <CButton
-                            // className="register-button"
                             title="Register"
                             onClickFunction={registerUser}
                         />

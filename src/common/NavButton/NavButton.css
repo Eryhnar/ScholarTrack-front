@@ -2,8 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: var(--button-color); */
-    /* border-radius: 0.5rem; */
 
     padding-block: 0.25rem;
     padding-inline: 0.5rem;

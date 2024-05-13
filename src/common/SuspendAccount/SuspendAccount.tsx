@@ -45,9 +45,9 @@ export const SuspendAccount: React.FC = (): JSX.Element => {
                     message={errorMsg.serverError.message}
                     success={errorMsg.serverError.success}
                     time={4000}
-                    resetServerError={() => setErrorMsg(prevState => ({
+                    resetServerError={() => setErrorMsg({
                         serverError: { message: "", success: false }
-                    }))}
+                    })}
 
                 />
             }
@@ -62,10 +62,6 @@ export const SuspendAccount: React.FC = (): JSX.Element => {
                     <>
                         <h1>Suspend Account</h1>
                         <div className="suspend-account-settings-container">
-                            {/* <div className="suspend-account-settings-item">
-                        <label htmlFor="reason">Reason</label>
-                        <input type="text" id="reason" />
-                    </div> */}
                             <CButton title="Suspend" onClickFunction={() => setIsOpenConfirmation(true)} />
                         </div>
                     </>

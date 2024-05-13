@@ -6,7 +6,7 @@ import { CButton } from "../../common/CButton/CButton";
 import { Toast } from "../../common/Toast/Toast";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../app/slices/userSlice";
-import { CreateStudentResponse, createStudentService } from "../../services/apicalls";
+import { createStudentService } from "../../services/apicalls";
 import { useMutation } from "react-query";
 
 interface NewStudent {
@@ -38,12 +38,10 @@ export const CreateStudent: React.FC = (): JSX.Element => {
     }
 
     const mutation = useMutation(createStudentService, {
-        onSuccess: (response: CreateStudentResponse) => {
-            // console.log(response)
+        onSuccess: () => {
             navigate(-1)
         },
         onError: (error: any) => {
-            // console.log(error)
             setErrorMsg({
                 serverError: { message: error.message, success: false }
             })
@@ -85,13 +83,6 @@ export const CreateStudent: React.FC = (): JSX.Element => {
                     value={newStudent.age || ""}
                     onChangeFunction={inputHandler}
                 />
-                {/* <CInput
-                    type="text"
-                    placeholder="Group"
-                    name="group"
-                    value={newStudent.group || ""}
-                    onChangeFunction={inputHandler}
-                /> */}
                 <CButton
                     title="Create Student"
                     onClickFunction={createStudent}

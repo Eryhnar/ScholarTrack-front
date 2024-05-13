@@ -1,12 +1,8 @@
 import "./ChooseCreate.css"
-// import { CButton } from "../CButton/CButton"
 import { ReactNode, useEffect, useRef } from "react"
 
 export interface ChooseCreateProps {
     className?: string
-    // anchor: string
-    // id: string
-    // popover: "popover" | null
     closeFunction: () => void
     children: ReactNode;
 }
@@ -14,9 +10,6 @@ export interface ChooseCreateProps {
 export const ChooseCreate: React.FC<ChooseCreateProps> = (
     {
         className = "default-choose-create",
-        // anchor,
-        // id,
-        // popover
         closeFunction,
         children
     }
@@ -43,22 +36,7 @@ export const ChooseCreate: React.FC<ChooseCreateProps> = (
 
     return (
         <div className={className} ref={menuRef}>
-            {/* <CButton
-                title="Close"
-                onClickFunction={() => closeFunction()}
-            /> */}
-            {/* <CButton
-                title="Create Task"
-                onClickFunction={() => console.log("Create Task")}
-                />
-                <CButton
-                title="Create Attendance"
-                onClickFunction={() => console.log("Create Attendance")}
-                />
-                <CButton
-                title="Create Student"
-                onClickFunction={() => console.log("Create Student")}
-            /> */}
+
             <div className="create-button-menu">
                 {children}
                 <div onClick={closeFunction}><span className="material-symbols-outlined default-nav-button">

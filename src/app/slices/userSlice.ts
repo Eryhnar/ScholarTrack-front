@@ -5,7 +5,6 @@ export interface User {
     id: string;
     name: string;
     role: string;
-    // profilePicture?: string;
 }
 
 export interface UserState {
@@ -22,7 +21,6 @@ const initialState: UserState = {
             id: "",
             name: "",
             role: "",
-            // profilePicture: ""
         }
     }
 };
@@ -48,6 +46,6 @@ export const userSlice = createSlice({
 
 export const { login, logout, updateUser } = userSlice.actions;
 
-export const selectUser = (state: RootState) => state.user; //review
+export const selectUser = (state: RootState) => state.user;
 
 export default userSlice.reducer;

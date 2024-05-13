@@ -42,7 +42,7 @@ export const CreateMark: React.FC = (): JSX.Element => {
     }
 
     const mutation = useMutation(createMarkService, {
-        onSuccess: (response: any) => {
+        onSuccess: () => {
             navigate(-1)
         },
         onError: (error: any) => {

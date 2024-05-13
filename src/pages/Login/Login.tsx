@@ -104,7 +104,6 @@ export const Login: React.FC = (): JSX.Element => {
                             <div className={errorMsg.passwordError ? "login-field-error-msg" : "login-empty-error"}>{errorMsg.passwordError}</div>
                         </div>
                         <CButton
-                            // className={"login-button"}
                             title={"Login"}
                             onClickFunction={loginUser}
                         />
