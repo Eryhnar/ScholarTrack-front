@@ -1,0 +1,17 @@
+.default-custom-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--button-color);
+    border-radius: 0.5rem;
+
+    padding-block: 0.25rem;
+    padding-inline: 0.5rem;
+    width: 7rem;
+}
+
+.default-custom-button:hover {
+    /* background-color: #e0e0e0; */
+    background-color: var(--button-color-hover);
+    cursor: pointer;
+}

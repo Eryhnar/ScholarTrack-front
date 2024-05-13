@@ -1,0 +1,103 @@
+.register-design {
+    min-height: 95svh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+
+    /* padding-block: 2rem; */
+    padding-block: 5svh;
+    /* background-color: #333; */
+}
+
+.register-inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-block: 2rem;
+
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 1rem;
+    width: 80vw;
+    max-width: 40rem;
+    height: 60svh;
+}
+
+.register-inputs h1{
+    padding-top: 0;
+    padding-bottom: 3rem;
+}
+
+.register-card {
+    padding-block: 2rem;
+}
+.register-card h2 {
+    padding-block: 1rem;
+}
+
+.register-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-block: 0.5rem;
+}
+
+.register-input-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.register-input-area label{
+    position: absolute;
+    right: calc(50% + 6rem);
+    text-align: right;
+}
+
+.info-button-wrapper {
+    position: absolute;
+    left: calc(50% + 6em);
+}
+
+.register-field-error {
+    border: 0.1rem solid red;
+}
+
+.register-msg {
+    color: red;
+}
+
+.register-field-error-msg {
+    color: red;
+    height: 1rem;
+}
+
+.register-empty-error {
+    height: 1rem;
+}
+
+.register-button {
+    max-width: 7rem;
+    margin-inline: auto;
+    padding-block: 0.25rem;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin-block: 0.5rem;
+}
+
+.register-redirect-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.register-redirect-link {
+    text-decoration:underline;
+    color:rgb(36, 36, 189)
+}

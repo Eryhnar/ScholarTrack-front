@@ -1,13 +1,51 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+
+    --main-background-color: #502F4C;
+    --button-color: #EBA6A9;
+    --button-color-hover: rgb(224, 172, 181);
+    /* --accent-color: #2f1e46; */
+    --accent-color: #7e64a0;
+    --accent-color-hover: #a890c8;
+    /* --secondary-background-color: #034748; */
+    --secondary-background-color: #2e1b2c;
+    /* --main-background-color: rgb(110, 28, 110);
+    --button-color: rgb(193, 139, 148);
+    --button-color-hover: rgb(224, 172, 181);
+    --accent-color: peachpuff;
+    --accent-color-hover: orange;
+    --secondary-background-color: rgb(153, 75, 88); */
+    --dark-font-color: black;
+    --light-font-color: white;
 }
 
+/* :root {
+    --main-background-color: rgb(110, 28, 110);
+    --button-color: rgb(198, 139, 149);
+    --accent-color: peachpuff;
+    --accent-color-hover: orange;
+    --secondary-background-color: rgb(129, 57, 69);
+    --dark-font-color: black;
+    --light-font-color: white;
+} */
+
 #root {
+    /* --main-background-color: rgb(74, 0, 74); */
+    /* --main-background-color: rgb(110, 28, 110);
+    --button-color: rgb(205, 144, 154);
+    --accent-color: peachpuff;
+    --accent-color-hover: orange;
+    --secondary-background-color: rgb(129, 57, 69);
+    --dark-font-color: black;
+    --light-font-color: white; */
+    
     margin: 0;
     padding: 0;
     text-align: center;
     width: 100vw;
-    background-color: aquamarine;
+    background-color: var(--main-background-color);
+    /* background-color: transparent; */
 }
 

@@ -1,0 +1,112 @@
+.header-design {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2e1b2c;
+    color: white;
+    min-height: 5svh;
+    padding-inline: 1rem;
+
+    position: relative;
+}
+
+.burguer-button {
+    cursor: pointer;
+    color: var(--button-color);
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: var(--secondary-background-color);
+    color: black;
+
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 5;
+
+    width: 15%;
+    height: 95svh;
+}
+
+.nav-profile-button {
+    cursor: pointer;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--button-color);
+    color: black;
+    font-weight: bold;
+}
+
+.nav-profile-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: var(--secondary-background-color);
+    color: black;
+
+    position: absolute;
+    top: 100%;
+    right: 0%;
+    z-index: 5;
+
+    width: 10%;
+    padding-block: 1rem;
+    gap: 1rem;
+    /* height: 95svh; */
+}
+
+.nav-profile-menu h3 {
+    color: var(--light-font-color);
+}
+
+.nav-profile-menu li {
+    list-style: none;
+    cursor: pointer;
+}
+
+.no-token-header-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    /* padding-inline: 2rem; */
+
+}
+
+.no-token-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: var(--accent-color); */
+    background-color: #2e1b2c;
+    color: var(--light-font-color);
+    min-height: 5svh;
+    /* padding-inline: 4rem; */
+
+    width: 100%;
+    padding-inline: 1rem;
+
+    /* position: fixed; */
+}
+
+.no-token-header-right{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}

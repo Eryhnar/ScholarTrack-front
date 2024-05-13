@@ -1,0 +1,25 @@
+.create-mark-design {
+    min-height: 95vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.create-mark-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 85vw;
+    height: 85svh;
+    padding-block: 1rem;
+    gap: 2rem;
+    padding-inline: 2rem;
+    border-radius: 1rem;
+    background-color: rgba(0,0,0,0.3);
+}
+
+.create-mark-wrapper h1 {
+    padding-block: 2rem;
+}
