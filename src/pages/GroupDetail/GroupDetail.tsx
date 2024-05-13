@@ -11,6 +11,7 @@ import { RootState } from "../../app/store";
 import { ChooseCreate } from "../../common/ChooseCreate/ChooseCreate";
 import { CButton } from "../../common/CButton/CButton";
 import { setStudent } from "../../app/slices/studentDetailSlice";
+import { NavButton } from "../../common/NavButton/NavButton";
 
 export const GroupDetail: React.FC = (): JSX.Element => {
     const navigate = useNavigate();
@@ -65,9 +66,12 @@ export const GroupDetail: React.FC = (): JSX.Element => {
         closeFunction={() => setIsOpenCreate(false)}
         children= {
             <>
-                <CButton title="Create Student" onClickFunction={() => navigate(`/groups/${groupId}/create-student`, { state: { path: '/groups/:groupId/create-student'}})} />
-                <CButton title="Create Task" onClickFunction={() => navigate(`/groups/${groupId}/create-task`, { state: { path: '/groups/:groupId/create-task' }})} /> {/* todo possibly remove the id */}
-                <CButton title="Create Attendance" onClickFunction={() => navigate(`/groups/${groupId}/create-attendance`)} />
+                <NavButton title="Create Student" path={`/groups/${groupId}/create-student`}  state= {{ path: '/groups/:groupId/create-student'}} />
+                {/* <CButton title="Create Student" onClickFunction={() => navigate(`/groups/${groupId}/create-student`, { state: { path: '/groups/:groupId/create-student'}})} /> */}
+                <NavButton title="Create Task" path={`/groups/${groupId}/create-task`} state= {{ path: '/groups/:groupId/create-task'}} />
+                {/* <CButton title="Create Task" onClickFunction={() => navigate(`/groups/${groupId}/create-task`, { state: { path: '/groups/:groupId/create-task' }})} /> todo possibly remove the id */}
+                {/* <NavButton title="Create Attendance" path={`/groups/${groupId}/create-attendance`} state= {{ path: '/groups/:groupId/create-attendance'}} /> */}
+                {/* <CButton title="Create Attendance" onClickFunction={() => navigate(`/groups/${groupId}/create-attendance`)} /> */}
                 {/* <CButton title="Mark task" onClickFunction={() => navigate(`/groups/${groupId}/create-mark`)} /> */}
             </>
         }

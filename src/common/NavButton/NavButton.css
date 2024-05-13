@@ -13,5 +13,6 @@
 
 .default-nav-button:hover {
     background-color: var(--button-color-hover);
+    color: var(--dark-font-color);
     cursor: pointer;
 }
